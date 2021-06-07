@@ -3,26 +3,30 @@
     <mat-label>Registro</mat-label>
   </mat-card-header>
   <mat-card-content>
-    <form action="">
-      <mat-form-field appearance="fill">
-        <mat-label>Select type Document</mat-label>
-        <mat-select>
-          <mat-option value="one">First option</mat-option>
-          <mat-option value="two">Second option</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Number Identification</mat-label>
-        <input matInput>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
-        <input matInput>
-      </mat-form-field>
-
+    <form  [formGroup]='formControlRegistrarse' (ngSubmit)="submit()">
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Select type Document</mat-label>
+          <mat-select formControlName='tipoDocumento'>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Number Identification</mat-label>
+          <input matInput  formControlName='numberIdentifi'>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName='nameUser'>
+        </mat-form-field>
+      </p>
+      <p>
       <mat-form-field appearance="fill">
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [matDatepicker]="picker" formControlName='dateUser'>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -30,22 +34,28 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Telephone</mat-label>
-        <input matInput>
+        <input  formControlName='telefono'  matInput>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>direction</mat-label>
-        <input matInput>
+        <input  formControlName='direccion'  matInput>
       </mat-form-field>
+    </p>
       <mat-form-field appearance="fill">
         <mat-label>password</mat-label>
-        <input matInput>
+        <input  formControlName='password'  matInput>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>email</mat-label>
-        <input matInput>
+        <input  type="email"  formControlName='email'  matInput>
       </mat-form-field>
+      <p>
+        <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
+      </p>
+      <mat-card-footer>
+          <button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' >Guardar</button>
 
-
+      </mat-card-footer>
 
 
 

@@ -15,6 +15,7 @@ import { SaveOrderComponent } from './components/save-order/save-order.component
 import { SaveServiceComponent } from './components/save-service/save-service.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { HttpClientModule } from '@angular/common/http';
     ListServiceComponent,
     SaveEventComponent,
     SaveOrderComponent,
-    SaveServiceComponent
+    SaveServiceComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
