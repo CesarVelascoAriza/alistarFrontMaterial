@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SaveServiceComponent } from './save-service.component';
+import { ManageServiceComponent } from './manage-service.component';
 
-describe('SaveServiceComponent', () => {
-  let component: SaveServiceComponent;
-  let fixture: ComponentFixture<SaveServiceComponent>;
+describe('ManageServiceComponent', () => {
+  let component: ManageServiceComponent;
+  let fixture: ComponentFixture<ManageServiceComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SaveServiceComponent ]
+      declarations: [ ManageServiceComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SaveServiceComponent);
+    fixture = TestBed.createComponent(ManageServiceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

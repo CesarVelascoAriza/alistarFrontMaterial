@@ -12,10 +12,18 @@ import { LoginComponent } from './components/login/login.component';
 import { ListServiceComponent } from './components/list-service/list-service.component';
 import { SaveEventComponent } from './components/save-event/save-event.component';
 import { SaveOrderComponent } from './components/save-order/save-order.component';
-import { SaveServiceComponent } from './components/save-service/save-service.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
+import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
+import { DashboardProveedorComponent } from './components/dashboard-proveedor/dashboard-proveedor.component';
+import { ManageServiceComponent } from './components/manage-service/manage-service.component';
 
 
 @NgModule({
@@ -28,8 +36,10 @@ import { HomeComponent } from './components/home/home.component';
     ListServiceComponent,
     SaveEventComponent,
     SaveOrderComponent,
-    SaveServiceComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardUserComponent,
+    DashboardProveedorComponent,
+    ManageServiceComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +47,13 @@ import { HomeComponent } from './components/home/home.component';
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

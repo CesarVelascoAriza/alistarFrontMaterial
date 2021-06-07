@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
+import { RegistraseComponent } from '../registrase/registrase.component';
 
 @Component({
   selector: 'app-nadvar',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NadvarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog:MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  openDialogSession(){
+    const dialogRef = this.dialog.open(LoginComponent);
+  }
+
+  openDialogRegistro(){
+    let dialogRef = this.dialog.open(RegistraseComponent);
+  }
 }
