@@ -9,6 +9,7 @@ import { RegistraseComponent } from '../registrase/registrase.component';
   styleUrls: ['./nadvar.component.css']
 })
 export class NadvarComponent implements OnInit {
+  showFiller = false;
 
   constructor(public dialog:MatDialog) { }
 

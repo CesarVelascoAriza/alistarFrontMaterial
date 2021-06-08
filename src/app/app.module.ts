@@ -24,6 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DashboardProveedorComponent } from './components/dashboard-proveedor/dashboard-proveedor.component';
 import { ManageServiceComponent } from './components/manage-service/manage-service.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { PaginatePipe } from './pipes/paginate.pipe';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { ManageServiceComponent } from './components/manage-service/manage-servi
     HomeComponent,
     DashboardUserComponent,
     DashboardProveedorComponent,
-    ManageServiceComponent
+    ManageServiceComponent,
+    FooterComponent,
+    PaginatePipe
   ],
   imports: [
     BrowserModule,

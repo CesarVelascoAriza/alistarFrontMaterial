@@ -11,7 +11,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -27,7 +28,9 @@ const MaterialComponents= [
   MatNativeDateModule,
   MatDatepickerModule,
   MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSidenavModule,
+  MatPaginatorModule
 ]
 
 @NgModule({
