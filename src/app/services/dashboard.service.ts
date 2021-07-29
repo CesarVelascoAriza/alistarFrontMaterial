@@ -39,4 +39,12 @@ export class DashboardService {
         y: 2.61
     }]
   }
+
+  serviciosSolicitados() {
+      return ['Piñatas', 'Quince Años', 'Conferencias'];
+  }
+
+  proximosEventos() {
+    return ['Matrimonios', 'Quince Años', 'Conferencias'];
+}
 }
