@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NadvarComponent } from './components/nadvar/nadvar.component';
 import { MaterialModule } from './material/material.module';
 import { SlaiderComponent } from './components/slaider/slaider.component';
 import { RegistraseComponent } from './components/registrase/registrase.component';
@@ -21,17 +20,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { LayoutModule } from '@angular/cdk/layout';
 import { DashboardProveedorComponent } from './components/dashboard-proveedor/dashboard-proveedor.component';
 import { ManageServiceComponent } from './components/manage-service/manage-service.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
-
-
+import { LayoutModule } from './layouts/layout.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { HighchartsChartModule } from 'highcharts-angular';
 @NgModule({
   declarations: [
     AppComponent,
-    NadvarComponent,
     SlaiderComponent,
     RegistraseComponent,
     LoginComponent,
@@ -42,7 +39,6 @@ import { PaginatePipe } from './pipes/paginate.pipe';
     DashboardUserComponent,
     DashboardProveedorComponent,
     ManageServiceComponent,
-    FooterComponent,
     PaginatePipe
   ],
   imports: [
@@ -57,7 +53,9 @@ import { PaginatePipe } from './pipes/paginate.pipe';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule
+    LayoutModule,
+    MatDividerModule,
+    HighchartsChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
