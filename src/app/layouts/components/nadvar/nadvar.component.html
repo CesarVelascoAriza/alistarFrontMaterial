@@ -10,14 +10,18 @@
       />
     </span>
     <span class="example-spacer"></span>
-    <button mat-button (click)='openDialogSession()' > 
-      <mat-icon>person_outline</mat-icon> 
-      Inciar sesion 
-    </button>
-    <button mat-button (click)='openDialogRegistro()'>
-      <mat-icon>library_add</mat-icon>
-      Registrarse
-    </button>
+    <div *ngIf="user; then thenBlock else elseBlock"></div>
+    <ng-template #elseBlock>
+      <button mat-button (click)='openDialogSession()' > 
+        <mat-icon>person_outline</mat-icon> 
+        Inciar sesion 
+      </button>
+      <button mat-button (click)='openDialogRegistro()'>
+        <mat-icon>library_add</mat-icon>
+        Registrarse
+      </button>
+    </ng-template>
+    <ng-template #thenBlock></ng-template>
   </mat-toolbar-row>
 </mat-toolbar>
 

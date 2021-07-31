@@ -10,10 +10,24 @@ import { RegistraseComponent } from 'src/app/components/registrase/registrase.co
 })
 export class NadvarComponent implements OnInit {
 
+  public user : boolean;
   showFiller = false;
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
   
-  constructor(public dialog:MatDialog) { }
+  constructor(
+    public dialog:MatDialog
+    ) { 
+      this.user = false;
+      //this.nombreUsuario='';
+      if(localStorage.getItem('identity') != null || localStorage.getItem('identity') !=  undefined)
+      {
+        let usuariolocal = localStorage.getItem('identity');
+          //this.usuario =JSON.parse(usuariolocal!);
+          this.user=true;
+          //this.nombreUsuario = this.usuario.nombre;
+        //console.log("Usuario de mas " + this.nombreUsuario);
+      }
+    }
 
   ngOnInit(): void {
   }
