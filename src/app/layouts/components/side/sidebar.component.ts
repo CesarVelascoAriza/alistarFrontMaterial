@@ -33,6 +33,7 @@ export class SidebarComponent implements OnInit {
 
   cerrarSesion(){
     localStorage.removeItem('identity')
+    localStorage.removeItem('nombreUsuario')
     this._router.navigate(['']).then(data=>{
       window.location.reload()
     })

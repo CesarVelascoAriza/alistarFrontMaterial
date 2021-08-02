@@ -81,4 +81,13 @@ export class RegistraseComponent implements OnInit {
     );*/
   }
 
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+
+  reset(){}
+
 }

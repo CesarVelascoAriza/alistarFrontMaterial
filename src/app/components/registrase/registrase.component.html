@@ -1,64 +1,75 @@
 <mat-card>
   <mat-card-header>
-    <mat-label>Registro</mat-label>
+    <h1>Registro</h1>
   </mat-card-header>
+  <br>
   <mat-card-content>
     <form  [formGroup]='formControlRegistrarse' (ngSubmit)="submit()">
       <p>
         <mat-form-field appearance="fill">
-          <mat-label>Select type Document</mat-label>
+          <mat-label>Tipo de Documento</mat-label>
           <mat-select formControlName='tipoDocumento'>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
+            <mat-option [value]="doc" *ngFor="let doc of tDocs">{{doc.descripcionLarga}}</mat-option>
           </mat-select>
         </mat-form-field>
-      </p>
-      <p>
         <mat-form-field appearance="fill">
-          <mat-label>Number Identification</mat-label>
+          <mat-label>Número de Identificación</mat-label>
           <input matInput  formControlName='numberIdentifi'>
         </mat-form-field>
         <mat-form-field appearance="fill">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName='nameUser'>
+          <mat-label>Nombre Completos</mat-label>
+          <input matInput formControlName='nameUser' >
         </mat-form-field>
-      </p>
-      <p>
+      
       <mat-form-field appearance="fill">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName='dateUser'>
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName='dateUser' >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-
-
       <mat-form-field appearance="fill">
-        <mat-label>Telephone</mat-label>
-        <input  formControlName='telefono'  matInput>
+        <mat-label>Teléfono</mat-label>
+        <input  formControlName='telefono'  matInput >
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>direction</mat-label>
-        <input  formControlName='direccion'  matInput>
-      </mat-form-field>
-    </p>
-      <mat-form-field appearance="fill">
-        <mat-label>password</mat-label>
-        <input  formControlName='password'  matInput>
+        <mat-label>Dirección</mat-label>
+        <input  formControlName='direccion'  matInput >
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>email</mat-label>
-        <input  type="email"  formControlName='email'  matInput>
+        <mat-label>Contraseña</mat-label>
+        <input  formControlName='password'  matInput >
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Correo Electrónico</mat-label>
+        <input  type="email"  formControlName='email'  matInput  [errorStateMatcher]="matcher"
+        placeholder="Ex. pat@example.com" >
+        <mat-hint>Errors appear instantly!</mat-hint>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
       </mat-form-field>
       <p>
         <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
       </p>
       <mat-card-footer>
-          <button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' >Guardar</button>
-
+          <!--<button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' (click)="register()">Guardar</button>-->
+          <button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid'>Guardar</button>
       </mat-card-footer>
-
-
-
     </form>
   </mat-card-content>
 </mat-card>
+
+<!--<mat-vertical-stepper>
+  <mat-step label="Dinos quien Eres!">
+    conten1
+  </mat-step>
+  <mat-step label="Establezcamos Datos de Ingreso">
+    content2
+  </mat-step>
+  <mat-step label="Conozcamonos un poco más!">
+    content2
+  </mat-step>
+</mat-vertical-stepper>-->
