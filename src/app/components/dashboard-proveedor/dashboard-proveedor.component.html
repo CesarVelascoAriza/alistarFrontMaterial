@@ -2,13 +2,13 @@
   <h1 class="mat-h1">Dashboard</h1>
   <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
     <mat-card fxFlex="25">
-      <app-widget-card label="Servicios mas solicitados" ></app-widget-card>
+      <app-widget-card label="Servicios mas solicitados" [data]="serviciosSolicitados"></app-widget-card>
     </mat-card>
     <mat-card fxFlex="25">
         <app-widget-card label="No hay servicios para atender hoy"></app-widget-card>
     </mat-card>
     <mat-card fxFlex="25">
-        <app-widget-card label="Proximos Eventos"></app-widget-card>
+        <app-widget-card label="Proximos Eventos" [data] ="proximosEventos"></app-widget-card>
     </mat-card>
   </div>
   <mat-divider></mat-divider>
