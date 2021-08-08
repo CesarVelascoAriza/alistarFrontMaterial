@@ -10,6 +10,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 
 import { TipoDocumento } from '../../models/tipoDocumento';
 import { Usuario } from '../../models/usuario';
+import { Telefono } from 'src/app/models/telefono';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -71,14 +72,25 @@ export class RegistraseComponent implements OnInit {
   
   submit(){
     console.log('formControlRegistrarse: ', this.formControlRegistrarse.value);
-    /*this._usuarioService.register(this.formControlRegistrarse.value).subscribe(
+    this.usuario.tipoDocumento = this.formControlRegistrarse.value.tipoDocumento;
+    this.usuario.numeroIdentificacion = this.formControlRegistrarse.value.numberIdentifi;
+    this.usuario.direccion = this.formControlRegistrarse.value.direccion;
+    this.usuario.email = this.formControlRegistrarse.value.email;
+    this.usuario.nombre = this.formControlRegistrarse.value.nameUser;
+    this.usuario.password = this.formControlRegistrarse.value.password;
+    this.usuario.telefonos = new Telefono();
+    this.usuario.telefonos.idTelefono = 0;
+    this.usuario.telefonos.telefono = this.formControlRegistrarse.value.telefono;
+    this.usuario.fechaNacimiento = this.formControlRegistrarse.value.dateUser;
+    console.log('Usuario: ' , this.usuario)
+    this._usuarioService.register(this.usuario).subscribe(
       response => {
         let identity = response
         console.log(response)
         this.identity = identity
         this._router.navigate([''])
       }
-    );*/
+    );
   }
 
   emailFormControl = new FormControl('', [

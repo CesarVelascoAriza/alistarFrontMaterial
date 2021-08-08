@@ -8,7 +8,7 @@ export class Usuario {
   nombre: string = '';
   password: string = '';
   tipoDocumento: TipoDocumento = new TipoDocumento();
-  telefono: Telefono = new Telefono();
+  telefonos: Telefono = new Telefono();
   email: string = '';
 
 }

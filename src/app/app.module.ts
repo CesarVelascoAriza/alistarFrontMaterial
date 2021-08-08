@@ -26,6 +26,7 @@ import { PaginatePipe } from './pipes/paginate.pipe';
 import { LayoutModule } from './layouts/layout.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { HighchartsChartModule } from 'highcharts-angular';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatButtonModule,
     LayoutModule,
     MatDividerModule,
+    MatProgressBarModule,
     HighchartsChartModule
   ],
   providers: [],
