@@ -49,13 +49,18 @@ export class ManageServiceService {
   onUpload(file:any):Observable<any>{
     const fd= new FormData;
     fd.append('image',file,file.name);
-    return   this._http.post(this.url+'add-image-post',fd); 
+    return  this._http.post(this.url+'add-image-post',fd); 
   }
 
-  createService(servicio: Servicio){
+  createService(servicio: Servicio) {
+    console.log('----------------------- createService ------------------ ');   
+    console.log('servicio: ', servicio);    
     let json = JSON.stringify(servicio)
+    console.log('json: ', json); 
     let params = json
-    const path = `${this.url}/Servicio/save-Servicio`
+    console.log('params: ', params); 
+    const path = `${this.url}Servicio/save-Servicio`
+    console.log('path --- ', path);    
     return this._http.post<Servicio>(path, params, this.httpOptions)
   }
 

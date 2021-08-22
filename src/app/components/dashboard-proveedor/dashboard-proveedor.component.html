@@ -1,24 +1,34 @@
 <div class="grid-container">
   <h1 class="mat-h1">Dashboard</h1>
   <button mat-raised-button color="accent" (click)='openCreateService()'>Crear Servicio</button>
-  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
-    <mat-card fxFlex="25">
-      <app-widget-card label="Servicios mas solicitados" [data]="serviciosSolicitados"></app-widget-card>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px" class="stats-cards">
+    <mat-card fxFlex="40">
+      <app-widget-card label="Crear Servicios" [data]="serviciosSolicitados"></app-widget-card>
     </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-card label="No hay servicios para atender hoy"></app-widget-card>
+    <mat-card fxFlex="40">
+        <app-widget-card label="Ver servicios programados"></app-widget-card>
     </mat-card>
-    <mat-card fxFlex="25">
+    <mat-card fxFlex="40">
+        <app-widget-card label="Servicios más solicitados por evento" [data] ="proximosEventos"></app-widget-card>
+    </mat-card>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px" class="stats-cards">
+    <mat-card fxFlex="40">
+      <app-widget-card label="Crear Evento" [data]="serviciosSolicitados"></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="40">
+        <app-widget-card label="Ver eventos programados"></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="40">
         <app-widget-card label="Proximos Eventos" [data] ="proximosEventos"></app-widget-card>
     </mat-card>
   </div>
   <mat-divider></mat-divider>
   <mat-grid-list cols="2" rowHeight="350px">
-    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      
-      <div fxFlex="40">
-          <app-widget-pie [data]="pieChart"></app-widget-pie>
-      </div>
-  </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px"> 
+        <div fxFlex="40">
+            <app-widget-pie [data]="pieChart"></app-widget-pie>
+        </div>
+    </div>
   </mat-grid-list>
 </div>

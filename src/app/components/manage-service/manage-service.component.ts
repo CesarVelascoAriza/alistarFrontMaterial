@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroupDirective, NgForm, Validators, FormGroup} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
-import {MatStepperModule} from '@angular/material/stepper';
 import {ErrorStateMatcher} from '@angular/material/core';
-import { Observable } from 'rxjs';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import Swal from 'sweetalert2'
 
 import { Categoria } from '../../models/categoria';
 
@@ -35,6 +33,7 @@ export class ManageServiceComponent implements OnInit {
   public identity : any;
   public service: Servicio
   public usuario!: Usuario;
+  public error: any;
 
   formControlCreateService=this.fb.group({
     nombreServicio:['',Validators.required],
@@ -72,13 +71,22 @@ export class ManageServiceComponent implements OnInit {
 
   cargarImagen(event:any){
     this.selectedFile=<File>event.target.files[0]
+    console.info('Foto deleccionada' , this.selectedFile)
+    if(this.selectedFile.type.indexOf('image') < 0){
+      this.selectedFile = undefined;
+      Swal.fire(
+        'Error al seleccionar la foto:', 
+        'El archivo debe ser del tipo imagen',
+        'error');
+    }
   }
 
   enviarImagen(){
     this.manageService.onUpload(this.selectedFile).subscribe(
       response=>{
          if(response.status=='success'){
-           console.log(response);
+           console.log('enviarImagen ', response);
+           Swal.fire('Nuevo: servicio creado con éxito', 'success');
          }
       },
       error=>{
@@ -96,19 +104,47 @@ export class ManageServiceComponent implements OnInit {
   {
     console.log('Servicio: ',this.formControlCreateService);
     this.service.nombreServicio = this.formControlCreateService.value.nombreServicio;
+    console.log(this.formControlCreateService.value.nombreServicio);    
+    this.service.categoria = this.formControlCreateService.value.categoria;
+    console.log(this.formControlCreateService.value.categoria);   
+    this.service.descripcionServicio = this.formControlCreateService.value.descripcionServicio;
+    console.log(this.formControlCreateService.value.descripcionServicio);   
+    this.service.direccion = this.formControlCreateService.value.direccion;
+    console.log(this.formControlCreateService.value.direccion);   
+    this.service.proveedor = this.usuario;
+    console.log(this.usuario);   
+    this.service.precionUnidad = this.formControlCreateService.value.precionUnidad;
+    this.service.imagenServicio = this.formControlCreateService.value.imagenServicio;
+    console.log('service.imagenServicio ' , this.service.imagenServicio); 
+    console.log('this.formControlCreateService.value.imagenServicio -- ', typeof(this.formControlCreateService.value.imagenServicio));
+    console.log('this.selectedFile -- ', this.selectedFile?.name);
+    /*console.log('Servicio: ',this.formControlCreateService);
+    this.service.nombreServicio = this.formControlCreateService.value.nombreServicio;
     this.service.categoria = this.formControlCreateService.value.categoria;
     this.service.descripcionServicio = this.formControlCreateService.value.descripcionServicio;
     this.service.direccion = this.formControlCreateService.value.direccion;
     this.service.proveedor = this.usuario;
     this.service.precionUnidad = this.formControlCreateService.value.precionUnidad;
     this.service.imagenServicio = this.formControlCreateService.value.imagenServicio;
-    console.log('service: ', this.service)
+    console.log('service.imagenServicio ' , this.service.imagenServicio);
+    console.log('.formControlCreateService.value.imagenServicio ' , this.formControlCreateService.value.imagenServicio);
+    console.log('submit(): ', this.service, ' AND ' , this.formControlCreateService.value.imagenServicio)*/
     /*Espacio para realizar 
     la implementación del boton cargar imagen */
-    this.manageService.createService(this.service).subscribe(response =>{
-      let identity = response
-      this.identity = identity
-    });
+    this.manageService.createService(this.service).subscribe(
+      response =>{        
+        let identity = response
+        this.identity = identity
+        console.log(response);        
+        Swal.fire('Nuevo servicio creado con éxito', 'succes');
+        //acá se debe cerrar la ventanita
+      },
+      error => {
+        if(error.status === 400){
+          this.error = error.error;
+          console.log(this.error);
+        }
+      });
   }
 
 }

@@ -26,7 +26,8 @@ import { PaginatePipe } from './pipes/paginate.pipe';
 import { LayoutModule } from './layouts/layout.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { HighchartsChartModule } from 'highcharts-angular';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +58,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     LayoutModule,
     MatDividerModule,
     MatProgressBarModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
