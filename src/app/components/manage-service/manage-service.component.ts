@@ -34,6 +34,7 @@ export class ManageServiceComponent implements OnInit {
   public service: Servicio
   public usuario!: Usuario;
   public error: any;
+  public titulo: string = 'Crear Servicio';
 
   formControlCreateService=this.fb.group({
     nombreServicio:['',Validators.required],

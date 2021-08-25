@@ -1,39 +1,44 @@
-<form  [formGroup]='formControlCreateService' (ngSubmit)="submit()">
-    <p>
-        <mat-form-field appearance="fill">
-            <mat-label>Nombre de Servicio</mat-label>
-            <input matInput formControlName='nombreServicio' >
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Categoría</mat-label>
-            <mat-select formControlName='categoria'>
-            <mat-option [value]="cat" *ngFor="let cat of Cats">{{cat.nombreCategoria}}</mat-option>
-        </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Describe tu Servicio</mat-label>
-            <input matInput formControlName='descripcionServicio' >
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Dirección</mat-label>
-            <input matInput  formControlName='direccion' >
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Valor del Servicio</mat-label>
-            <input matInput formControlName='precionUnidad' >
-        </mat-form-field>
-        <div class="input-file"> 
-            <input type="file" id="file" formControlName='imagenServicio' class="input-file-input" (change)="cargarImagen($event)"> 
-            <label for="" class="input-file-btn">
-                Seleccionar archivo
-            </label>
+<h1 mat-dialog-title> {{ titulo }} </h1>
+<div mat-dialog-content style="width: 600px;">
+    <form  [formGroup]='formControlCreateService' (ngSubmit)="submit()">
+        <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre de Servicio</mat-label>
+                <input matInput formControlName='nombreServicio' >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Categoría</mat-label>
+                <mat-select formControlName='categoria'>
+                <mat-option [value]="cat" *ngFor="let cat of Cats">{{cat.nombreCategoria}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Describe tu Servicio</mat-label>
+                <input matInput formControlName='descripcionServicio' >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <input matInput  formControlName='direccion' >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Valor del Servicio</mat-label>
+                <input matInput formControlName='precionUnidad' >
+            </mat-form-field>
+            <div class="input-file"> 
+                <input type="file" id="file" formControlName='imagenServicio' class="input-file-input" (change)="cargarImagen($event)"> 
+                <label for="" class="input-file-btn">
+                    Seleccionar archivo
+                </label>
+            </div>
+            <!--<button type="subtmit" class="btn btn-info">Agregar Imagen</button>-->
+            <p>
+            <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
         </div>
-        <!--<button type="subtmit" class="btn btn-info">Agregar Imagen</button>-->
-        <p>
-        <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
-    </p>
-    <mat-card-footer>
-        <!--<button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' (click)="register()">Guardar</button>-->
-        <button type="submit" mat-button color="primary" [disabled]='!formControlCreateService.valid'>Guardar</button>
-    </mat-card-footer>
-</form>
+        <div mat-dialog-actions>
+            <!--<button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' (click)="register()">Guardar</button>-->
+            <button type="submit" mat-button color="primary" [disabled]='!formControlCreateService.valid'>Guardar</button>
+            <button mat-button mat-dialog-close>Close</button>
+          </div>
+    </form>
+</div>
+  

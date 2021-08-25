@@ -4,25 +4,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { ManageServiceComponent } from '../manage-service/manage-service.component';
 
 import { DashboardService } from 'src/app/services/dashboard.service';
+import { RankingComponentenComponent } from '../ranking-componenten/ranking-componenten.component';
 
 @Component({
-  selector: 'app-dashboard-proveedor',
-  templateUrl: './dashboard-proveedor.component.html',
-  styleUrls: ['./dashboard-proveedor.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class DashboardProveedorComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   
-  pieChart: [] | any;
   serviciosSolicitados: [] | any;
   proximosEventos: [] | any;
 
   constructor(
     private dashboardService: DashboardService,
     public dialog:MatDialog
-    ) {}
+  ) {}
 
   ngOnInit(): void {
-    this.pieChart = this.dashboardService.pieChart();
     this.serviciosSolicitados = this.dashboardService.serviciosSolicitados();
     this.proximosEventos = this.dashboardService.proximosEventos();
   }
@@ -30,5 +29,10 @@ export class DashboardProveedorComponent implements OnInit {
   openCreateService()
   {
     const dialogRef = this.dialog.open(ManageServiceComponent);
+  }
+
+  openServiciosMasSolicitados()
+  {
+    const dialogRef = this.dialog.open(RankingComponentenComponent);
   }
 }
