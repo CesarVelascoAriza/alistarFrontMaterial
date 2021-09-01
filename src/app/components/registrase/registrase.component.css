@@ -1,0 +1,16 @@
+.mat-card-header{
+    background-color: #e5e5f7;
+    opacity: 0.8;
+    background-image: radial-gradient(#00695C 1.4000000000000001px, #e5e5f7 1.4000000000000001px);
+    background-size: 28px 28px;
+}
+
+.mat-form-field {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+.mat-card-header h1
+{
+    margin-top: 20px;
+}

@@ -1,0 +1,25 @@
+<div class="grid-container">
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px" class="stats-cards">
+    <mat-card fxFlex="40">
+      <app-widget-card label="Crear Servicios" (click)='openCreateService()'></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="40">
+        <app-widget-card label="Ver servicios programados"></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="40">
+        <app-widget-card label="Servicios más solicitados por evento" (click)='openServiciosMasSolicitados()'></app-widget-card>
+    </mat-card>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px" class="stats-cards">
+    <mat-card fxFlex="40">
+      <app-widget-card label="Crear Evento" [data]="serviciosSolicitados"></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="40">
+        <app-widget-card label="Ver eventos programados"></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="40">
+        <app-widget-card label="Proximos Eventos" [data] ="proximosEventos"></app-widget-card>
+    </mat-card>
+  </div>
+  <mat-divider></mat-divider>
+</div>
