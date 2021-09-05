@@ -1,8 +1,6 @@
 import { Estado } from './estado';
-import { Evento } from './evento';
 import { EventoOrden } from './eventoPostOrden';
 import { Horario } from './horario';
-import { Servicio } from './servicio';
 
 export class Orden {
   nombreEvento:String='';
@@ -12,5 +10,5 @@ export class Orden {
   estado: Estado = new Estado();
   precioTotal: number = 0.0;
   cantidad:number =0;
-  evento:Array<Evento> = new Array<Evento>()
+  evento:Array<EventoOrden> = new Array<EventoOrden>()
 }

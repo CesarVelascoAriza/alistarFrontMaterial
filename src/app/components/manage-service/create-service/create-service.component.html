@@ -1,0 +1,58 @@
+
+<div class="content">
+    <mat-card>
+        <mat-card-header>
+            <h1 mat-dialog-title> {{ titulo }} </h1>
+        </mat-card-header>
+        <div mat-dialog-content style="width: 600px;">
+            <form (ngSubmit)="crearServicio()">
+                <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre Servicio</mat-label>
+                        <input matInput type="text" name="nombreServicio" id="nombreServicio" [(ngModel)]="model.nombreServicio" placeholder="Nombre Servicio">
+                        <mat-hint align="end">Nombre del Servicio</mat-hint>
+                    </mat-form-field> 
+                    <mat-form-field appearance="fill">
+                        <mat-label>Categoría</mat-label>
+                        <mat-select name="categoria" id="categoria" [(ngModel)]="model.categoria">
+                            <mat-option selected disabled >Seleccione......</mat-option>
+                            <mat-option [value]="cat" *ngFor="let cat of categorias">{{cat.nombreCategoria}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dirección Servicio</mat-label>
+                        <input matInput type="text" id="dirservicio" name="dirservicio" [(ngModel)]="model.direccion" placeholder="Dirección Servicio">
+                        <mat-hint align="end">Dirección Servicio</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descripcon Servicio</mat-label>
+                        <input matInput type="text" id="descripcion" name="descripcion" [(ngModel)]="model.descripcionServicio" placeholder="Descripcon Servicio">
+                        <mat-hint align="end">Descripcon Servicio</mat-hint>
+                    </mat-form-field>
+                    <div class="custom-file">
+                        <input (change)="uploadImage($event)" type="file" class="custom-file-input"
+                            id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                    </div>
+                    <p>
+                        <label>
+                          <input type="checkbox" />
+                          <span> Acepta  <a class="waves-effect waves-light  modal-trigger" href="#modal1" > Terminos y condiciciones</a></span>
+                        </label>
+                    </p>
+                </div>
+                <div mat-dialog-actions>
+                    <button type="submit" mat-button >Guardar</button>
+                </div>
+            </form>
+        </div>
+    </mat-card>
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h4>Terminos y condiciciones del sitio</h4>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam incidunt quibusdam provident consequatur natus, quas, illo doloremque, rem quidem reiciendis molestias suscipit aliquam soluta impedit sed animi! Necessitatibus, suscipit animi?</p>
+        </div>
+        <div class="modal-footer">
+          <a class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+        </div>
+    </div>
+</div>

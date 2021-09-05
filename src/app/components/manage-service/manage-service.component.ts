@@ -10,6 +10,7 @@ import { DropDownService } from 'src/app/services/drop-down.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import { Servicio } from 'src/app/models/servicio';
 import { Usuario } from 'src/app/models/usuario';
+import { MatDialog } from '@angular/material/dialog';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -49,8 +50,8 @@ export class ManageServiceComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dropdownService : DropDownService,
-    private _formBuilder: FormBuilder,
-    private manageService: ManageServiceService
+    private manageService: ManageServiceService,
+    public dialog:MatDialog
     ) { 
       this.Cats = new Array<Categoria>();
       this.service = new Servicio();
@@ -103,18 +104,7 @@ export class ManageServiceComponent implements OnInit {
 
   submit()
   {
-    console.log('Servicio: ',this.formControlCreateService);
-    this.service.nombreServicio = this.formControlCreateService.value.nombreServicio;
-    console.log(this.formControlCreateService.value.nombreServicio);    
-    this.service.categoria = this.formControlCreateService.value.categoria;
-    console.log(this.formControlCreateService.value.categoria);   
-    this.service.descripcionServicio = this.formControlCreateService.value.descripcionServicio;
-    console.log(this.formControlCreateService.value.descripcionServicio);   
-    this.service.direccion = this.formControlCreateService.value.direccion;
-    console.log(this.formControlCreateService.value.direccion);   
-    this.service.proveedor = this.usuario;
-    console.log(this.usuario);   
-    this.service.precionUnidad = this.formControlCreateService.value.precionUnidad;
+    
     this.service.imagenServicio = this.formControlCreateService.value.imagenServicio;
     console.log('service.imagenServicio ' , this.service.imagenServicio); 
     console.log('this.formControlCreateService.value.imagenServicio -- ', typeof(this.formControlCreateService.value.imagenServicio));
@@ -132,20 +122,20 @@ export class ManageServiceComponent implements OnInit {
     console.log('submit(): ', this.service, ' AND ' , this.formControlCreateService.value.imagenServicio)*/
     /*Espacio para realizar 
     la implementación del boton cargar imagen */
-    this.manageService.createService(this.service).subscribe(
+    /*this.manageService.createService(this.service).subscribe(
       response =>{        
         let identity = response
         this.identity = identity
         console.log(response);        
         Swal.fire('Nuevo servicio creado con éxito', 'succes');
-        //acá se debe cerrar la ventanita
+        this.dialog.closeAll();
       },
       error => {
         if(error.status === 400){
           this.error = error.error;
           console.log(this.error);
         }
-      });
+      });*/
   }
 
 }

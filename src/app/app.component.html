@@ -1,11 +1,15 @@
-<app-nadvar (toggleSideBarForMe)="sideBarToggler()"></app-nadvar>
+<div class="container">
+    <app-nadvar (toggleSideBarForMe)="sideBarToggler()"></app-nadvar>
 
-<mat-drawer-container>
-    <mat-drawer mode="side" [opened]="sideBarOpen">
-        <app-sidebar></app-sidebar>
-    </mat-drawer>
-    <mat-drawer-content>
-        <router-outlet></router-outlet>
-    </mat-drawer-content>
-</mat-drawer-container>
-<app-footer></app-footer>
+    <mat-drawer-container>
+        <mat-drawer mode="side" [opened]="sideBarOpen">
+            <app-sidebar></app-sidebar>
+        </mat-drawer>
+        <mat-drawer-content>
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+    <app-footer style="width: 100%;"></app-footer>
+</div>
+

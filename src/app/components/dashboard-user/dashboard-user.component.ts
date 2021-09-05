@@ -11,12 +11,15 @@ import { Subscription } from  'rxjs'
 })
 export class DashboardUserComponent implements OnInit, OnDestroy{
 
-  showFiller = false;
-  mediasub: Subscription | undefined;
-  devices: boolean | undefined;
+  public showFiller = false;
+  public mediasub: Subscription | undefined;
+  public devices: boolean | undefined;
+  public title: string ='Inicia o Verifica tus eventos';
 
-  constructor(private breakpointObserver: BreakpointObserver,
-    public mediaObserver: MediaObserver) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public mediaObserver: MediaObserver
+  ) {}
 
   ngOnInit(){
     this.mediasub = this.mediaObserver.media$.subscribe((result:MediaChange) => {

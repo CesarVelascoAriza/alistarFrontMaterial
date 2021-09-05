@@ -12,21 +12,25 @@ import { ListServiceComponent } from './components/list-service/list-service.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
-import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ManageServiceComponent } from './components/manage-service/manage-service.component';
 import { PaginatePipe } from './pipes/paginate.pipe';
 import { LayoutModule } from './layouts/layout.module';
 import { MatDividerModule } from '@angular/material/divider';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RankingComponentenComponent } from './components/ranking-componenten/ranking-componenten.component';
+import { RankingComponentenComponent } from './components/ranking-componenten/ranking-componenten.component'
+import { DashboardServiceComponent } from './components/dashboard-service/dashboard_service.component';
+import { ManageServiceModule } from './components/manage-service/manage-service.module';
+import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
+import { DashboardEventComponent } from './components/dashboard-event/dashboard-event.component';
+import { ManageEventModule } from './components/manage-event/manage-event.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,10 +40,10 @@ import { RankingComponentenComponent } from './components/ranking-componenten/ra
     ListServiceComponent,
     HomeComponent,
     DashboardUserComponent,
-    DashboardComponent,
-    ManageServiceComponent,
+    DashboardServiceComponent,
     PaginatePipe,
-    RankingComponentenComponent
+    RankingComponentenComponent,
+    DashboardEventComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +61,10 @@ import { RankingComponentenComponent } from './components/ranking-componenten/ra
     MatDividerModule,
     MatProgressBarModule,
     HighchartsChartModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTabsModule,
+    ManageServiceModule,
+    ManageEventModule
   ],
   providers: [],
   bootstrap: [AppComponent]
