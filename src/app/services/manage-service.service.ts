@@ -4,6 +4,9 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
 import { Servicio } from '../models/servicio';
+import { Categoria } from '../models/categoria';
+import { Usuario } from '../models/usuario';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +16,10 @@ export class ManageServiceService {
   public url : string;
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private localStorageService: LocalStorageService
   ) { 
     this.url = environment.UrlBase;
-    /*this.url = 'http://localhost'*/
   }
 
   httpOptions = {
@@ -52,16 +55,23 @@ export class ManageServiceService {
     return  this._http.post(this.url+'add-image-post',fd); 
   }
 
-  createService(servicio: Servicio) {
-    console.log('----------------------- createService ------------------ ');   
-    console.log('servicio: ', servicio);    
-    let json = JSON.stringify(servicio)
-    console.log('json: ', json); 
+  createService(servicio: Servicio): Observable<Servicio>{
+
+    let json = JSON.stringify(servicio);
     let params = json
-    console.log('params: ', params); 
-    const path = `${this.url}Servicio/save-Servicio`
-    console.log('path --- ', path);    
-    return this._http.post<Servicio>(path, params, this.httpOptions)
+    const path = `${this.url}Servicio/save-Servicio`;
+    return this._http.post<Servicio>(path, params, this.httpOptions) 
   }
 
+  getServicexUser(idUsuario: number):Observable<Servicio[]>
+  {
+    const path = `${this.url}/Servicio/get-usuario-service?usuarioId=${idUsuario}`
+    console.log(path)
+    return this._http.get<Servicio[]>(path,this.httpOptions);
+  }
+
+  /**Método para obtener la imagen en B64 */
+  getImgB64(): any {
+    return this.localStorageService.geDatosStorage('imgb64');
+  }
 }

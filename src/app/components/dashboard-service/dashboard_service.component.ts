@@ -8,10 +8,10 @@ import { RankingComponentenComponent } from '../ranking-componenten/ranking-comp
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  templateUrl: './dashboard_service.component.html',
+  styleUrls: ['./dashboard_service.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardServiceComponent implements OnInit {
   
   serviciosSolicitados: [] | any;
   proximosEventos: [] | any;
@@ -25,14 +25,5 @@ export class DashboardComponent implements OnInit {
     this.serviciosSolicitados = this.dashboardService.serviciosSolicitados();
     this.proximosEventos = this.dashboardService.proximosEventos();
   }
-
-  openCreateService()
-  {
-    const dialogRef = this.dialog.open(ManageServiceComponent);
-  }
-
-  openServiciosMasSolicitados()
-  {
-    const dialogRef = this.dialog.open(RankingComponentenComponent);
-  }
+  
 }

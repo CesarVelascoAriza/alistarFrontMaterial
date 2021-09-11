@@ -14,7 +14,6 @@ export class SidebarComponent implements OnInit {
   public usuario!: Usuario;
   public nombreUsuario:String ='';
   constructor(
-    private _router: Router
   ) { 
     this.user=false;
     this.nombreUsuario='';
@@ -29,15 +28,6 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  cerrarSesion(){
-    localStorage.removeItem('identity')
-    localStorage.removeItem('nombreUsuario')
-    this._router.navigate(['']).then(data=>{
-      window.location.reload()
-    })
-
   }
 
 }

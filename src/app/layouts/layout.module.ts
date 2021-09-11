@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { PieComponent } from './widgets/pie/pie.component';
 import { CardComponent } from './widgets/card/card.component';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatIconModule,
     MatListModule,
     MatDividerModule,
-    HighchartsChartModule
+    HighchartsChartModule,
+    MatCardModule
   ],
   exports: [
     NadvarComponent,

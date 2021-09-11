@@ -10,6 +10,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { TipoDocumento } from '../../models/tipoDocumento';
 import { Usuario } from '../../models/usuario';
 import { Telefono } from 'src/app/models/telefono';
+import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -32,6 +34,7 @@ export class RegistraseComponent implements OnInit {
   public tDocs : TipoDocumento[];
   public usuario : Usuario;
   public identity : any;
+  public error: any;
 
   formControlRegistrarse=this.fb.group({
     tipoDocumento:['',Validators.required],
@@ -50,7 +53,8 @@ export class RegistraseComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _usuarioService : UsuarioService,
     private dropdownService: DropDownService,
-    private _router: Router
+    private _router: Router,
+    public dialog:MatDialog
     ) { 
       this.tDocs = new Array<TipoDocumento>();
       this.usuario = new Usuario();
@@ -88,8 +92,15 @@ export class RegistraseComponent implements OnInit {
         console.log(response)
         this.identity = identity
         this._router.navigate([''])
-      }
-    );
+        Swal.fire('Nuevo servicio creado con éxito', 'succes');
+        this.dialog.closeAll();
+      },
+      error => {
+        if(error.status === 400){
+          this.error = error.error;
+          console.log(this.error);
+        }
+      });
   }
 
   emailFormControl = new FormControl('', [

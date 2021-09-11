@@ -1,0 +1,15 @@
+.content {
+  padding: 16px 45px;
+}
+
+.content > mat-card {
+  width: 1070px;
+}
+
+button {
+  background-color: #083A80;
+  font-size: 1rem;
+  font-variation-settings: "wght" 625;
+  letter-spacing: -.75px;
+  color: #fff;
+}

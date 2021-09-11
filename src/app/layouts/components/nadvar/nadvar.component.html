@@ -1,6 +1,6 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <button mat-icon-button (click)="toggleSideBar()">
+<mat-toolbar color="basic">
+  <mat-toolbar-row >
+    <button mat-icon-button (click)="toggleSideBar()" *ngIf="user;">
       <mat-icon>menu</mat-icon>
     </button> 
     <span>
@@ -21,7 +21,12 @@
         Registrarse
       </button>
     </ng-template>
-    <ng-template #thenBlock></ng-template>
+    <ng-template #thenBlock>
+      <button mat-button (click)="cerrarSesion()" > 
+        <mat-icon>exit_to_app</mat-icon>
+        Cerrar sesion 
+      </button>
+   </ng-template>
   </mat-toolbar-row>
 </mat-toolbar>
 

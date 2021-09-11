@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegistraseComponent } from 'src/app/components/registrase/registrase.component';
 
@@ -15,7 +16,8 @@ export class NadvarComponent implements OnInit {
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
   
   constructor(
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private _router: Router
     ) { 
       this.user = false;
       //this.nombreUsuario='';
@@ -47,5 +49,14 @@ export class NadvarComponent implements OnInit {
         new Event('resize')
       );
     }, 300);
+  }
+
+  cerrarSesion(){
+    localStorage.removeItem('identity')
+    localStorage.removeItem('nombreUsuario')
+    this._router.navigate(['']).then(data=>{
+      window.location.reload()
+    })
+
   }
 }
