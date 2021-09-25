@@ -38,7 +38,6 @@ export class CreateEventComponent implements OnInit {
   }
 
   saveChanges() {
-    console.log(this.servicioSeleccionado)
   }
 
   getListEstado() {
@@ -56,9 +55,6 @@ export class CreateEventComponent implements OnInit {
     this.crearOrden.idOrden =this.servicioSeleccionado.idServicio;
     this.crearOrden.cantidad=1
     this.crearOrden.precioTotal =12321
-    console.log("orden",this.crearOrden)
-    //console.log(f.valid);
-    //console.log(f.value);
     this.manageEventService.guardarOrden(this.crearOrden).subscribe(
     data=>{
       let identity = data
@@ -67,8 +63,7 @@ export class CreateEventComponent implements OnInit {
     }, err => {
       if(err.status === 400){
         this.error = err.error;
-        Swal.fire('Error en la creación del evento', 'error');
-        console.log(this.error);
+        Swal.fire(`Error en la creación del evento ${err}`, 'error');
       }
     });
   }

@@ -1,4 +1,3 @@
-import { Telefono } from "./telefono";
 import { TipoDocumento } from "./tipoDocumento";
 
 export class Usuario {
@@ -8,7 +7,7 @@ export class Usuario {
   nombre: string = '';
   password: string = '';
   tipoDocumento: TipoDocumento = new TipoDocumento();
-  telefonos: Telefono = new Telefono();
+  telefono: string = "";
   email: string = '';
-
+  imagenHashCode: string = '';
 }

@@ -1,32 +1,27 @@
 <mat-toolbar color="basic">
   <mat-toolbar-row >
-    <button mat-icon-button (click)="toggleSideBar()" *ngIf="user;">
+    <button mat-icon-button (click)="toggleSideBar()" *ngIf="user">
       <mat-icon>menu</mat-icon>
     </button> 
-    <span>
-      <img width="40"
-        alt="Angular Logo"
-        src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-      />
+    <span *ngIf="user">
+      <a class="navbar-brand" routerLink="" routerLinkActive="active">
+        <img src="../../../../assets/img/lista-logo.png" alt="" width="60" height="64">
+      </a>
     </span>
     <span class="example-spacer"></span>
-    <div *ngIf="user; then thenBlock else elseBlock"></div>
-    <ng-template #elseBlock>
-      <button mat-button (click)='openDialogSession()' > 
-        <mat-icon>person_outline</mat-icon> 
-        Inciar sesion 
-      </button>
-      <button mat-button (click)='openDialogRegistro()'>
-        <mat-icon>library_add</mat-icon>
-        Registrarse
-      </button>
-    </ng-template>
-    <ng-template #thenBlock>
-      <button mat-button (click)="cerrarSesion()" > 
-        <mat-icon>exit_to_app</mat-icon>
-        Cerrar sesion 
-      </button>
-   </ng-template>
+    <div ></div>
+    <button mat-button (click)='openDialogSession()'*ngIf="!user"> 
+      <mat-icon>person_outline</mat-icon> 
+      Inciar sesion 
+    </button>
+    <button mat-button (click)='openDialogRegistro()' *ngIf="!user">
+      <mat-icon>library_add</mat-icon>
+      Registrarse
+    </button>
+    <button mat-button (click)="logout()" *ngIf="user" > 
+      <mat-icon>exit_to_app</mat-icon>
+      Cerrar sesion 
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 

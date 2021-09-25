@@ -70,20 +70,18 @@ export class RegistraseComponent implements OnInit {
 
     this.dropdownService.getTipoDoc().subscribe(tipoDocs => {
       this.tDocs = tipoDocs
-      })
+    })
   }
   
-  submit(){
+  submitRegistrar(){
     console.log('formControlRegistrarse: ', this.formControlRegistrarse.value);
     this.usuario.tipoDocumento = this.formControlRegistrarse.value.tipoDocumento;
     this.usuario.numeroIdentificacion = this.formControlRegistrarse.value.numberIdentifi;
     this.usuario.direccion = this.formControlRegistrarse.value.direccion;
-    this.usuario.email = this.formControlRegistrarse.value.email;
+    //this.usuario.email = this.formControlRegistrarse.value.email;
     this.usuario.nombre = this.formControlRegistrarse.value.nameUser;
     this.usuario.password = this.formControlRegistrarse.value.password;
-    this.usuario.telefonos = new Telefono();
-    this.usuario.telefonos.idTelefono = 0;
-    this.usuario.telefonos.telefono = this.formControlRegistrarse.value.telefono;
+    this.usuario.telefono = this.formControlRegistrarse.value.telefono;
     this.usuario.fechaNacimiento = this.formControlRegistrarse.value.dateUser;
     console.log('Usuario: ' , this.usuario)
     this._usuarioService.register(this.usuario).subscribe(

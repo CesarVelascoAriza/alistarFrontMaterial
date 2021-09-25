@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { Usuario } from 'src/app/models/usuario';
+import { MatDialog } from '@angular/material/dialog';
 import { ConsultaUsuarioResponse } from 'src/app/models/consultaUsuarioResponse';
-
 import { ApiServicesService } from 'src/app/services/api-services.service';
+import Swal from 'sweetalert2';
+import { UsuarioResponse } from 'src/app/models/usuaruiResponse';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,57 +16,67 @@ export class LoginComponent implements OnInit {
   spinner =false;
   formUserControl = this.fb.group({
     usuario: ['', Validators.required],
-    password: ['', Validators.required],
+    password: ['', Validators.required]
   });
   //user:Usuario| undefined;
-  public usuario: Usuario
+  usuario: UsuarioResponse  = new UsuarioResponse ;
 
   public resUsuario: ConsultaUsuarioResponse
   public identity: any
   public consulta: any
+
   constructor(
     private fb: FormBuilder,
     private request: ApiServicesService,
-    private _router: Router
-    ) {
-      this.usuario = new Usuario();
-      this.resUsuario = new ConsultaUsuarioResponse('')
-   }
+    private _router: Router,
+    private api_service: ApiServicesService,
+    public dialog:MatDialog
+  ) {
+    this.resUsuario = new ConsultaUsuarioResponse('')
+  }
 
   ngOnInit(): void {
-    /**datos del usuario identificado */
-    this.identity = this.request.getIdentity();
+
+    
   }
 
-
-  onSubmit(){
-   console.log( this.formUserControl)
-   console.log( this.formUserControl.get('username')?.value)
-   console.log( this.formUserControl.get('password')?.value)
-   console.log( this.formUserControl.value)
-    this.request.getUserNamePassword(this.formUserControl.value).subscribe(
-      response=>{
-        console.log('usuario: '+response)
-        let identity = response
-        this.identity = identity
-
-        if (!this.identity.numeroIdentificacion) {
-          alert('El usuario no existe')
-        } else {
-          localStorage.setItem('identity', JSON.stringify(identity))
-          localStorage.setItem('nombreUsuario', this.identity.nombre)
-          this._router.navigate(['dashboard-user']).then(data => {
+  onSubmitIniciar(){
+    this.usuario.usuario = parseInt(this.formUserControl.value.usuario);
+    this.usuario.password = this.formUserControl.value.password;
+    /*if (this.usuario.usuario === NaN || this.usuario.usuario === undefined || this.usuario.password === '') {
+      Swal.fire({
+				title: 'Opps!',
+				text: `Usuario o Contraseña vacíos`,
+				icon: 'error',
+				confirmButtonText: 'Cerrar'
+			})
+    }*/
+     this.request.getUserNamePassword(this.usuario).subscribe(
+       response=>{
+         this.api_service.usuarioSession(response.token)
+         this.api_service.tokenSession(response.token)
+         let usuario = this.api_service.getUsuarioSesion;  
+                
+         Swal.fire({
+            icon: 'success',
+            title: 'Login',
+            text: `Login correcto para ${usuario.nombre}`
+         })
+          this.dialog.closeAll();
+          this._router.navigate(['servicios']).then(data => {
             window.location.reload()
           })
-        }
-      },
-      error => {
-        var errorMessage = <any>error;
-        if (errorMessage != null) {
-          console.log('el error: ',error)
-          alert('Falla en la autenticatición, Por favor Revise sus credenciales')
-        }
-      }
-    );
-  }
+       },
+       error => {
+         var errorMessage = <any>error;
+         if (errorMessage != null) {
+           Swal.fire({
+            icon: 'error',
+            title: 'Opps...',
+            text: `Falla en la autenticatición, Por favor Revise sus credenciales, ${error}`
+          })
+         }
+       }
+     );
+   }
 }

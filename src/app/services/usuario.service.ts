@@ -12,7 +12,7 @@ export class UsuarioService {
   public url: string
 
   constructor(
-    private _http: HttpClient
+    private http: HttpClient
   ) {
     this.url = environment.UrlBase
   }
@@ -24,9 +24,7 @@ export class UsuarioService {
   }
 
   register(usuario: Usuario) {
-    let json = JSON.stringify(usuario)
-    let params = json
     const path = `${this.url}Usuarios/save-usuario`
-    return this._http.post<Usuario>(path, params, this.httpOptions)
+    return this.http.post<Usuario>(path, usuario, this.httpOptions)
   }
 }

@@ -83,7 +83,7 @@ export class CreateServiceComponent implements OnInit {
       response => {
         let identity = response
         this.identity = identity
-        Swal.fire('Nuevo servicio creado con éxito', 'success');
+        Swal.fire('Nuevo servicio creado con éxito', 'success'); 
         //this.router.navigate([this.redirect]);
     }, err => {
       if(err.status === 400){

@@ -62,7 +62,6 @@ export class ManageServiceComponent implements OnInit {
     this.dropdownService.getCategory().subscribe(category => {
       this.Cats = category
       });
-    console.log(this.Cats);
 
     if(localStorage.getItem('identity') != null || localStorage.getItem('identity') !=  undefined)
     {
@@ -87,12 +86,10 @@ export class ManageServiceComponent implements OnInit {
     this.manageService.onUpload(this.selectedFile).subscribe(
       response=>{
          if(response.status=='success'){
-           console.log('enviarImagen ', response);
            Swal.fire('Nuevo: servicio creado con éxito', 'success');
          }
       },
       error=>{
-        console.log(<any>error);
       }
     );
     

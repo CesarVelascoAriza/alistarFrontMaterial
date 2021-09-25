@@ -1,10 +1,8 @@
-<div *ngIf="user; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
+<div *ngIf="user;" >
     <mat-nav-list>
         <div class="profile-card">
             <div class="header">
                 <h2>{{nombreUsuario}}</h2>
-                <h4>{{usuario.email}}</h4>
             </div>
             <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Soufiane FADIL">
         </div>
@@ -28,6 +26,5 @@
             Leads
         </a>
     </mat-nav-list>
-</ng-template>
-<ng-template #elseBlock></ng-template>
+</div>
 

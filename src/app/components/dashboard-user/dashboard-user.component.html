@@ -1,18 +1,24 @@
-<div class="content">
-    <div fxLayout="row warp" fxLayoutGap="16px">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title >{{title}}</mat-card-title>
-        </mat-card-header>
-        <img class="img" style="max-width: 400px;" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-        <mat-card-content>
-          <p>
-            Encuentra cada evento que realizaste o estar por hacer ! confirma a tus proveedores y haz de ese día una reunión exitosa.
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button routerLink="/consult_events">Verifica tus eventos</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <button mat-raised-button color="accent" >Crear Servicio</button>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
+    <mat-card fxFlex="25">
+      <app-widget-card label="Servicios mas solicitados" ></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="25">
+        <app-widget-card label="No hay servicios para atender hoy"></app-widget-card>
+    </mat-card>
+    <mat-card fxFlex="25">
+        <app-widget-card label="Proximos Eventos" ></app-widget-card>
+    </mat-card>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-grid-list cols="2" rowHeight="350px">
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      
+      <div fxFlex="40">
+          <app-widget-pie ></app-widget-pie>
+      </div>
+  </div>
+  </mat-grid-list>
 </div>

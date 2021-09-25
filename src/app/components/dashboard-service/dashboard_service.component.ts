@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
-import { ManageServiceComponent } from '../manage-service/manage-service.component';
+import { ApiServicesService } from 'src/app/services/api-services.service';
 
 import { DashboardService } from 'src/app/services/dashboard.service';
-import { RankingComponentenComponent } from '../ranking-componenten/ranking-componenten.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,12 +16,14 @@ export class DashboardServiceComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private api_service: ApiServicesService,
   ) {}
 
   ngOnInit(): void {
     this.serviciosSolicitados = this.dashboardService.serviciosSolicitados();
     this.proximosEventos = this.dashboardService.proximosEventos();
+    console.log('usuario en sesion... ', this.api_service.getUsuarioSesion);
   }
   
 }

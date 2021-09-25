@@ -9,7 +9,7 @@ import { Orden } from '../models/orden';
 @Injectable({
   providedIn: 'root'
 })
-export class ManageEventService {
+export class ManageEventService  {
 
   public url : string;
 
@@ -17,11 +17,11 @@ export class ManageEventService {
     private http: HttpClient
   ) {
     this.url = environment.UrlBase;
-   }
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+        'Content-Type':'application/json'
     })
   }
 

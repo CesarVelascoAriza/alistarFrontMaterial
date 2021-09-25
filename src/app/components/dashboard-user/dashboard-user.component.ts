@@ -11,19 +11,21 @@ import { Subscription } from  'rxjs'
 })
 export class DashboardUserComponent implements OnInit, OnDestroy{
 
-  public showFiller = false;
-  public mediasub: Subscription | undefined;
-  public devices: boolean | undefined;
-  public title: string ='Inicia o Verifica tus eventos';
+  showFiller = false;
+  mediasub: Subscription | undefined;
+  devices: boolean | undefined;
+  pieChart: [] | any;
+  serviciosSolicitados: [] | any;
+  proximosEventos: [] | any;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     public mediaObserver: MediaObserver
-  ) {}
+  ) 
+  {}
 
   ngOnInit(){
     this.mediasub = this.mediaObserver.media$.subscribe((result:MediaChange) => {
-      console.log(result.mqAlias);   
       this.devices = result.mqAlias === 'xs' ? true : false;   
     })
   }
@@ -31,4 +33,5 @@ export class DashboardUserComponent implements OnInit, OnDestroy{
   ngOnDestroy(){
     this.mediasub?.unsubscribe();
   }
+  
 }

@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegistraseComponent } from 'src/app/components/registrase/registrase.component';
+import { ApiServicesService } from 'src/app/services/api-services.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nadvar',
@@ -17,21 +19,21 @@ export class NadvarComponent implements OnInit {
   
   constructor(
     public dialog:MatDialog,
-    private _router: Router
-    ) { 
-      this.user = false;
-      //this.nombreUsuario='';
-      if(localStorage.getItem('identity') != null || localStorage.getItem('identity') !=  undefined)
-      {
-        let usuariolocal = localStorage.getItem('identity');
-          //this.usuario =JSON.parse(usuariolocal!);
-          this.user=true;
-          //this.nombreUsuario = this.usuario.nombre;
-        //console.log("Usuario de mas " + this.nombreUsuario);
-      }
+    private _router: Router,
+    public api_service: ApiServicesService
+  ) { 
+    this.user = false; 
+    this.api_service.isAuthenticated();
+    this.user = false;   
+    console.log(this.api_service.isAuthenticated(), ' :this.api_service.isAuthenticated()');
+     
+    if(this.api_service.isAuthenticated()) {      
+      this.user=true;
     }
+  }
 
   ngOnInit(): void {
+    
   }
 
   openDialogSession(){
@@ -51,12 +53,13 @@ export class NadvarComponent implements OnInit {
     }, 300);
   }
 
-  cerrarSesion(){
-    localStorage.removeItem('identity')
-    localStorage.removeItem('nombreUsuario')
-    this._router.navigate(['']).then(data=>{
+  public logout(): void {
+    this.api_service.logout();
+    console.log('this.user ', this.user);
+    
+    Swal.fire('Sesión finalizada con éxito', 'success')
+    this._router.navigate(['/home']).then(data => {
       window.location.reload()
     })
-
   }
 }

@@ -35,13 +35,10 @@ export class ConsultEventComponent implements OnInit {
 
   public obtenerEventos(): any {
     this.usuIdentity = JSON.parse(this._dataServices.getId())
-    console.log('this.usuIdentity  ' , this.usuIdentity);
     this.usuId = this.usuIdentity.numeroIdentificacion
-    console.log('this.usuId  ' , this.usuId);
     this.manageEvent.getEventsUser(this.usuId).subscribe(
       response =>{
         this.eventosUsuarios = response
-        console.log('obtener eventos  ' , this.eventosUsuarios);
     });
 
   }

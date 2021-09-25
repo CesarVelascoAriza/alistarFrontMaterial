@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.slideIndex)
     this.showSlides(this.slideIndex);
   }
 
