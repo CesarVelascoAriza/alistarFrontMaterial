@@ -25,7 +25,6 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RankingComponentenComponent } from './components/ranking-componenten/ranking-componenten.component'
-import { DashboardServiceComponent } from './components/dashboard-service/dashboard_service.component';
 import { ManageServiceModule } from './components/manage-service/manage-service.module';
 import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
 import { DashboardEventComponent } from './components/dashboard-event/dashboard-event.component';
@@ -40,7 +39,6 @@ import { ManageEventModule } from './components/manage-event/manage-event.module
     ListServiceComponent,
     HomeComponent,
     DashboardUserComponent,
-    DashboardServiceComponent,
     PaginatePipe,
     RankingComponentenComponent,
     DashboardEventComponent

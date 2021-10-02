@@ -1,0 +1,54 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img mat-card-image src="data:image/jpeg;base64,{{servicio.imagenServicio}}" alt="Photo of a Shiba Inu">
+      </div>
+      <mat-card-title> {{servicio.nombreServicio}} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div mat-dialog-content style="width: 500px;">
+            <form >
+                <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
+                    <mat-grid-list cols="2" rowHeight="4:1">
+                        <mat-grid-tile>
+                            <label for="nombre">Categoria:   </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre"> {{servicio.categoria.nombreCategoria}} </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre">Proveedor:   </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre"> {{servicio.proveedor.nombre}}  </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre">Precion Unidad:   </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre"> {{servicio.precionUnidad}} </label>
+                        </mat-grid-tile>   
+                        <mat-grid-tile>
+                            <label for="nombre">Dirección del servicio:   </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre"> {{servicio.direccion}} </label>
+                        </mat-grid-tile> 
+                        <mat-grid-tile>
+                            <label for="nombre">Descripción:   </label>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <label for="nombre"> {{servicio.descripcionServicio}} </label>
+                        </mat-grid-tile>                        
+                    </mat-grid-list>
+                </div>
+            </form>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button color='primary'>
+            <mat-icon>close</mat-icon>
+            CLOSE
+        </button>
+    </mat-card-actions>
+</mat-card>

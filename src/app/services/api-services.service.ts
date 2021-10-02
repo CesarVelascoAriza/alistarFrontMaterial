@@ -43,12 +43,13 @@ export class ApiServicesService {
   public usuarioSession(accesToken: string): void {
     let payload = this.decodeDatosToken(accesToken)
     this._usuario = new Usuario();
-    this._usuario.nombre = payload.nombreUusario
-    //this._usuario.email = payload.email
+    this._usuario.nombre = payload.name
+    this._usuario.email = payload.email
     this._usuario.direccion = payload.direccion
     this._usuario.imagenHashCode = payload.imagenPerfil
     this._usuario.fechaNacimiento = payload.fechaNacimiento
     this._usuario.telefono = payload.telefono
+    this._usuario.numeroIdentificacion = payload.sub
     sessionStorage.setItem('usuario', JSON.stringify(this._usuario))
     localStorage.setItem('usuario', JSON.stringify(this._usuario))
   }

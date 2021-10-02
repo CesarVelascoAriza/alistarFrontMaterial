@@ -14,9 +14,6 @@
                 <table>
                     <thead>
                         <th>
-                            Acciones
-                        </th>
-                        <th>
                             Id servicio
                         </th>
                         <th>
@@ -28,12 +25,12 @@
                         <th>
                             Proveedor
                         </th>
+                        <th colspan="3">
+                            Acciones
+                        </th>
                     </thead>
                     <tbody style="color: black; text-align: center;" >
                         <tr *ngFor="let item of serviciosUsuarios">
-                            <td>
-                                Ver, Editar, Borrar
-                            </td>
                             <td>
                                 {{item.idServicio}}
                             </td>
@@ -46,16 +43,31 @@
                             <td>
                                 {{item.proveedor.nombre}}
                             </td>
+                            <td>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)='openDialogViewService(item.idServicio)'>
+                                    <mat-icon>info</mat-icon>
+                                </button>
+                            </td>
+                            <td>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)='openDialogEditService()'>
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                            <td>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)='openDialogDeleteService(item.idServicio)'>
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <br>
-            <button mat-raised-button  routerLink="/create_services">
+            <button mat-raised-button  (click)='openDialogCreateService()'>
+                <mat-icon>add</mat-icon>
                 Crear servicio
             </button>
         </mat-card-content>
     </mat-card>
 </div>
-
 

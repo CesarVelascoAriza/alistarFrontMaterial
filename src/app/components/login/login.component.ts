@@ -57,24 +57,21 @@ export class LoginComponent implements OnInit {
          this.api_service.tokenSession(response.token)
          let usuario = this.api_service.getUsuarioSesion;  
                 
+         this.dialog.closeAll();
+         this._router.navigate(['list'])
          Swal.fire({
             icon: 'success',
             title: 'Login',
             text: `Login correcto para ${usuario.nombre}`
-         })
-          this.dialog.closeAll();
-          this._router.navigate(['servicios']).then(data => {
-            window.location.reload()
-          })
+         }).then(data => {
+          window.location.reload()
+        }); 
+          
        },
        error => {
          var errorMessage = <any>error;
          if (errorMessage != null) {
-           Swal.fire({
-            icon: 'error',
-            title: 'Opps...',
-            text: `Falla en la autenticatición, Por favor Revise sus credenciales, ${error}`
-          })
+           Swal.fire('error', 'Falla en la autenticatición, Por favor Revise sus credenciales', error)
          }
        }
      );

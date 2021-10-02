@@ -22,14 +22,12 @@ export class ManageServiceService {
     this.url = environment.UrlBase;
   }
 
-  private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
-
   upload(file:File): Observable<HttpEvent<any>>
   {
     const formData: FormData = new FormData();
     formData.append('files', file);
    
-    const req = new HttpRequest('POST', `${this.url}/upload`, formData, {
+    const req = new HttpRequest('POST', `${this.url}upload`, formData, {
       reportProgress: true,
       responseType: 'json'
     });
@@ -38,12 +36,12 @@ export class ManageServiceService {
 
   //Metodo para Obtener los archivos
   getFiles(){
-    return this.http.get(`${this.url}/files`);
+    return this.http.get(`${this.url}files`);
   }
 
   //Metodo para borrar los archivos
   deleteFile(filename: string){
-    return this.http.get(`${this.url}/delete/${filename}`);
+    return this.http.get(`${this.url}delete/${filename}`);
   }
 
   onUpload(file:any):Observable<any>{
@@ -56,15 +54,14 @@ export class ManageServiceService {
 
     let json = JSON.stringify(servicio);
     let params = json
-    const path = `${this.url}Servicio/save-Servicio`;
-    return this.http.post<Servicio>(path, params, {headers: this.agregarAuthorizationHeader()}) 
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.post<Servicio>(environment.UrlBase + 'Servicio/save-Servicio', params, {headers: httpHeaders}) 
   }
 
   getServicexUser(idUsuario: number):Observable<Servicio[]>
   {
-    const path = `${this.url}/Servicio/get-usuario-service?usuarioId=${idUsuario}`
-    console.log(path)
-    return this.http.get<Servicio[]>(path,{headers: this.agregarAuthorizationHeader()});
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.get<Servicio[]>(environment.UrlBase + 'Servicio/get-usuario-service?usuarioId='+idUsuario,{headers: httpHeaders});
   }
 
   /**Método para obtener la imagen en B64 */
@@ -72,14 +69,28 @@ export class ManageServiceService {
     return this.localStorageService.geDatosStorage('imgb64');
   }
 
-
-   /**Método que agrega el token */
-   public agregarAuthorizationHeader() {
-    let token = this.api_service.getTokenSesion
-    
-    if (token != null) {
-      return this.httpHeaders.append('Authorization', 'Bearer '+ token)
-    }
-    return this.httpHeaders
+  viewService(idServicio: number): Observable<Servicio>
+  {
+    let params = JSON.stringify(idServicio);
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.get<Servicio>(environment.UrlBase + 'Servicio?id=' + idServicio, {headers: httpHeaders})
   }
+
+  deleteService(idServicio: number): Observable<Servicio>
+  {
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.delete<Servicio>(environment.UrlBase + 'Servicio/delete-Servicio?id=' + idServicio, {headers: httpHeaders})
+  }
+
+  updateService(idServicio: number): Observable<Servicio>
+  {
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.put<Servicio>(environment.UrlBase + 'Servicio/modify?id=' + idServicio, {headers: httpHeaders})
+  }
+
+  listarServicios(): Observable<Servicio[]>
+  {
+    return this.http.get<Servicio[]>(environment.UrlBase + 'Servicio')
+  }
+
 }

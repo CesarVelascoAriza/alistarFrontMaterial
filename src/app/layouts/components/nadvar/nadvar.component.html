@@ -1,11 +1,8 @@
 <mat-toolbar color="basic">
   <mat-toolbar-row >
-    <button mat-icon-button (click)="toggleSideBar()" *ngIf="user">
-      <mat-icon>menu</mat-icon>
-    </button> 
     <span *ngIf="user">
-      <a class="navbar-brand" routerLink="" routerLinkActive="active">
-        <img src="../../../../assets/img/lista-logo.png" alt="" width="60" height="64">
+      <a class="navbar-brand" routerLink="" routerLinkActive="active" (click)="toggleSideBar()">
+        <img src="../../../../assets/img/lista-logo.png" alt="" width="50" height="54">
       </a>
     </span>
     <span class="example-spacer"></span>

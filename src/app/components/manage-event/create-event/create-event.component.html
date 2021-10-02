@@ -7,22 +7,22 @@
             <form (ngSubmit)="createEvent()">
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
-                        <mat-label>Nombre del evento</mat-label>
-                        <input matInput type="text" name="nombreEvento" id="nombreEvento" [(ngModel)]="crearOrden.nombreEvento" placeholder="Nombre Evento"  #nombreServicio="ngModel">
+                        <mat-label for="nombreEvento">Nombre del evento</mat-label>
+                        <input matInput type="text" name="nombreEvento" id="nombreEvento" [(ngModel)]="crearOrden.nombreEvento" placeholder="Nombre Evento"  #nombreEvento="ngModel">
                         <mat-hint align="end">Nombre del Evento</mat-hint>
-                        <div *ngIf="nombreServicio.invalid && (nombreServicio.dirty || nombreServicio.touched)">
+                        <div *ngIf="nombreEvento.invalid && (nombreEvento.dirty || nombreEvento.touched)">
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                     </mat-form-field> 
                     <mat-form-field appearance="fill">
-                        <mat-label>Fecha del Evento</mat-label>
-                        <input matInput [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha" 
+                        <mat-label for="fecha">Fecha del Evento</mat-label>
+                        <input matInput type="date" [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha" 
                         placeholder="Nombre Evento"  #fecha="ngModel">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-hint align="end">Fecha del Evento</mat-hint>
                         <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
-                            <div id="emailHelp" class="form-text">recuerda que to es una fecha</div>
+                            <div id="emailHelp" class="form-text">Este campo debe tener formato de fecha</div>
                           </div>
                       </mat-form-field>
                       <div class="mb-3">
@@ -30,7 +30,7 @@
                         <input type="time" class="form-control" required [(ngModel)]="crearOrden.horario.hora" #hora="ngModel"
                           id="hora" name="hora" step="2">
                         <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
-                          <div id="emailHelp" class="form-text">recuerda que to es una Hora hobligatoria</div>
+                          <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
                         </div>
                       </div>
                       <mat-form-field appearance="fill">
@@ -41,25 +41,36 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div mat-dialog-actions>
+                  <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Servicio</button>
+               </div>
                 <table>
                     <thead>
                       <tr>
                         <th scope="col">Nombre Servicio</th>
                         <th scope="col">cantidad</th>
+                        <th scope="col">Valor Unidad</th>
                         <th scope="col">valor total</th>
+                        <th scope="col">Contacta</th>
+                        <th scope="col">Pagar</th>
                         <th scope="col">borrar</th>
                       </tr>
                     </thead>
                     <tbody style="color: black; text-align: center;">
-                      <tr>
+                      <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
                         <td>
-                          {{servicioSeleccionado.nombreServicio}}
+                          {{itemServicioSelect.nombreServicio}}
                         </td>
                         <td>
-                          {{crearOrden.cantidad}}
+                          <input type="number" value="1" min="1" max="50" name="cantidad" [(ngModel)]="itemServicioSelect.cantidad" (change)="cambiarValor()">
                         </td>
                         <td>
-                          {{crearOrden.precioTotal}}
+                          {{itemServicioSelect.precionUnidad}}
+                        </td>
+                        <td>
+                          <a (click)="toWhatsApp()">
+                            <img src="../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
+                          </a>
                         </td>
                         <td>
                           <button class="btn btn-info">
@@ -86,9 +97,7 @@
             </form>
         </div>
         <br>
-        <div mat-dialog-actions>
-            <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Servicio</button>
-        </div>
+        
     </mat-card>
 </div>
 <!-- Modal -->

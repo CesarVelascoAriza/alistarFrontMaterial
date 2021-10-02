@@ -57,9 +57,10 @@ export class NadvarComponent implements OnInit {
     this.api_service.logout();
     console.log('this.user ', this.user);
     
-    Swal.fire('Sesión finalizada con éxito', 'success')
-    this._router.navigate(['/home']).then(data => {
+    this._router.navigate(['/home'])
+    Swal.fire('Sesión finalizada con éxito', 'success').then(data => {
       window.location.reload()
-    })
+    }); 
+    
   }
 }

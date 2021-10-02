@@ -23,11 +23,15 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
+import { ViewServiceComponent } from './view-service/view-service.component';
+import { EditServiceComponent } from './edit-service/edit-service.component';
 
 @NgModule({
   declarations: [
     ConsultServiceComponent,
-    CreateServiceComponent
+    CreateServiceComponent,
+    ViewServiceComponent,
+    EditServiceComponent
   ],
   imports: [
     CommonModule,

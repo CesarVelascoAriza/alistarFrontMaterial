@@ -13,5 +13,4 @@ export class Servicio {
     precionUnidad: number = 0;
     valorTotal : number = 0;
     cantidad: number = 1;
-    imagenHashCode: number | any;
 }

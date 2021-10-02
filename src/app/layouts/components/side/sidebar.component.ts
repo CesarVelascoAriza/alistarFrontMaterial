@@ -19,7 +19,6 @@ export class SidebarComponent implements OnInit {
   ) { 
     this.api_service.isAuthenticated();
     this.user = false;   
-    console.log(this.api_service.isAuthenticated(), ' :this.api_service.isAuthenticated()');
      
     if(this.api_service.isAuthenticated()) {      
       this.user=true;

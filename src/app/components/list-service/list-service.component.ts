@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Servicio } from 'src/app/models/servicio';
+import { ManageServiceService } from 'src/app/services/manage-service.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-service',
@@ -19,9 +22,23 @@ export class ListServiceComponent implements OnInit {
 
   // MatPaginator Output
   pageEvent: PageEvent |undefined;
-  constructor() { }
+  
+  servicios: Servicio[] = [];
+  msnError: string = "";
+
+  constructor(
+    private manageService: ManageServiceService
+  ) {   }
 
   ngOnInit(): void {
+    this.manageService.listarServicios().subscribe(
+      response => {
+        this.servicios = response;
+      }, error => {
+        this.msnError = 'Error al Listar Servicios ', error
+        Swal.fire('Error', this.msnError, 'error')
+      }
+    )
   }
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {

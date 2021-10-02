@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { DropDownService } from 'src/app/services/drop-down.service';
 import { DatosService } from 'src/app/services/datos.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-service-create',
@@ -31,13 +32,10 @@ export class CreateServiceComponent implements OnInit {
   public imageUrl?: string;
   
   constructor(
-    private fb: FormBuilder,
     private dropdownService: DropDownService,
     private manageService: ManageServiceService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private _dataServices: DatosService,
-    private sant: DomSanitizer
+    private sant: DomSanitizer,
+    public dialog:MatDialog
   ) {
     `$('.modal').modal()`;
     `$('select').formSelect()`;
@@ -51,12 +49,10 @@ export class CreateServiceComponent implements OnInit {
       this.categorias = category
     })
 
-    if(localStorage.getItem('identity') != null || localStorage.getItem('identity') !=  undefined)
+    if(localStorage.getItem('usuario') != null || localStorage.getItem('usuario') !=  undefined)
     {
-      let usuariolocal = localStorage.getItem('identity');
-        this.usuario =JSON.parse(usuariolocal!);   
-        console.log(this.usuario);
-        
+      let usuariolocal = localStorage.getItem('usuario');
+        this.usuario =JSON.parse(usuariolocal!);           
     }
   }
 
@@ -76,15 +72,17 @@ export class CreateServiceComponent implements OnInit {
 
   public crearServicio(): void {
 
-    this.model.proveedor = this.usuario;  
+    this.model.proveedor = this.usuario;      
     this.model.imagenServicio = this.manageService.getImgB64();
-    console.log('Model ' , this.model);    
     this.manageService.createService(this.model).subscribe(
-      response => {
-        let identity = response
-        this.identity = identity
-        Swal.fire('Nuevo servicio creado con éxito', 'success'); 
+      response => { 
+
+        this.dialog.closeAll();    
+        Swal.fire('Nuevo servicio'+ response.nombreServicio + ' creado con éxito', 'success').then(data => {
+          window.location.reload()
+        }); 
         //this.router.navigate([this.redirect]);
+        
     }, err => {
       if(err.status === 400){
         this.error = err.error;
@@ -93,6 +91,10 @@ export class CreateServiceComponent implements OnInit {
       }
     });
 
+  }
+
+  public editService(): void {
+    
   }
 
 }
