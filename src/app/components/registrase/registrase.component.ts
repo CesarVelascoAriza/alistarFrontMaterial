@@ -30,13 +30,13 @@ export class RegistraseComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup | any ;
   secondFormGroup: FormGroup | any ;
-
+  day = new Date()
   public tDocs : TipoDocumento[];
   public usuario : Usuario;
   public identity : any;
   public error: any;
   min =new Date(new Date().getFullYear()-80 , 0, 1);
-  max =new Date(new Date().getFullYear()-18 ,new Date().getMonth(),   31);
+  max =new Date(new Date().getFullYear()-18 ,new Date().getMonth(),  this.day.getDate() );
 
   formControlRegistrarse=this.fb.group({
     tipoDocumento:['',Validators.required],
