@@ -17,5 +17,5 @@ export class LocalStorageService {
         this.datos = null
     }
     return this.datos 
-}
+  }
 }

@@ -30,10 +30,10 @@ export class ConsultEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerEventos();
+   // this.obtenerEventos();
   }
 
-  public obtenerEventos(): any {
+  /*public obtenerEventos(): any {
     this.usuIdentity = JSON.parse(this._dataServices.getId())
     this.usuId = this.usuIdentity.numeroIdentificacion
     this.manageEvent.getEventsUser(this.usuId).subscribe(
@@ -41,7 +41,7 @@ export class ConsultEventComponent implements OnInit {
         this.eventosUsuarios = response
     });
 
-  }
+  }*/
   
 }
 

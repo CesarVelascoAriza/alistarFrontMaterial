@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Estado } from '../models/estado';
 import { Orden } from '../models/orden';
+import { Servicio } from '../models/servicio';
 import { ApiServicesService } from './api-services.service';
 
 @Injectable({
@@ -11,12 +12,13 @@ import { ApiServicesService } from './api-services.service';
 })
 export class ManageEventService  {
 
+  servicioSeleccionado = new EventEmitter<Servicio>();
+
   constructor(
     private http: HttpClient,
     private api_service: ApiServicesService
   ) { }
 
-  //let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
 
   getAllEstados():Observable<Estado[]>{
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
@@ -38,6 +40,5 @@ export class ManageEventService  {
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
     return this.http.get<Orden>(environment.UrlBase + 'Orden/getIdOrden?id=' + idOrden,{headers: httpHeaders});
   }
-
 
 }

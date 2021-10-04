@@ -57,11 +57,11 @@ export class ConsultServiceComponent implements OnInit {
   }
 
   openDialogCreateService() {
-    const dialogRef = this.dialog.open(CreateServiceComponent)
+    this.dialog.open(CreateServiceComponent)
   }
 
   openDialogEditService() {
-    const dialogRef = this.dialog.open(EditServiceComponent)
+    this.dialog.open(EditServiceComponent)
   }
 
   openDialogViewService(idServicio: number) {
