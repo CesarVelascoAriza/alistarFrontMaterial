@@ -4,7 +4,7 @@
             <h1 mat-dialog-title> {{ titulo }} </h1>
         </mat-card-header>
         <div mat-dialog-content style="width: 600px;">
-            <form (ngSubmit)="createEvent()">
+            <form #formulario="ngForm" (ngSubmit)="createEvent(formulario)">
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
                         <mat-label for="nombreEvento">Nombre del evento</mat-label>
@@ -13,10 +13,10 @@
                         <div *ngIf="nombreEvento.invalid && (nombreEvento.dirty || nombreEvento.touched)">
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                    </mat-form-field> 
+                    </mat-form-field>
                     <mat-form-field appearance="fill">
                         <mat-label for="fecha">Fecha del Evento</mat-label>
-                        <input matInput type="date" [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha" 
+                        <input matInput type="date" [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha"
                         placeholder="Nombre Evento"  #fecha="ngModel">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -97,7 +97,7 @@
             </form>
         </div>
         <br>
-        
+
     </mat-card>
 </div>
 <!-- Modal -->

@@ -4,46 +4,45 @@
   </mat-card-header>
   <br>
   <mat-card-content>
-    <form  [formGroup]='formControlRegistrarse' (ngSubmit)="submitRegistrar()">
+    <form  [formGroup]='formControlRegistrarse' (ngSubmit)="submitRegistrar()" class="formulariosRegistro">
       <p>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="form-control">
           <mat-label>Tipo de Documento</mat-label>
           <mat-select formControlName='tipoDocumento'>
             <mat-option [value]="doc" *ngFor="let doc of tDocs">{{doc.descripcionLarga}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill"   class="form-control">
           <mat-label>Número de Identificación</mat-label>
           <input matInput  formControlName='numberIdentifi'>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill"  class="form-control">
           <mat-label>Nombre Completos</mat-label>
           <input matInput formControlName='nameUser' >
         </mat-form-field>
-      
-      <mat-form-field appearance="fill">
+
+      <mat-form-field appearance="fill"  class="form-control">
         <mat-label>Fecha de Nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName='dateUser' >
+        <input matInput [matDatepicker]="picker" [min]="min" [max]="max" formControlName='dateUser' >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill"  class="form-control">
         <mat-label>Teléfono</mat-label>
-        <input  formControlName='telefono'  matInput >
+        <input  maxlength="15" formControlName='telefono'  matInput >
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill"  class="form-control">
         <mat-label>Dirección</mat-label>
         <input  formControlName='direccion'  matInput >
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill"  class="form-control">
         <mat-label>Contraseña</mat-label>
-        <input  formControlName='password'  matInput >
+        <input type="password" formControlName='password'  matInput >
       </mat-form-field>
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="fill"  class="form-control">
         <mat-label>Correo Electrónico</mat-label>
         <input  type="email"  formControlName='email'  matInput  [errorStateMatcher]="matcher"
         placeholder="Ex. pat@example.com" >
-        <mat-hint>Errors appear instantly!</mat-hint>
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
       Please enter a valid email address
     </mat-error>
@@ -51,25 +50,14 @@
       Email is <strong>required</strong>
     </mat-error>
       </mat-form-field>
-      <p>
+      <p class="conetido-Check">
         <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
       </p>
       <mat-card-footer>
           <!--<button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' (click)="register()">Guardar</button>-->
-          <button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid'>Guardar</button>
+          <button type="submit" class="btn"   mat-button color="primary" [disabled]='!formControlRegistrarse.valid'>Guardar</button>
       </mat-card-footer>
     </form>
   </mat-card-content>
 </mat-card>
 
-<!--<mat-vertical-stepper>
-  <mat-step label="Dinos quien Eres!">
-    conten1
-  </mat-step>
-  <mat-step label="Establezcamos Datos de Ingreso">
-    content2
-  </mat-step>
-  <mat-step label="Conozcamonos un poco más!">
-    content2
-  </mat-step>
-</mat-vertical-stepper>-->

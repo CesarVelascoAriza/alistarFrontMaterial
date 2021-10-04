@@ -14,3 +14,20 @@
 {
     margin-top: 20px;
 }
+
+.mat-form-field.mat-form-field.form-control
+{
+  width: 40%;
+}
+form.formulariosRegistro
+{
+  contain: content;
+}
+.mat-card-footer {
+   margin: 19px 50%;
+}
+.conetido-Check
+{
+  padding-left: 2%;
+  margin: 8px 1%;
+}
