@@ -4,7 +4,7 @@
             <h1 mat-dialog-title> {{ titulo }} </h1>
         </mat-card-header>
         <div mat-dialog-content style="width: 600px;">
-            <form (ngSubmit)="createEvent()">
+            <form #formulario="ngForm" (ngSubmit)="createEvent()">
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
                         <mat-label for="nombreEvento">Nombre del evento</mat-label>
@@ -13,7 +13,7 @@
                         <div *ngIf="nombreEvento.invalid && (nombreEvento.dirty || nombreEvento.touched)">
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                    </mat-form-field> 
+                    </mat-form-field>
                     <mat-form-field appearance="fill">
                       <mat-label>Fecha del Evento</mat-label>
                       <input matInput [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha" #fecha="ngModel">
@@ -29,6 +29,22 @@
                         id="hora" name="hora" step="2">
                       <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
                         <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
+                        <mat-label for="fecha">Fecha del Evento</mat-label>
+                        <input matInput type="date" [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha"
+                        placeholder="Nombre Evento"  #fecha="ngModel">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint align="end">Fecha del Evento</mat-hint>
+                        <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
+                            <div id="emailHelp" class="form-text">Este campo debe tener formato de fecha</div>
+                        </div>
+                      <div class="mb-3">
+                        <label for="hora" class="form-label">Hora en la que se realizara el Evento</label>
+                        <input type="time" class="form-control" required [(ngModel)]="crearOrden.horario.hora" #hora="ngModel"
+                          id="hora" name="hora" step="2">
+                        <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
+                          <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
+                        </div>
                       </div>
                     </div>
                     <mat-form-field appearance="fill">
@@ -96,10 +112,11 @@
                 <div mat-dialog-actions>
                     <button type="submit" mat-button >Guardar</button>
                 </div>
+              </div>
             </form>
         </div>
         <br>
-        
+
     </mat-card>
 </div>
 <!-- Modal -->

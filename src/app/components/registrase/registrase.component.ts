@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core'; 
+import {ErrorStateMatcher} from '@angular/material/core';
 import { Router } from '@angular/router';
 
 import { ApiServicesService } from 'src/app/services/api-services.service';
@@ -30,11 +30,13 @@ export class RegistraseComponent implements OnInit {
   isLinear = false;
   firstFormGroup: FormGroup | any ;
   secondFormGroup: FormGroup | any ;
- 
+  day = new Date()
   public tDocs : TipoDocumento[];
   public usuario : Usuario;
   public identity : any;
   public error: any;
+  min =new Date(new Date().getFullYear()-80 , 0, 1);
+  max =new Date(new Date().getFullYear()-18 ,new Date().getMonth(),  this.day.getDate() );
 
   formControlRegistrarse=this.fb.group({
     tipoDocumento:['',Validators.required],
@@ -55,7 +57,7 @@ export class RegistraseComponent implements OnInit {
     private dropdownService: DropDownService,
     private _router: Router,
     public dialog:MatDialog
-    ) { 
+    ) {
       this.tDocs = new Array<TipoDocumento>();
       this.usuario = new Usuario();
     }
@@ -72,13 +74,13 @@ export class RegistraseComponent implements OnInit {
       this.tDocs = tipoDocs
     })
   }
-  
+
   submitRegistrar(){
     console.log('formControlRegistrarse: ', this.formControlRegistrarse.value);
     this.usuario.tipoDocumento = this.formControlRegistrarse.value.tipoDocumento;
     this.usuario.numeroIdentificacion = this.formControlRegistrarse.value.numberIdentifi;
     this.usuario.direccion = this.formControlRegistrarse.value.direccion;
-    //this.usuario.email = this.formControlRegistrarse.value.email;
+    this.usuario.email = this.formControlRegistrarse.value.email;
     this.usuario.nombre = this.formControlRegistrarse.value.nameUser;
     this.usuario.password = this.formControlRegistrarse.value.password;
     this.usuario.telefono = this.formControlRegistrarse.value.telefono;

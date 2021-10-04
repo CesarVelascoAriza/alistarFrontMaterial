@@ -16,16 +16,16 @@ export class ConsultEventComponent implements OnInit {
   usuId : number | any;
   usuIdentity : Usuario | any;
   eventosUsuarios : Evento[]=[];
-  
+
   public titulo: string;
-  
+
   constructor(
     private manageEvent: ManageEventService,
     private _dataServices: DatosService
-  ) { 
+  ) {
     this.usuIdentity = new Usuario();
     this.usuId = 0;
-    
+
     this.titulo = 'Mis Eventos';
   }
 
@@ -36,13 +36,7 @@ export class ConsultEventComponent implements OnInit {
   /*public obtenerEventos(): any {
     this.usuIdentity = JSON.parse(this._dataServices.getId())
     this.usuId = this.usuIdentity.numeroIdentificacion
-    this.manageEvent.getEventsUser(this.usuId).subscribe(
-      response =>{
-        this.eventosUsuarios = response
-    });
-
   }*/
-  
 }
 
 
