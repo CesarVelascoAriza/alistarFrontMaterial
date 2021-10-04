@@ -1,39 +1,44 @@
 .example-card {
-    max-width: 1360px;
+  max-width: 100%;
 }
-  
+
 .example-header-image {
-    background-size: cover;
+  background-size: cover;
 }
 
 .box {
-    display: flex;
+  display: flex;
 }
 
 .one {
-    flex: 1 1 auto;
-    max-width: 400px;
-}   
+  flex: 1 1 auto;
+  max-width: 400px;
+}
 
 .two {
-    flex: 1 1 auto;
-    max-width: 400px;
+  flex: 1 1 auto;
+  max-width: 400px;
 }
 
 .three {
-    flex: 1 1 auto;
-    max-width: 400px;
+  flex: 1 1 auto;
+  max-width: 400px;
 }
 
 .fourth {
-    flex: 1 1 auto;
-    max-width: 400px;
+  flex: 1 1 auto;
+  max-width: 400px;
 }
 
 .example-footer {
-    text-align:center;  
+  align-items: center;
+  text-align:center;
 }
 
 .text-reset {
-    color: grey;
+  color: grey;
+}
+.copy {
+  align-content: center;
+  text-align: center;
 }
