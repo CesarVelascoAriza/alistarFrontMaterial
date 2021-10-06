@@ -27,7 +27,7 @@ export class ManageEventService  {
 
   guardarOrden(orden:Orden):Observable<Orden>{
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
-    return  this.http.post<Orden>(environment.UrlBase+'/Orden/save-Orden',orden,{headers: httpHeaders});
+    return  this.http.post<Orden>(environment.UrlBase+'Orden/save-Orden',orden,{headers: httpHeaders});
   }
 
   getAllOrdenByUsuaio(idUsuario: number):Observable<Orden[]>{

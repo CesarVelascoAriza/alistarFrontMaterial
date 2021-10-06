@@ -7,26 +7,29 @@
         </mat-card-header>
         <mat-card-content> 
             <br>
-            <div class="alert alert-info" *ngIf="eventosUsuarios?.length == null || eventosUsuarios?.length == 0" >
+            <div class="alert alert-info" *ngIf="eventosUsuarios?.length == 0" >
                 No hay eventos en el sistema.
             </div>
-            <div *ngIf="eventosUsuarios?.length != null || eventosUsuarios?.length != 0">
+            <div *ngIf="eventosUsuarios?.length != 0">
                 <table>
                     <thead>
-                        <th>
-                            Acciones
-                        </th>
                         <th>
                             Id evento
                         </th>
                         <th>
-                            Cantidad
+                            Nombre Evento
                         </th>
                         <th>
-                            Servicio
+                            Horario
                         </th>
                         <th>
                             Valor Total
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th colspan="3">
+                            Acciones
                         </th>
                     </thead>
                     <tbody style="color: black; text-align: center;" >
@@ -35,16 +38,34 @@
                                 Ver, Editar, Borrar
                             </td>
                             <td>
-                                {{item.idEvento}}
+                                {{item.idOrden}}
                             </td>
                             <td>
-                                {{item.servicio}}
+                                {{item.nombreEvento}}
                             </td>
                             <td>
-                                {{item.cantidad}}
+                                {{item.horario}}
                             </td>
                             <td>
-                                {{item.valorTotal}}
+                                {{item.precioTotal}}
+                            </td>
+                            <td>
+                                {{item.estado}}
+                            </td>
+                            <td>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" >
+                                    <mat-icon>info</mat-icon>
+                                </button>
+                            </td>
+                            <td>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" >
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                            <td>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" >
+                                    <mat-icon>delete</mat-icon>
+                                </button>
                             </td>
                         </tr>
                     </tbody>

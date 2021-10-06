@@ -67,9 +67,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
     servicio.cantidad = 1;
     servicio.precionUnidad = 1000;
     this.manageEventService.servicioSeleccionado.emit(servicio)
-
     this.dialog.closeAll()
-
   }
 
 }

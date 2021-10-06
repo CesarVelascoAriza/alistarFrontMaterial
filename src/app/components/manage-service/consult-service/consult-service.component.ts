@@ -30,7 +30,7 @@ export class ConsultServiceComponent implements OnInit {
   constructor(
     private manageService: ManageServiceService,
     private dialog:MatDialog,
-    private api_service: ApiServicesService,
+    private api_service: ApiServicesService
   ) { 
     this.usuIdentity = new Usuario();
     this.usuId = 0;
@@ -40,20 +40,21 @@ export class ConsultServiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerServicios(); 
-  }
+  } 
 
   public obtenerServicios(): any {
     let usuario = this.api_service.getUsuarioSesion
-    console.log(usuario);
-    
+   
     this.manageService.getServicexUser(usuario.numeroIdentificacion).subscribe(
       response =>{
         this.serviciosUsuarios = response
-        console.log('this.serviciosUsuarios .. ', Object.values(this.serviciosUsuarios))
         if (this.serviciosUsuarios.length === undefined) {
           this.serviciosUsuarios.length = 0;
         }
-    });
+      }, error => {
+
+      }
+    );
   }
 
   openDialogCreateService() {

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { createTransactionPayment } from 'src/app/models/createTransactionPayment';
 import { Estado } from 'src/app/models/estado';
 import { Evento } from 'src/app/models/evento';
@@ -9,9 +8,9 @@ import { EventoOrden } from 'src/app/models/eventoPostOrden';
 import { Orden } from 'src/app/models/orden';
 import { Servicio } from 'src/app/models/servicio';
 import { Usuario } from 'src/app/models/usuario';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
+import Swal from 'sweetalert2';
 import { ListServiceComponent } from '../../list-service/list-service.component';
 
 
@@ -32,11 +31,8 @@ export class CreateEventComponent implements OnInit {
   cantidad: number = 1;
   idOrden: number = 0;
   createTrasactionPayment: createTransactionPayment = new createTransactionPayment();
-  error: any; 
   titulo: string;
   servicios: number[] = []
-  precios: number[] = []
-  valorServicio: number = 0;
 
   constructor(
     private router: Router,
@@ -123,7 +119,17 @@ export class CreateEventComponent implements OnInit {
   }
 
   createEvent() {
-    console.log(this.crearOrden);
+    this.crearOrden.usuario = this.usuario.numeroIdentificacion
+    console.log(this.crearOrden, '  Orden');
+    this.manageEventService.guardarOrden(this.crearOrden).subscribe(
+      response => {
+        console.log(response);
+        Swal.fire('Success', 'Orden creada con éxito', 'success')
+      }, error => {
+        console.log(error);        
+        Swal.fire('Error', error, 'error')
+      }
+    )
     
   }
 
@@ -137,14 +143,12 @@ export class CreateEventComponent implements OnInit {
         this.ListaServSeleccionado.push(data)
         for (let i in this.ListaServSeleccionado) {
           this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
-    
         }
   
       } else {
         for (let j in this.ListaServSeleccionado) {
           this.servicioSeleccionado = this.ListaServSeleccionado[j]
-          this.servicios.push(this.servicioSeleccionado.idServicio) 
-          this.valorServicio = this.ListaServSeleccionado[j].valorTotal;                  
+          this.servicios.push(this.servicioSeleccionado.idServicio)                   
         }
   
         //aumentar la cantidad
@@ -162,7 +166,7 @@ export class CreateEventComponent implements OnInit {
           }          
         }
       }
-           
+      this.cambiarValorTotalOrden();  
     })
   }
 
@@ -174,19 +178,11 @@ export class CreateEventComponent implements OnInit {
         this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
       }            
     }
+    this.cambiarValorTotalOrden();
   }
 
-  cambiarValorTotalOrden(valor: number) {
-    this.precios.push(valor) 
-    console.log('precios .. ', this.precios);
-    
-    /*this.precios.forEach(values => {
-      console.log('values,  ', values);
-      
-      this.crearOrden.precioTotal += values
-      console.log('this.crearOrden.precioTotal ', this.crearOrden.precioTotal);
-      
-    });*/
+  cambiarValorTotalOrden() { 
+    this.crearOrden.precioTotal = this.ListaServSeleccionado.reduce((sum, value) => (sum + value.valorTotal), 0)
   }
 
 }

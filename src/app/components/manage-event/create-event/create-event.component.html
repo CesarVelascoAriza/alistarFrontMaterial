@@ -4,7 +4,7 @@
             <h1 mat-dialog-title> {{ titulo }} </h1>
         </mat-card-header>
         <div mat-dialog-content style="width: 600px;">
-            <form #formulario="ngForm" (ngSubmit)="createEvent()">
+            <form #formulario="ngForm" >
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
                         <mat-label for="nombreEvento">Nombre del evento</mat-label>
@@ -110,7 +110,7 @@
                 </tfoot>
               </table>
                 <div mat-dialog-actions>
-                    <button type="submit" mat-button >Guardar</button>
+                    <button (click)="createEvent()" mat-button >Guardar</button>
                 </div>
               </div>
             </form>
@@ -119,22 +119,4 @@
 
     </mat-card>
 </div>
-<!-- Modal -->
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <app-listado-servicios (servicioSeleccionado)="servicioSeleccionado"></app-listado-servicios>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveChanges()">Save
-            changes</button>
-        </div>
-      </div>
-    </div>
-  </div>-->
+
