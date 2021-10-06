@@ -34,6 +34,9 @@ export class CreateEventComponent implements OnInit {
   createTrasactionPayment: createTransactionPayment = new createTransactionPayment();
   error: any; 
   titulo: string;
+  servicios: number[] = []
+  precios: number[] = []
+  valorServicio: number = 0;
 
   constructor(
     private router: Router,
@@ -63,11 +66,6 @@ export class CreateEventComponent implements OnInit {
     }
   }
 
-  saveChanges() {
-    this.ListaServSeleccionado.push(this.servicioSeleccionado);
-    
-  }
-
   borrar(id: number)
   {
     console.log('borrar Item id: ', id)
@@ -86,13 +84,6 @@ export class CreateEventComponent implements OnInit {
   {
     this.crearOrden.precioTotal += this.servicioSeleccionado.valorTotal
     console.log('valor total: ' + this.crearOrden.precioTotal)
-  }
-
-  cambiarValor()
-  {
-    this.crearOrden.cantidad != 0;
-    this.servicioSeleccionado.valorTotal = this.servicioSeleccionado.precionUnidad * this.servicioSeleccionado.cantidad
-
   }
 
   getOrdenById()
@@ -136,40 +127,66 @@ export class CreateEventComponent implements OnInit {
     
   }
 
-  openDialogListarServicios() {
+  agregarServiciosAlEvento() {
     this.dialog.open(ListServiceComponent)
 
     this.manageEventService.servicioSeleccionado.subscribe(data => {
-      console.log('data. ', data);
-      console.log('ListaServSeleccionado. ', this.ListaServSeleccionado);
-
-      console.log('lenght... ', this.ListaServSeleccionado.length);
       
+      //agregarlo por primera vez
       if (this.ListaServSeleccionado.length == 0) {
         this.ListaServSeleccionado.push(data)
-      } else {
         for (let i in this.ListaServSeleccionado) {
-          console.log(i);
-          for (let i in data) {
-            console.log('data.idServicio ', data.idServicio);
-            data.idServicio
-          }
-          
+          this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+    
         }
-        /*for (let i in this.ListaServSeleccionado) {
-          const element = this.ListaServSeleccionado[i];
-          console.log('element.idServicio .. ', element.idServicio);
-          if (element.idServicio) {
-            element.cantidad = element.cantidad + 1
-            console.log('element.. ', element);
-            
-          } else {
-            this.ListaServSeleccionado.push(data)
+  
+      } else {
+        for (let j in this.ListaServSeleccionado) {
+          this.servicioSeleccionado = this.ListaServSeleccionado[j]
+          this.servicios.push(this.servicioSeleccionado.idServicio) 
+          this.valorServicio = this.ListaServSeleccionado[j].valorTotal;                  
+        }
+  
+        //aumentar la cantidad
+        if (this.servicios.includes(data.idServicio)) {
+          for (let i in this.ListaServSeleccionado) {
+            if (this.ListaServSeleccionado[i].idServicio === data.idServicio) {
+              this.ListaServSeleccionado[i].cantidad +=1
+              this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+            }            
           }
-        }*/
+        } else {
+          this.ListaServSeleccionado.push(data)
+          for (let i in this.ListaServSeleccionado) {
+            this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+          }          
+        }
       }
+           
     })
   }
 
+  cambiarValorTotal(idServicio: number)
+  {
+    for (let i in this.ListaServSeleccionado) {
+      if (this.ListaServSeleccionado[i].idServicio === idServicio) {
+        this.ListaServSeleccionado[i].cantidad +=1
+        this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+      }            
+    }
+  }
+
+  cambiarValorTotalOrden(valor: number) {
+    this.precios.push(valor) 
+    console.log('precios .. ', this.precios);
+    
+    /*this.precios.forEach(values => {
+      console.log('values,  ', values);
+      
+      this.crearOrden.precioTotal += values
+      console.log('this.crearOrden.precioTotal ', this.crearOrden.precioTotal);
+      
+    });*/
+  }
 
 }
