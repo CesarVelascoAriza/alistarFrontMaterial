@@ -4,7 +4,7 @@
             <h1 mat-dialog-title> {{ titulo }} </h1>
         </mat-card-header>
         <div mat-dialog-content style="width: 600px;">
-            <form #formulario="ngForm" (ngSubmit)="createEvent(formulario)">
+            <form #formulario="ngForm" >
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
                         <mat-label for="nombreEvento">Nombre del evento</mat-label>
@@ -15,6 +15,20 @@
                         </div>
                     </mat-form-field>
                     <mat-form-field appearance="fill">
+                      <mat-label>Fecha del Evento</mat-label>
+                      <input matInput [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha" #fecha="ngModel">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
+                        <div id="emailHelp" class="form-text">Este campo debe tener formato de fecha</div>
+                      </div>
+                    </mat-form-field>
+                    <div class="mb-3">
+                      <label for="hora" class="form-label">Hora Inicio Evento</label>
+                      <input type="time" class="form-control" required [(ngModel)]="crearOrden.horario.hora" #hora="ngModel"
+                        id="hora" name="hora" step="2">
+                      <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
+                        <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
                         <mat-label for="fecha">Fecha del Evento</mat-label>
                         <input matInput type="date" [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha"
                         placeholder="Nombre Evento"  #fecha="ngModel">
@@ -23,8 +37,7 @@
                         <mat-hint align="end">Fecha del Evento</mat-hint>
                         <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
                             <div id="emailHelp" class="form-text">Este campo debe tener formato de fecha</div>
-                          </div>
-                      </mat-form-field>
+                        </div>
                       <div class="mb-3">
                         <label for="hora" class="form-label">Hora en la que se realizara el Evento</label>
                         <input type="time" class="form-control" required [(ngModel)]="crearOrden.horario.hora" #hora="ngModel"
@@ -33,89 +46,77 @@
                           <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
                         </div>
                       </div>
-                      <mat-form-field appearance="fill">
-                        <mat-label>Estado</mat-label>
-                        <mat-select name="estado" id="estado" [(ngModel)]="crearOrden.estado" #estado="ngModel">
-                            <mat-option selected disabled >Seleccione......</mat-option>
-                            <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
-                        </mat-select>
+                    </div>
+                    <mat-form-field appearance="fill">
+                      <mat-label>Estado</mat-label>
+                      <mat-select name="estado" id="estado" [(ngModel)]="crearOrden.estado" #estado="ngModel">
+                          <mat-option selected disabled >Seleccione......</mat-option>
+                          <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
+                      </mat-select>
                     </mat-form-field>
                 </div>
                 <div mat-dialog-actions>
-                  <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal">Seleccionar Servicio</button>
+                  <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="agregarServiciosAlEvento()">Seleccionar Servicio</button>
                </div>
-                <table>
-                    <thead>
-                      <tr>
-                        <th scope="col">Nombre Servicio</th>
-                        <th scope="col">cantidad</th>
-                        <th scope="col">Valor Unidad</th>
-                        <th scope="col">valor total</th>
-                        <th scope="col">Contacta</th>
-                        <th scope="col">Pagar</th>
-                        <th scope="col">borrar</th>
-                      </tr>
-                    </thead>
-                    <tbody style="color: black; text-align: center;">
-                      <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
-                        <td>
-                          {{itemServicioSelect.nombreServicio}}
-                        </td>
-                        <td>
-                          <input type="number" value="1" min="1" max="50" name="cantidad" [(ngModel)]="itemServicioSelect.cantidad" (change)="cambiarValor()">
-                        </td>
-                        <td>
-                          {{itemServicioSelect.precionUnidad}}
-                        </td>
-                        <td>
-                          <a (click)="toWhatsApp()">
-                            <img src="../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
-                          </a>
-                        </td>
-                        <td>
-                          <button class="btn btn-info">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                              class="bi bi-file-x" viewBox="0 0 16 16">
-                              <path
-                                d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z" />
-                              <path
-                                d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
-                            </svg>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td colspan="4">esto es tododo amigos</td>
-                      </tr>
-                    </tfoot>
-                  </table>
+               <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre Servicio</th>
+                    <th scope="col">cantidad</th>
+                    <th scope="col">Valor Unidad</th>
+                    <th scope="col">valor total</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Pagar</th>
+                    <th scope="col">borrar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
+                    <td>
+                      {{itemServicioSelect.nombreServicio}}
+                    </td>
+                    <td>
+                      <input type="number" value="{{itemServicioSelect.cantidad}}" min="1" max="50" name="cantidad" (change)="cambiarValorTotal(itemServicioSelect.idServicio)">
+                    </td>
+                    <td>
+                      {{itemServicioSelect.precionUnidad}}
+                    </td>
+                    <td>
+                      {{itemServicioSelect.valorTotal}}
+                    </td>
+                    <td>
+                      <a (click)="toWhatsApp()">
+                        <img src="../../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
+                      </a>
+                    </td>
+                    <td>
+                      <a (click)="toPay()">
+                        <!--<img src="../../../assets/img/logo-pse.png" height="50px" />-->
+                        <img src="https://www.nequi.com.co/wp-content/themes/nequi/img/logo_nequi_header.svg" height="20px" />
+                      </a>
+                    </td>
+                    <td>
+                      <button mat-mini-fab color="primary" type="button" class="btn btn-danger" (click)="borrar(this.itemServicioSelect.idServicio)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3">Valor total de la orden</td>
+                    <td colspan="2" >{{crearOrden.precioTotal}}</td>
+                  </tr>
+                </tfoot>
+              </table>
                 <div mat-dialog-actions>
-                    <button type="submit" mat-button >Guardar</button>
+                    <button (click)="createEvent()" mat-button >Guardar</button>
                 </div>
+              </div>
             </form>
         </div>
         <br>
 
     </mat-card>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <app-listado-servicios (servicioSeleccionado)="servicioSeleccionado"></app-listado-servicios>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveChanges()">Save
-            changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+

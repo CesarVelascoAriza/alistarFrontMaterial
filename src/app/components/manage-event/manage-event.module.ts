@@ -9,7 +9,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { ListadoServiciosComponent } from '../listado-servicios/listado-servicios.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,8 +27,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 @NgModule({
   declarations: [
     CreateEventComponent,
-    ConsultEventComponent,
-    ListadoServiciosComponent
+    ConsultEventComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +60,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatTableModule,
     MatDatepickerModule,
     MatDatepickerModule
-    
   ]
 })
 export class ManageEventModule { }

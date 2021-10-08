@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createTransactionPayment } from 'src/app/models/createTransactionPayment';
 import { Estado } from 'src/app/models/estado';
@@ -11,6 +11,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
+import { ListServiceComponent } from '../../list-service/list-service.component';
 
 
 @Component({
@@ -30,41 +31,35 @@ export class CreateEventComponent implements OnInit {
   cantidad: number = 1;
   idOrden: number = 0;
   createTrasactionPayment: createTransactionPayment = new createTransactionPayment();
-  error: any;
   titulo: string;
+  servicios: number[] = []
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private manageEventService: ManageEventService,
-    private manageServiceService: ManageServiceService
+    public manageEventService: ManageEventService,
+    private manageServiceService: ManageServiceService,
+    private dialog:MatDialog
   ) { 
     this.titulo = 'Crea tu evento';
     this.ListaServSeleccionado = new Array<Servicio>();
+
     this.usuario = new Usuario();
     if(this.route.snapshot.paramMap.get('id')!=null || this.route.snapshot.paramMap.get('id')!=undefined ){
       this.idOrden =Number( this.route.snapshot.paramMap.get('id'));
       this.getOrdenById();
-      console.log('idOrden: ',this.idOrden)
       this.listaServxOrden();
-      console.log('crear Evento:', this.crearOrden);
     }
   }
 
   ngOnInit(): void {
-    this.getListEstado()
+    this.getListEstado()   
 
     if(localStorage.getItem('usuario') != null || localStorage.getItem('usuario') !=  undefined)
     {
       let usuariolocal = localStorage.getItem('usuario');
         this.usuario =JSON.parse(usuariolocal!);          
     }
-  }
-
-  saveChanges() {
-    this.ListaServSeleccionado.push(this.servicioSeleccionado);
-    console.log(this.servicioSeleccionado)
-    
   }
 
   borrar(id: number)
@@ -87,48 +82,8 @@ export class CreateEventComponent implements OnInit {
     console.log('valor total: ' + this.crearOrden.precioTotal)
   }
 
-  cambiarValor()
-  {
-    this.crearOrden.cantidad != 0;
-    this.servicioSeleccionado.valorTotal = this.servicioSeleccionado.precionUnidad * this.servicioSeleccionado.cantidad
-    console.log( 'cantidad servicio: ' + this.servicioSeleccionado.cantidad);
-  }
-
-  createEvent(f: NgForm) {
-    this.events.nombreEvento=f.value.nombreServicio;
-    this.events.usuario = this.usuario.numeroIdentificacion;
-    this.crearOrden.nombreEvento = f.value.nombreServicio;
-    this.crearOrden.usuario = this.usuario.numeroIdentificacion;
-
-    console.log('lista select: ', this.ListaServSeleccionado)
-    for (let index = 0; index < this.ListaServSeleccionado.length; index++)
-    {
-      const element = this.ListaServSeleccionado[index];
-
-      var newEvent = new Evento();
-      newEvent.cantidad = element.cantidad;
-      newEvent.servicio = element.idServicio;
-      newEvent.valorTotal = element.valorTotal;
-
-      this.evento.push(newEvent)
-
-      this.crearOrden.precioTotal += newEvent.valorTotal;
-    }
-
-    this.crearOrden.evento = this.evento;
-
-
-    console.log("orden",this.crearOrden)
-    console.log("abc",f.valid);
-    console.log("xyz",f.value);
-    this.manageEventService.guardarOrden(this.crearOrden).subscribe(data=>{
-      console.log(data);
-    })
-  }
-
   getOrdenById()
   {
-
     this.manageEventService.getOrdernById(this.idOrden).subscribe(response=>{
       this.crearOrden = response
       this.listaServxOrden();
@@ -140,7 +95,6 @@ export class CreateEventComponent implements OnInit {
   {
     for (let index = 0; index < this.crearOrden.evento.length; index++) {
       const element = this.crearOrden.evento[index];
-      console.log('ord: ', element)
       this.seleccionServicio(element.servicio);
     }
   }
@@ -148,7 +102,6 @@ export class CreateEventComponent implements OnInit {
   seleccionServicio(id: number){
 
     this.manageServiceService.viewService(id).subscribe(data=>{
-      console.log(data)
       this.servicioSeleccionado = data;
       this.ListaServSeleccionado.push(this.servicioSeleccionado)
     });
@@ -163,6 +116,73 @@ export class CreateEventComponent implements OnInit {
   toPay()
   {
     window.open("https://recarga.nequi.com.co/bdigitalpsl/?_ga=2.81606546.443474604.1621784967-1433038197.1607735026#!/", "_blank");
+  }
+
+  createEvent() {
+    this.crearOrden.usuario = this.usuario.numeroIdentificacion
+    console.log(this.crearOrden, '  Orden');
+    this.manageEventService.guardarOrden(this.crearOrden).subscribe(
+      response => {
+        console.log(response);
+        Swal.fire('Success', 'Orden creada con éxito', 'success')
+      }, error => {
+        console.log(error);        
+        Swal.fire('Error', error, 'error')
+      }
+    )
+    
+  }
+
+  agregarServiciosAlEvento() {
+    this.dialog.open(ListServiceComponent)
+
+    this.manageEventService.servicioSeleccionado.subscribe(data => {
+      
+      //agregarlo por primera vez
+      if (this.ListaServSeleccionado.length == 0) {
+        this.ListaServSeleccionado.push(data)
+        for (let i in this.ListaServSeleccionado) {
+          this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+        }
+  
+      } else {
+        for (let j in this.ListaServSeleccionado) {
+          this.servicioSeleccionado = this.ListaServSeleccionado[j]
+          this.servicios.push(this.servicioSeleccionado.idServicio)                   
+        }
+  
+        //aumentar la cantidad
+        if (this.servicios.includes(data.idServicio)) {
+          for (let i in this.ListaServSeleccionado) {
+            if (this.ListaServSeleccionado[i].idServicio === data.idServicio) {
+              this.ListaServSeleccionado[i].cantidad +=1
+              this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+            }            
+          }
+        } else {
+          this.ListaServSeleccionado.push(data)
+          for (let i in this.ListaServSeleccionado) {
+            this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+          }          
+        }
+      }
+      this.cambiarValorTotalOrden();  
+    })
+  }
+
+  cambiarValorTotal(idServicio: number)
+  {
+    for (let i in this.ListaServSeleccionado) {
+      if (this.ListaServSeleccionado[i].idServicio === idServicio) {
+        this.ListaServSeleccionado[i].cantidad +=1
+        this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
+      }            
+    }
+    this.cambiarValorTotalOrden();
+  }
+
+  cambiarValorTotalOrden() { 
+    this.crearOrden.precioTotal = this.ListaServSeleccionado.reduce((sum, value) => (sum + value.valorTotal), 0)
   }
 
 }
