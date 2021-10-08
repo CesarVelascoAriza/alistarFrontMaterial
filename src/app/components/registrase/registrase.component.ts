@@ -92,7 +92,7 @@ export class RegistraseComponent implements OnInit {
         console.log(response)
         this.identity = identity
         this._router.navigate([''])
-        Swal.fire('Nuevo servicio creado con éxito', 'succes');
+        Swal.fire('Nuevo Usuario creado con éxito', 'succes');
         this.dialog.closeAll();
       },
       error => {
