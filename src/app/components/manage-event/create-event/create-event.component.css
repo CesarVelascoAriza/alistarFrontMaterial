@@ -1,9 +1,18 @@
 .content {
-padding: 16px 45px;
+  padding: 16px 16px;
 }
 
 .content > mat-card {
-width: 1070px;
+  width: 900px;
+  text-align: center;
+  align-content: right;
+}
+
+mat-card-header{
+  padding: 12px ;
+  text-align: center;
+  background-color: #0c58a4;
+  color: white;  
 }
 
 button {

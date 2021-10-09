@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +9,7 @@ import { EventoOrden } from 'src/app/models/eventoPostOrden';
 import { Orden } from 'src/app/models/orden';
 import { Servicio } from 'src/app/models/servicio';
 import { Usuario } from 'src/app/models/usuario';
+import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
@@ -27,19 +29,22 @@ export class CreateEventComponent implements OnInit {
   servicioSeleccionado: Servicio = new Servicio();
   ListaServSeleccionado: Servicio [] = [];
   usuario: Usuario;
-  evento: Evento[] = [];
+  eventoList: Evento[] = [];
+  evento: Evento = new Evento();
   cantidad: number = 1;
   idOrden: number = 0;
   createTrasactionPayment: createTransactionPayment = new createTransactionPayment();
   titulo: string;
   servicios: number[] = []
+  err: HttpErrorResponse | undefined
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public manageEventService: ManageEventService,
     private manageServiceService: ManageServiceService,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private api_service: ApiServicesService
   ) { 
     this.titulo = 'Crea tu evento';
     this.ListaServSeleccionado = new Array<Servicio>();
@@ -120,14 +125,32 @@ export class CreateEventComponent implements OnInit {
 
   createEvent() {
     this.crearOrden.usuario = this.usuario.numeroIdentificacion
-    console.log(this.crearOrden, '  Orden');
+    console.log('lista de servicios.. ', this.ListaServSeleccionado);
+    for (let i = 0; i < this.ListaServSeleccionado.length; i++) 
+    {
+      const element = this.ListaServSeleccionado[i];
+      let newEvent = new Evento();
+
+      newEvent.cantidad = element.cantidad;
+      newEvent.servicio = element.idServicio;
+      newEvent.valorTotal = element.valorTotal;
+      this.eventoList.push(newEvent)
+    }
+    this.crearOrden.evento = this.eventoList
+    
     this.manageEventService.guardarOrden(this.crearOrden).subscribe(
       response => {
         console.log(response);
         Swal.fire('Success', 'Orden creada con éxito', 'success')
       }, error => {
-        console.log(error);        
-        Swal.fire('Error', error, 'error')
+        console.log('Error del sistema  ', error.status );
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+        }
+        Swal.fire('error', error.error , 'error').then(data => {
+          window.location.reload()
+        })
       }
     )
     
@@ -136,9 +159,8 @@ export class CreateEventComponent implements OnInit {
   agregarServiciosAlEvento() {
     this.dialog.open(ListServiceComponent)
 
-    this.manageEventService.servicioSeleccionado.subscribe(data => {
-      
-      //agregarlo por primera vez
+    this.manageEventService.servicioSeleccionado.subscribe(
+      data => {      //agregarlo por primera vez
       if (this.ListaServSeleccionado.length == 0) {
         this.ListaServSeleccionado.push(data)
         for (let i in this.ListaServSeleccionado) {
@@ -167,6 +189,14 @@ export class CreateEventComponent implements OnInit {
         }
       }
       this.cambiarValorTotalOrden();  
+    }, error => {
+      this.err = error
+        console.log('Error del sistema  ', this.err?.status );
+        if (this.err?.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+        }
+        Swal.fire('error', this.err?.error , 'error')
     })
   }
 
@@ -183,6 +213,11 @@ export class CreateEventComponent implements OnInit {
 
   cambiarValorTotalOrden() { 
     this.crearOrden.precioTotal = this.ListaServSeleccionado.reduce((sum, value) => (sum + value.valorTotal), 0)
+  }
+
+  saveOrder() {
+    console.log('Guardar orden');
+    console.log(this.crearOrden, '  Orden');
   }
 
 }

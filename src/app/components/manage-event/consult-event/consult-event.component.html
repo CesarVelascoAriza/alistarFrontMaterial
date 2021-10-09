@@ -7,7 +7,7 @@
         </mat-card-header>
         <mat-card-content> 
             <br>
-            <div class="alert alert-info" *ngIf="eventosUsuarios?.length == 0" >
+            <div class="alert alert-info" style="text-align: left;" *ngIf="eventosUsuarios?.length == 0" >
                 No hay eventos en el sistema.
             </div>
             <div *ngIf="eventosUsuarios?.length != 0">
@@ -72,7 +72,7 @@
                 </table>
             </div>
             <br>
-            <button mat-raised-button  routerLink="/create_events">
+            <button mat-raised-button routerLink="/create_events">
                 Crear eventos
             </button>
         </mat-card-content>

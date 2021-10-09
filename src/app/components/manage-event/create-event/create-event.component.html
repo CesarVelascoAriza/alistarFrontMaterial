@@ -3,7 +3,8 @@
         <mat-card-header>
             <h1 mat-dialog-title> {{ titulo }} </h1>
         </mat-card-header>
-        <div mat-dialog-content style="width: 600px;">
+        <br>
+        <div mat-dialog-content style="width: 895px; height: 440px;">
             <form #formulario="ngForm" >
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
@@ -57,58 +58,58 @@
                 </div>
                 <div mat-dialog-actions>
                   <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="agregarServiciosAlEvento()">Seleccionar Servicio</button>
-               </div>
-               <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Nombre Servicio</th>
-                    <th scope="col">cantidad</th>
-                    <th scope="col">Valor Unidad</th>
-                    <th scope="col">valor total</th>
-                    <th scope="col">Contacto</th>
-                    <th scope="col">Pagar</th>
-                    <th scope="col">borrar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
-                    <td>
-                      {{itemServicioSelect.nombreServicio}}
-                    </td>
-                    <td>
-                      <input type="number" value="{{itemServicioSelect.cantidad}}" min="1" max="50" name="cantidad" (change)="cambiarValorTotal(itemServicioSelect.idServicio)">
-                    </td>
-                    <td>
-                      {{itemServicioSelect.precionUnidad}}
-                    </td>
-                    <td>
-                      {{itemServicioSelect.valorTotal}}
-                    </td>
-                    <td>
-                      <a (click)="toWhatsApp()">
-                        <img src="../../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
-                      </a>
-                    </td>
-                    <td>
-                      <a (click)="toPay()">
-                        <!--<img src="../../../assets/img/logo-pse.png" height="50px" />-->
-                        <img src="https://www.nequi.com.co/wp-content/themes/nequi/img/logo_nequi_header.svg" height="20px" />
-                      </a>
-                    </td>
-                    <td>
-                      <button mat-mini-fab color="primary" type="button" class="btn btn-danger" (click)="borrar(this.itemServicioSelect.idServicio)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="3">Valor total de la orden</td>
-                    <td colspan="2" >{{crearOrden.precioTotal}}</td>
-                  </tr>
-                </tfoot>
-              </table>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nombre Servicio</th>
+                      <th scope="col">cantidad</th>
+                      <th scope="col">Valor Unidad</th>
+                      <th scope="col">Valor total</th>
+                      <th scope="col">Contacto</th>
+                      <th scope="col">Pagar</th>
+                      <th scope="col">borrar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
+                      <td>
+                        {{itemServicioSelect.nombreServicio}}
+                      </td>
+                      <td>
+                        <input type="number" value="{{itemServicioSelect.cantidad}}" min="1" max="50" name="cantidad" (change)="cambiarValorTotal(itemServicioSelect.idServicio)">
+                      </td>
+                      <td>
+                        {{itemServicioSelect.precionUnidad}}
+                      </td>
+                      <td>
+                        {{itemServicioSelect.valorTotal}}
+                      </td>
+                      <td>
+                        <a (click)="toWhatsApp()">
+                          <img src="../../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
+                        </a>
+                      </td>
+                      <td>
+                        <a (click)="toPay()">
+                          <!--<img src="../../../assets/img/logo-pse.png" height="50px" />-->
+                          <img src="https://www.nequi.com.co/wp-content/themes/nequi/img/logo_nequi_header.svg" height="20px" />
+                        </a>
+                      </td>
+                      <td>
+                        <button mat-mini-fab color="primary" type="button" class="btn btn-danger" (click)="borrar(this.itemServicioSelect.idServicio)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="3">Valor total de la orden</td>
+                      <td colspan="1" >{{crearOrden.precioTotal}}</td>
+                    </tr>
+                  </tfoot>
+                </table>
                 <div mat-dialog-actions>
                     <button (click)="createEvent()" mat-button >Guardar</button>
                 </div>

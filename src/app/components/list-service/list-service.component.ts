@@ -33,6 +33,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.listarServicios()
+
   }
 
   ngOnDestroy(): void {
@@ -56,6 +57,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
     this.manageService.listarServicios().subscribe(
       response => {
         this.servicios = response;
+        console.log(this.servicios);
       }, error => {
         this.msnError = 'Error al Listar Servicios ', error
         Swal.fire('Error', this.msnError, 'error')

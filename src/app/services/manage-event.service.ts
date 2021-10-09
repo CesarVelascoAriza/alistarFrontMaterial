@@ -30,9 +30,10 @@ export class ManageEventService  {
     return  this.http.post<Orden>(environment.UrlBase+'Orden/save-Orden',orden,{headers: httpHeaders});
   }
 
-  getAllOrdenByUsuaio(idUsuario: number):Observable<Orden[]>{
+  getAllEventsByUsuaio(idUsuario: number):Observable<Orden[]>{
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
-    return this.http.get<Orden[]>(environment.UrlBase + 'Orden/getIdUsuario?id=' + idUsuario,{headers: httpHeaders});
+    console.log('estamos aca ', httpHeaders);
+    return this.http.get<Orden[]>(environment.UrlBase + 'Evento/Get-evento-Usuario?id=' + idUsuario,{headers: httpHeaders});
   }
 
   getOrdernById(idOrden: number):Observable<Orden>

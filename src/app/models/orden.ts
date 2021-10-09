@@ -9,6 +9,5 @@ export class Orden {
   horario: Horario = new Horario();
   estado: Estado = new Estado();
   precioTotal: number = 0.0;
-  cantidad:number =0;
   evento:Array<Evento> = new Array<Evento>()
 }

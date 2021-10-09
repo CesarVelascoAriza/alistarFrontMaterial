@@ -82,10 +82,11 @@ export class ManageServiceService {
     return this.http.delete<Servicio>(environment.UrlBase + 'Servicio/delete-Servicio?id=' + idServicio, {headers: httpHeaders})
   }
 
-  updateService(idServicio: number): Observable<Servicio>
+  updateService(servicio: Servicio): Observable<Servicio>
   {
+    console.log('servicio en editar..', servicio);
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
-    return this.http.put<Servicio>(environment.UrlBase + 'Servicio/modify?id=' + idServicio, {headers: httpHeaders})
+    return this.http.put<Servicio>(environment.UrlBase + 'Servicio/modify', servicio, {headers: httpHeaders})
   }
 
   listarServicios(): Observable<Servicio[]>

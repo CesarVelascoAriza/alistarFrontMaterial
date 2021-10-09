@@ -7,7 +7,7 @@
         </mat-card-header>
         <mat-card-content>
             <br>
-            <div class="alert alert-info" *ngIf="serviciosUsuarios?.length == 0">
+            <div class="alert alert-info"  style="text-align: left;" *ngIf="serviciosUsuarios?.length == 0">
                 No hay servicios en el sistema.
             </div>
             <div *ngIf="serviciosUsuarios?.length != 0">
@@ -49,7 +49,7 @@
                                 </button>
                             </td>
                             <td>
-                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)='openDialogEditService()'>
+                                <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)='openDialogEditService(item.idServicio)'>
                                     <mat-icon>edit</mat-icon>
                                 </button>
                             </td>

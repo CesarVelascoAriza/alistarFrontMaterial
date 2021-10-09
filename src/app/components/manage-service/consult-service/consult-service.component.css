@@ -1,10 +1,19 @@
- .content {
-    padding: 16px 45px;
-  }
-  
-  .content > mat-card {
-    width: 1070px;
-  }
+.content {
+  padding: 16px 16px;
+}
+
+.content > mat-card {
+  width: 945px;
+  text-align: center;
+  align-content: right;
+}
+
+mat-card-header{
+  padding: 12px ;
+  text-align: center;
+  background-color: #0c58a4;
+  color: white;  
+}
 
   button {
     background-color: #083A80;
@@ -14,6 +23,13 @@
     color: #fff;
   }
 
+  mat-card-header{
+    padding: 12px ;
+    text-align: center;
+    background-color: #0c58a4;
+    color: white;  
+  }
+  
   table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;

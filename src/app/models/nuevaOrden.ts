@@ -7,6 +7,4 @@ export class Orden {
   horario: string = '';
   estado: Estado = new Estado();
   valorTotal: number = 0.0;
-  cantidad:number =0;
-
 }

@@ -1,0 +1,21 @@
+.content {
+    width: 650px;
+    text-align: center;
+    align-content: right;
+  }
+  
+  
+  button {
+    background-color: #083A80;
+    font-size: 1rem;
+    font-variation-settings: "wght" 625;
+    letter-spacing: -.75px;
+    color: #fff;
+  }
+  
+  mat-card-header{
+    padding: 12px ;
+    text-align: center;
+    background-color: #0c58a4;
+    color: white;  
+  }
