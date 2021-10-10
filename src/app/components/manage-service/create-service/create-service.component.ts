@@ -104,17 +104,13 @@ export class CreateServiceComponent implements OnInit {
         if (err.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
+          window.location.reload();
         }
-        Swal.fire('error', err.error , 'error')
       });
     } else {
       Swal.fire('Solo se permiten archivos .png', 'error')
     }
 
-  }
-
-  public editService(): void {
-    
   }
 
 }

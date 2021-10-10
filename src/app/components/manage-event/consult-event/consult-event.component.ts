@@ -48,19 +48,16 @@ export class ConsultEventComponent implements OnInit {
           this.eventosUsuarios.length = 0;
         }
       }, error => {
-        this.err = error
-        console.log('Error del sistema  ', this.err?.status );
-        if (this.err?.status == 403) {
+        if(error.status === 400){
+          Swal.fire('Error', 'Error al listar eventos', 'error')
+        }
+        if (error.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
+          window.location.reload(); 
         }
-        Swal.fire('error', this.err?.error , 'error')
       }
     );
-  }
-
-  invalidateLogin() {
-
   }
 }
 

@@ -143,14 +143,14 @@ export class CreateEventComponent implements OnInit {
         console.log(response);
         Swal.fire('Success', 'Orden creada con éxito', 'success')
       }, error => {
-        console.log('Error del sistema  ', error.status );
+        if(error.status === 400){
+          Swal.fire('Error', 'Error al Listar Servicios', 'error')
+        }
         if (error.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
-        }
-        Swal.fire('error', error.error , 'error').then(data => {
-          window.location.reload()
-        })
+          window.location.reload();
+        }       
       }
     )
     
@@ -195,8 +195,10 @@ export class CreateEventComponent implements OnInit {
         if (this.err?.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
+          Swal.fire('error', error.error , 'error').then(data => {
+            window.location.reload()
+          })
         }
-        Swal.fire('error', this.err?.error , 'error')
     })
   }
 

@@ -63,10 +63,8 @@ export class EditServiceComponent implements OnInit {
         if (error.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
+          window.location.reload();
         }
-        Swal.fire('error', error.error , 'error').then(data => {
-          window.location.reload()
-        }); 
       }
     )
   }

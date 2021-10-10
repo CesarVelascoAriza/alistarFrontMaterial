@@ -61,8 +61,10 @@ export class ConsultServiceComponent implements OnInit {
         if (this.err?.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
+          Swal.fire('error', error.error , 'error').then(data => {
+            window.location.reload()
+          })
         }
-        Swal.fire('error', this.err?.error , 'error')
       }
     );
   }
@@ -82,10 +84,8 @@ export class ConsultServiceComponent implements OnInit {
         if (error.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
-        }
-        Swal.fire('error', error.error , 'error').then(data => {
-          window.location.reload()
-        })
+          window.location.reload();
+        }        
       }
     )
   }
@@ -98,11 +98,19 @@ export class ConsultServiceComponent implements OnInit {
         localStorage.setItem('servicio', JSON.stringify(this.servicioInfo))
         this.dialog.open(ViewServiceComponent)
       }, error => { 
-        Swal.fire({ 
-          icon: 'error',
-          title: 'Error al Consultar Servicio',
-          text: error
-       })
+       if(error.status === 400){
+          Swal.fire({ 
+            icon: 'error',
+            title: 'Error al Consultar Servicio',
+            text: error
+          })
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }
+        
       }
     )
   }
@@ -114,11 +122,18 @@ export class ConsultServiceComponent implements OnInit {
         console.log('idServicio  ', idServicio);
         this.obtenerServicios();
       }, error => {
+       if(error.status === 400){
         Swal.fire({
           icon: 'error',
           title: 'Error al Borrar Servicio',
           text:  error
-       })
+        })
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }
       }
     )
   }

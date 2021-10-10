@@ -1,63 +1,65 @@
-<mat-card>
-  <mat-card-header>
-    <h1>Registro</h1>
-  </mat-card-header>
-  <br>
-  <mat-card-content>
-    <form  [formGroup]='formControlRegistrarse' (ngSubmit)="submitRegistrar()" class="formulariosRegistro">
-      <p>
-        <mat-form-field appearance="fill" class="form-control">
-          <mat-label>Tipo de Documento</mat-label>
-          <mat-select formControlName='tipoDocumento'>
-            <mat-option [value]="doc" *ngFor="let doc of tDocs">{{doc.descripcionLarga}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill"   class="form-control">
-          <mat-label>Número de Identificación</mat-label>
-          <input matInput  formControlName='numberIdentifi'>
+<div class="content">
+  <mat-card>
+    <mat-card-header>
+      <h1>Registro</h1>
+    </mat-card-header>
+    <br>
+    <mat-card-content>
+      <form  [formGroup]='formControlRegistrarse' (ngSubmit)="submitRegistrar()" class="formulariosRegistro">
+        <p>
+          <mat-form-field appearance="fill" class="form-control">
+            <mat-label>Tipo de Documento</mat-label>
+            <mat-select formControlName='tipoDocumento'>
+              <mat-option [value]="doc" *ngFor="let doc of tDocs">{{doc.descripcionLarga}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill"   class="form-control">
+            <mat-label>Número de Identificación</mat-label>
+            <input matInput  formControlName='numberIdentifi'>
+          </mat-form-field>
+          <mat-form-field appearance="fill"  class="form-control">
+            <mat-label>Nombre Completos</mat-label>
+            <input matInput formControlName='nameUser' >
+          </mat-form-field>
+  
+        <mat-form-field appearance="fill"  class="form-control">
+          <mat-label>Fecha de Nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" [min]="min" [max]="max" formControlName='dateUser' >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field appearance="fill"  class="form-control">
-          <mat-label>Nombre Completos</mat-label>
-          <input matInput formControlName='nameUser' >
+          <mat-label>Teléfono</mat-label>
+          <input  maxlength="15" formControlName='telefono'  matInput >
         </mat-form-field>
-
-      <mat-form-field appearance="fill"  class="form-control">
-        <mat-label>Fecha de Nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" [min]="min" [max]="max" formControlName='dateUser' >
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="fill"  class="form-control">
-        <mat-label>Teléfono</mat-label>
-        <input  maxlength="15" formControlName='telefono'  matInput >
-      </mat-form-field>
-      <mat-form-field appearance="fill"  class="form-control">
-        <mat-label>Dirección</mat-label>
-        <input  formControlName='direccion'  matInput >
-      </mat-form-field>
-      <mat-form-field appearance="fill"  class="form-control">
-        <mat-label>Contraseña</mat-label>
-        <input type="password" formControlName='password'  matInput >
-      </mat-form-field>
-      <mat-form-field appearance="fill"  class="form-control">
-        <mat-label>Correo Electrónico</mat-label>
-        <input  type="email"  formControlName='email'  matInput  [errorStateMatcher]="matcher"
-        placeholder="Ex. pat@example.com" >
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-      </mat-form-field>
-      <p class="conetido-Check">
-        <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
-      </p>
-      <mat-card-footer>
-          <!--<button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' (click)="register()">Guardar</button>-->
-          <button type="submit" class="btn"   mat-button color="primary" [disabled]='!formControlRegistrarse.valid'>Guardar</button>
-      </mat-card-footer>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <mat-form-field appearance="fill"  class="form-control">
+          <mat-label>Dirección</mat-label>
+          <input  formControlName='direccion'  matInput >
+        </mat-form-field>
+        <mat-form-field appearance="fill"  class="form-control">
+          <mat-label>Contraseña</mat-label>
+          <input type="password" formControlName='password'  matInput >
+        </mat-form-field>
+        <mat-form-field appearance="fill"  class="form-control">
+          <mat-label>Correo Electrónico</mat-label>
+          <input  type="email"  formControlName='email'  matInput  [errorStateMatcher]="matcher"
+          placeholder="Ex. pat@example.com" >
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+        </mat-form-field>
+        <p class="conetido-Check">
+          <mat-checkbox  formControlName='terminosCondiciones' class="example-margin">Acepta  <a href="">Termninos y Condiciones </a> </mat-checkbox>
+        </p>
+        <mat-card-footer>
+            <!--<button type="submit" mat-button color="primary" [disabled]='!formControlRegistrarse.valid' (click)="register()">Guardar</button>-->
+            <button type="submit" class="btn"  mat-button color="primary" [disabled]='!formControlRegistrarse.valid'>Guardar</button>
+        </mat-card-footer>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
 

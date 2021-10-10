@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Servicio } from 'src/app/models/servicio';
+import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
@@ -14,9 +16,9 @@ import Swal from 'sweetalert2';
 })
 export class ListServiceComponent implements OnInit, OnDestroy {
 
-  page_size : number =12
+  page_size : number =4
   page_number: number =1
-  pageSizeOptions: number[] = [8, 16, 32, 100];
+  pageSizeOptions: number[] = [4, 8, 16, 24];
   pageEvent: PageEvent |undefined;
   servicios: Servicio[] = [];
   msnError: string = "";
@@ -28,7 +30,9 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   constructor(
     private manageService: ManageServiceService,
     private manageEventService: ManageEventService,
-    public dialog:MatDialog
+    public dialog:MatDialog,
+    private api_service: ApiServicesService,
+    private router: Router
   ) {   }
 
   ngOnInit(): void {
@@ -59,8 +63,15 @@ export class ListServiceComponent implements OnInit, OnDestroy {
         this.servicios = response;
         console.log(this.servicios);
       }, error => {
-        this.msnError = 'Error al Listar Servicios ', error
-        Swal.fire('Error', this.msnError, 'error')
+        if(error.status === 400){
+          this.msnError = 'Error al Listar Servicios ', error
+          Swal.fire('Error', this.msnError, 'error')
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }
       }
     )
   }

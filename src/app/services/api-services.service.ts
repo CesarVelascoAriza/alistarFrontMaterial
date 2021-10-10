@@ -60,7 +60,7 @@ export class ApiServicesService {
   /**Método para guardar el token */
   public tokenSession(accessToken: string): void {
     this._token = accessToken;
-    console.log('tokwn en sesion ', this._token);
+    console.log('token en sesion ', this._token);
     
     sessionStorage.setItem('token',this._token);
     localStorage.setItem('token',this._token);
@@ -108,8 +108,7 @@ export class ApiServicesService {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.clear();
-    this._usuario = new Usuario();
-    this._token = "";
+    sessionStorage.clear();
   }
 
    /**Método que agrega el token */
