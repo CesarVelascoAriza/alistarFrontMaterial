@@ -10,6 +10,7 @@ import { DashboardEventComponent } from './components/dashboard-event/dashboard-
 import { ConsultEventComponent } from './components/manage-event/consult-event/consult-event.component';
 import { CreateEventComponent } from './components/manage-event/create-event/create-event.component';
 import { LoginComponent } from './components/login/login.component';
+import { ViewEventComponent } from './components/manage-event/view-event/view-event.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo:'home'},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path:'create_events', component:CreateEventComponent},
   {path:'dashboard-user', component:DashboardUserComponent},
   {path:'list',component:ListServiceComponent},
-  {path:'login',component:LoginComponent}
+  {path:'login',component:LoginComponent},
+  {path:'viewEvent',component:ViewEventComponent}
 ];
 
 @NgModule({

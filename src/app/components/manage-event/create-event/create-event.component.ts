@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { createTransactionPayment } from 'src/app/models/createTransactionPayment';
@@ -13,6 +14,7 @@ import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
+import { isDate } from 'util';
 import { ListServiceComponent } from '../../list-service/list-service.component';
 
 
@@ -24,12 +26,13 @@ import { ListServiceComponent } from '../../list-service/list-service.component'
 export class CreateEventComponent implements OnInit {
 
   crearOrden: Orden = new Orden();
+  crearEvento: Evento = new Evento();
   listEstado: Estado[] = [];
   events:EventoOrden = new EventoOrden();
   servicioSeleccionado: Servicio = new Servicio();
   ListaServSeleccionado: Servicio [] = [];
   usuario: Usuario;
-  eventoList: Evento[] = [];
+  ordenList: Orden[] = [];
   evento: Evento = new Evento();
   cantidad: number = 1;
   idOrden: number = 0;
@@ -38,7 +41,16 @@ export class CreateEventComponent implements OnInit {
   servicios: number[] = []
   err: HttpErrorResponse | undefined
 
+  formControlCreateEvent = this.fb.group({
+    nombreEvento:['', Validators.required],
+    fecha:['', Validators.required],
+    horaInicio:['', Validators.required],
+    horaFin:['', Validators.required],
+    estado:['', Validators.required]
+  })
+
   constructor(
+    private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     public manageEventService: ManageEventService,
@@ -52,8 +64,6 @@ export class CreateEventComponent implements OnInit {
     this.usuario = new Usuario();
     if(this.route.snapshot.paramMap.get('id')!=null || this.route.snapshot.paramMap.get('id')!=undefined ){
       this.idOrden =Number( this.route.snapshot.paramMap.get('id'));
-      this.getOrdenById();
-      this.listaServxOrden();
     }
   }
 
@@ -76,32 +86,26 @@ export class CreateEventComponent implements OnInit {
   }
 
   getListEstado() {
-    this.manageEventService.getAllEstados().subscribe(data => {
+    this.manageEventService.getAllEstados().subscribe(
+      data => {
       this.listEstado = data;
-    })
+      }, 
+      error => {
+        if(error.status === 400){
+          Swal.fire('Error', 'Error al crear el evento', 'error')
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }
+      })
   }
 
   editar()
   {
     this.crearOrden.precioTotal += this.servicioSeleccionado.valorTotal
     console.log('valor total: ' + this.crearOrden.precioTotal)
-  }
-
-  getOrdenById()
-  {
-    this.manageEventService.getOrdernById(this.idOrden).subscribe(response=>{
-      this.crearOrden = response
-      this.listaServxOrden();
-    });
-
-  }
-
-  listaServxOrden()
-  {
-    for (let index = 0; index < this.crearOrden.evento.length; index++) {
-      const element = this.crearOrden.evento[index];
-      this.seleccionServicio(element.servicio);
-    }
   }
 
   seleccionServicio(id: number){
@@ -123,28 +127,18 @@ export class CreateEventComponent implements OnInit {
     window.open("https://recarga.nequi.com.co/bdigitalpsl/?_ga=2.81606546.443474604.1621784967-1433038197.1607735026#!/", "_blank");
   }
 
+  //Método para crear eventos
   createEvent() {
-    this.crearOrden.usuario = this.usuario.numeroIdentificacion
-    console.log('lista de servicios.. ', this.ListaServSeleccionado);
-    for (let i = 0; i < this.ListaServSeleccionado.length; i++) 
-    {
-      const element = this.ListaServSeleccionado[i];
-      let newEvent = new Evento();
-
-      newEvent.cantidad = element.cantidad;
-      newEvent.servicio = element.idServicio;
-      newEvent.valorTotal = element.valorTotal;
-      this.eventoList.push(newEvent)
-    }
-    this.crearOrden.evento = this.eventoList
+    console.log('crear');
     
-    this.manageEventService.guardarOrden(this.crearOrden).subscribe(
+    console.log('formControlCreateEvent.. ', this.formControlCreateEvent.value.fecha);
+    /*this.manageEventService.guardarEvento(this.crearEvento).subscribe(
       response => {
         console.log(response);
-        Swal.fire('Success', 'Orden creada con éxito', 'success')
+        Swal.fire('Success', 'Evento creada con éxito', 'success')
       }, error => {
         if(error.status === 400){
-          Swal.fire('Error', 'Error al Listar Servicios', 'error')
+          Swal.fire('Error', 'Error al crear el evento', 'error')
         }
         if (error.status == 403) {
           this.api_service.logout();
@@ -152,8 +146,32 @@ export class CreateEventComponent implements OnInit {
           window.location.reload();
         }       
       }
-    )
+    )*/
     
+  }
+
+  //Método para crear la lista de ordenes
+  createOrderList() {
+    for (let i = 0; i < this.ListaServSeleccionado.length; i++) 
+    {
+      const element = this.ListaServSeleccionado[i];
+      let newOrder = new Orden();
+
+      newOrder.cantidad = element.cantidad;
+      newOrder.servicio = element.idServicio;
+      newOrder.precioTotal = element.valorTotal;
+      console.log(newOrder, '   ORDEN');
+      this.ordenList.push(newOrder)      
+    }   
+  }
+
+  formatFecha() {
+    console.log('fecha ', this.crearEvento.horario.fecha)
+    let fecha = (this.crearEvento.horario.fecha).toString()
+       
+    let date = new Date();
+    let result = date.toISOString();
+    console.log(result)
   }
 
   agregarServiciosAlEvento() {
@@ -202,6 +220,7 @@ export class CreateEventComponent implements OnInit {
     })
   }
 
+  //Cambiar el valor total al aumentar en el control de cantidad
   cambiarValorTotal(idServicio: number)
   {
     for (let i in this.ListaServSeleccionado) {

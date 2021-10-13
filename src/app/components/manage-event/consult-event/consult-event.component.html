@@ -7,10 +7,10 @@
         </mat-card-header>
         <mat-card-content> 
             <br>
-            <div class="alert alert-info" style="text-align: left;" *ngIf="eventosUsuarios?.length == 0" >
-                No hay eventos en el sistema.
+            <div class="alert alert-info" style="text-align: left;" *ngIf="eventosUsuarios?.length === 0" >
+                No hay eventos para este usuario.
             </div>
-            <div *ngIf="eventosUsuarios?.length != 0">
+            <div *ngIf="eventosUsuarios?.length !== 0">
                 <table>
                     <thead>
                         <th>
@@ -35,22 +35,19 @@
                     <tbody style="color: black; text-align: center;" >
                         <tr *ngFor="let item of eventosUsuarios">
                             <td>
-                                Ver, Editar, Borrar
+                                
                             </td>
                             <td>
-                                {{item.idOrden}}
+                                
                             </td>
                             <td>
-                                {{item.nombreEvento}}
+                                
                             </td>
                             <td>
-                                {{item.horario}}
+                                
                             </td>
                             <td>
-                                {{item.precioTotal}}
-                            </td>
-                            <td>
-                                {{item.estado}}
+
                             </td>
                             <td>
                                 <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" >

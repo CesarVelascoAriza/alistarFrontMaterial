@@ -61,7 +61,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
     this.manageService.listarServicios().subscribe(
       response => {
         this.servicios = response;
-        console.log(this.servicios);
+        console.log('Lista de servicios', this.servicios);
       }, error => {
         if(error.status === 400){
           this.msnError = 'Error al Listar Servicios ', error

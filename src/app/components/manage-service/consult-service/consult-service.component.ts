@@ -80,7 +80,9 @@ export class ConsultServiceComponent implements OnInit {
         localStorage.setItem('servicioEditar', JSON.stringify(this.servicioInfo))
         this.dialog.open(EditServiceComponent)
       }, error => {
-        console.log('Error del sistema  ', error.status );
+        if (error.status === 406) {
+          Swal.fire('error', 'No existen registros para este usuario' , 'error')
+        }
         if (error.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);

@@ -1,0 +1,22 @@
+<div class="content">
+    <mat-card>
+      <mat-card-header>
+        <h1>Registro</h1>
+      </mat-card-header>
+      <br>
+      <mat-card-content>
+        <form  [formGroup]='formControlViewEvent' (ngSubmit)="submitVisualizar()" class="formulariosRegistro">
+          <mat-form-field appearance="fill"  class="form-control">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="min" [max]="max" formControlName='fecha' >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-card-footer>
+              <button type="submit" class="btn"  mat-button color="primary" [disabled]='!formControlViewEvent.valid'>Guardar</button>
+          </mat-card-footer>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
