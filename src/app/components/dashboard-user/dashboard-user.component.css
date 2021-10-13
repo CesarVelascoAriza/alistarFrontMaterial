@@ -1,48 +1,65 @@
-.flex {
-  -webkit-flex: 1 1 0%;
-      -ms-flex: 1 1 0%;
-          flex: 1 1 0%;
-  box-sizing: border-box;
+.contenedor-Perfil
+{
+  padding-left: 2%;
+  padding-top: 2%;
+  padding-right: 1%;
+
 }
-.flex-20 {
-  -webkit-flex: 1 1 20%;
-      -ms-flex: 1 1 20%;
-          flex: 1 1 20%;
-  max-width: 20%;
-  max-height: 100%;
-  box-sizing: border-box;
+.example-card {
+  max-width: 400px;
 }
 
-.layout-row .flex-33 {
-  -webkit-flex: 1 1 calc(100% / 3);
-      -ms-flex: 1 1 calc(100% / 3);
-          flex: 1 1 calc(100% / 3);
-  box-sizing: border-box;
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+.contenido-formulario
+{
+  margin: 2%;
+  padding: 1%;
+}
+.mat-form-field
+{
+ margin-left: 1%;
+ width: 30%;
+}
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+
+}
+.inputfile + label {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: rgb(71, 67, 67);
+  background-color: rgba(146, 141, 141, 0.281);
+  display: inline-block;
+  height: 45px;
+  width: 30%;
+  text-align: center;
+  padding: 5px;
+  margin-top: 14px;
+  border-bottom :6px ;
+  margin-left: 1%;
 }
 
-.layout-row  .flex-66 {
-  -webkit-flex: 1 1 calc(200% / 3);
-      -ms-flex: 1 1 calc(200% / 3);
-          flex: 1 1 calc(200% / 3);
-  box-sizing: border-box;
+.inputfile:focus + label,
+.inputfile + label:hover {
+  background-color: rgba(64, 67, 71, 0.514);
+}
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
 }
 
-.layout-row .flex-33 {
-  max-width: calc(100% / 3);
-  max-height: 100%;
+.inputfile:focus + label {
+	outline: 1px dotted rgb(201, 200, 200);
+	outline: -webkit-focus-ring-color auto 5px;
 }
-
-.layout-row  .flex-66 {
-  max-width: calc(200% / 3);
-  max-height: 100%;
-}
-
-.layout-column .flex-33 {
-  max-width: 100%;
-  max-height: calc(100% / 3);
-}
-
-.layout-column  .flex-66 {
-  max-width: 100%;
-  max-height: calc(200% / 3);
+.Btn-actions
+{
+  margin-left: 40%;
 }

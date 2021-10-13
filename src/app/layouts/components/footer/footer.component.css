@@ -37,8 +37,11 @@
 
 .text-reset {
   color: grey;
+  text-align: justify;
+  padding: 2%;
 }
 .copy {
   align-content: center;
   text-align: center;
+  color: black;
 }
