@@ -23,9 +23,9 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   servicios: Servicio[] = [];
   msnError: string = "";
   ListaServSeleccionado: Servicio [] = [];
-  suscripcion: Subscription = new Subscription(); 
+  suscripcion: Subscription = new Subscription();
 
-  @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined; 
+  @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined;
 
   constructor(
     private manageService: ManageServiceService,
@@ -45,7 +45,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
     this.manageEventService.servicioSeleccionado = new EventEmitter<Servicio>();
 
   }
-  
+
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
@@ -78,7 +78,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
 
   enviarServicio(servicio : Servicio){
     servicio.cantidad = 1;
-    servicio.precionUnidad = 1000;
+
     this.manageEventService.servicioSeleccionado.emit(servicio)
     this.dialog.closeAll()
   }
