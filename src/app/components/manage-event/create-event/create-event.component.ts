@@ -132,7 +132,7 @@ export class CreateEventComponent implements OnInit {
     console.log('crear');
     
     console.log('formControlCreateEvent.. ', this.formControlCreateEvent.value.fecha);
-    /*this.manageEventService.guardarEvento(this.crearEvento).subscribe(
+    this.manageEventService.guardarEvento(this.crearEvento).subscribe(
       response => {
         console.log(response);
         Swal.fire('Success', 'Evento creada con éxito', 'success')
@@ -146,7 +146,7 @@ export class CreateEventComponent implements OnInit {
           window.location.reload();
         }       
       }
-    )*/
+    )
     
   }
 
