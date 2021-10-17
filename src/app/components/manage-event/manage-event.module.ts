@@ -22,12 +22,14 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ViewEventComponent } from './view-event/view-event.component';
 
 
 @NgModule({
   declarations: [
     CreateEventComponent,
-    ConsultEventComponent
+    ConsultEventComponent,
+    ViewEventComponent
   ],
   imports: [
     CommonModule,

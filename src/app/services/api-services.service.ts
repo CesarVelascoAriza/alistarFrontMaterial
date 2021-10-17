@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -6,6 +6,8 @@ import { Usuario } from '../models/usuario';
 import { UsuarioResponse } from '../models/usuaruiResponse';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { LocalStorageService } from './local-storage.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,7 @@ export class ApiServicesService {
   private httpHeaders = new HttpHeaders({'Content-Type':'application/json'});
   
   constructor(
+    private router: Router,
     protected http: HttpClient,
     private localStorageService: LocalStorageService
   ) { 
@@ -57,7 +60,7 @@ export class ApiServicesService {
   /**Método para guardar el token */
   public tokenSession(accessToken: string): void {
     this._token = accessToken;
-    console.log('tokwn en sesion ', this._token);
+    console.log('token en sesion ', this._token);
     
     sessionStorage.setItem('token',this._token);
     localStorage.setItem('token',this._token);
@@ -78,7 +81,7 @@ export class ApiServicesService {
   }
 
   /**Métodos para traer el usuario del local strage */
-  public get getUsuarioSesion(): Usuario {    
+  public get getUsuarioSesion(): Usuario {  
     return JSON.parse(this.localStorageService.geDatosStorage('usuario'))
   }
 
@@ -104,9 +107,8 @@ export class ApiServicesService {
     sessionStorage.removeItem('usuario');
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
-
-    console.log('this.user  ', this._usuario);
-    
+    localStorage.clear();
+    sessionStorage.clear();
   }
 
    /**Método que agrega el token */
@@ -118,5 +120,15 @@ export class ApiServicesService {
     }
     return this.httpHeaders
   }
+
+  /*invalidateLogin(err: HttpErrorResponse ) {
+    
+    console.log('Error del sistema  ', err?.status );
+    if (err?.status == 403) {
+      this.logout();
+      this.router.navigate(['/home']);
+    }
+    Swal.fire('error', err?.error , 'error')
+  }*/
 
 }

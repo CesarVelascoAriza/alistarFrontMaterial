@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Servicio } from 'src/app/models/servicio';
 import { Usuario } from 'src/app/models/usuario';
 import { ApiServicesService } from 'src/app/services/api-services.service';
@@ -24,12 +26,14 @@ export class ConsultServiceComponent implements OnInit {
   formview: boolean = false;
   cant: string = ""
   prueba: string = "Esto es una prueba"
+  err: HttpErrorResponse | undefined
   
   public titulo: string;
   
   constructor(
     private manageService: ManageServiceService,
     private dialog:MatDialog,
+    private router: Router,
     private api_service: ApiServicesService
   ) { 
     this.usuIdentity = new Usuario();
@@ -52,7 +56,15 @@ export class ConsultServiceComponent implements OnInit {
           this.serviciosUsuarios.length = 0;
         }
       }, error => {
-
+        this.err = error
+        console.log('Error del sistema  ', this.err?.status );
+        if (this.err?.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          Swal.fire('error', error.error , 'error').then(data => {
+            window.location.reload()
+          })
+        }
       }
     );
   }
@@ -61,8 +73,23 @@ export class ConsultServiceComponent implements OnInit {
     this.dialog.open(CreateServiceComponent)
   }
 
-  openDialogEditService() {
-    this.dialog.open(EditServiceComponent)
+  openDialogEditService(idServicio: number) {
+    this.manageService.viewService(idServicio).subscribe(
+      response => {
+        this.servicioInfo = response
+        localStorage.setItem('servicioEditar', JSON.stringify(this.servicioInfo))
+        this.dialog.open(EditServiceComponent)
+      }, error => {
+        if (error.status === 406) {
+          Swal.fire('error', 'No existen registros para este usuario' , 'error')
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }        
+      }
+    )
   }
 
   openDialogViewService(idServicio: number) {
@@ -73,14 +100,21 @@ export class ConsultServiceComponent implements OnInit {
         localStorage.setItem('servicio', JSON.stringify(this.servicioInfo))
         this.dialog.open(ViewServiceComponent)
       }, error => { 
-        Swal.fire({ 
-          icon: 'error',
-          title: 'Error al Consultar Servicio',
-          text: error
-       })
+       if(error.status === 400){
+          Swal.fire({ 
+            icon: 'error',
+            title: 'Error al Consultar Servicio',
+            text: error
+          })
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }
+        
       }
     )
-
   }
 
   openDialogDeleteService(idServicio: number) {
@@ -90,11 +124,18 @@ export class ConsultServiceComponent implements OnInit {
         console.log('idServicio  ', idServicio);
         this.obtenerServicios();
       }, error => {
+       if(error.status === 400){
         Swal.fire({
           icon: 'error',
           title: 'Error al Borrar Servicio',
           text:  error
-       })
+        })
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']);
+          window.location.reload();
+        }
       }
     )
   }

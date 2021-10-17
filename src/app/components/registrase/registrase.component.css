@@ -1,8 +1,13 @@
 .mat-card-header{
-    background-color: #e5e5f7;
+    /*background-color: #e5e5f7;
     opacity: 0.8;
-    background-image: radial-gradient(#00695C 1.4000000000000001px, #e5e5f7 1.4000000000000001px);
+    background-image: radial-gradient(#00695C 1.4000000000000001px, #e5e5f7 1.4000000000000001px);*/
     background-size: 28px 28px;
+
+    padding: 12px ;
+    text-align: center;
+    background-color: #0c58a4;
+    color: white;  
 }
 
 .mat-form-field {
@@ -30,4 +35,10 @@ form.formulariosRegistro
 {
   padding-left: 2%;
   margin: 8px 1%;
+}
+
+.content {
+  width: 600px;
+  text-align: center;
+  align-content: right;
 }

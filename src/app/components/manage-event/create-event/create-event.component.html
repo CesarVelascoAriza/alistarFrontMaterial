@@ -3,114 +3,97 @@
         <mat-card-header>
             <h1 mat-dialog-title> {{ titulo }} </h1>
         </mat-card-header>
-        <div mat-dialog-content style="width: 600px;">
-            <form #formulario="ngForm" >
+        <br>
+        <div mat-dialog-content style="height: 740px;">
+            <form [formGroup]='formControlCreateEvent'>
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
                     <mat-form-field appearance="outline">
-                        <mat-label for="nombreEvento">Nombre del evento</mat-label>
-                        <input matInput type="text" name="nombreEvento" id="nombreEvento" [(ngModel)]="crearOrden.nombreEvento" placeholder="Nombre Evento"  #nombreEvento="ngModel">
+                        <mat-label>Nombre del evento</mat-label>
+                        <input matInput formControlName='nombreEvento' placeholder="Nombre Evento" >
                         <mat-hint align="end">Nombre del Evento</mat-hint>
-                        <div *ngIf="nombreEvento.invalid && (nombreEvento.dirty || nombreEvento.touched)">
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                        </div>
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                      <mat-label>Fecha del Evento</mat-label>
-                      <input matInput [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha" #fecha="ngModel">
+                      <mat-label>Choose a date</mat-label>
+                      <input matInput [matDatepicker]="picker" formControlName="fecha">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
-                      <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
-                        <div id="emailHelp" class="form-text">Este campo debe tener formato de fecha</div>
-                      </div>
                     </mat-form-field>
-                    <div class="mb-3">
-                      <label for="hora" class="form-label">Hora Inicio Evento</label>
-                      <input type="time" class="form-control" required [(ngModel)]="crearOrden.horario.hora" #hora="ngModel"
-                        id="hora" name="hora" step="2">
-                      <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
+
+                   <div class="mb-3">
+                      <label class="form-label">Hora Inicio Evento</label>
+                      <input type="time" class="form-control" required formControlName='horaInicio' step="2">
+                      <div>
                         <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
-                        <mat-label for="fecha">Fecha del Evento</mat-label>
-                        <input matInput type="date" [matDatepicker]="picker" name='fecha' id ='fecha' required [(ngModel)]="crearOrden.horario.fecha"
-                        placeholder="Nombre Evento"  #fecha="ngModel">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-hint align="end">Fecha del Evento</mat-hint>
-                        <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
-                            <div id="emailHelp" class="form-text">Este campo debe tener formato de fecha</div>
-                        </div>
-                      <div class="mb-3">
-                        <label for="hora" class="form-label">Hora en la que se realizara el Evento</label>
-                        <input type="time" class="form-control" required [(ngModel)]="crearOrden.horario.hora" #hora="ngModel"
-                          id="hora" name="hora" step="2">
-                        <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
-                          <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
-                        </div>
+                      </div>
+                      <label class="form-label">Hora Finalización Evento</label>
+                      <input type="time" class="form-control" required formControlName='horaFin' step="2">
+                      <div>
+                        <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
                       </div>
                     </div>
                     <mat-form-field appearance="fill">
                       <mat-label>Estado</mat-label>
-                      <mat-select name="estado" id="estado" [(ngModel)]="crearOrden.estado" #estado="ngModel">
+                      <mat-select formControlName='estado'>
                           <mat-option selected disabled >Seleccione......</mat-option>
                           <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
                       </mat-select>
                     </mat-form-field>
-                </div>
                 <div mat-dialog-actions>
                   <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="agregarServiciosAlEvento()">Seleccionar Servicio</button>
-               </div>
-               <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Nombre Servicio</th>
-                    <th scope="col">cantidad</th>
-                    <th scope="col">Valor Unidad</th>
-                    <th scope="col">valor total</th>
-                    <th scope="col">Contacto</th>
-                    <th scope="col">Pagar</th>
-                    <th scope="col">borrar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
-                    <td>
-                      {{itemServicioSelect.nombreServicio}}
-                    </td>
-                    <td>
-                      <input type="number" value="{{itemServicioSelect.cantidad}}" min="1" max="50" name="cantidad" (change)="cambiarValorTotal(itemServicioSelect.idServicio)">
-                    </td>
-                    <td>
-                      {{itemServicioSelect.precionUnidad}}
-                    </td>
-                    <td>
-                      {{itemServicioSelect.valorTotal}}
-                    </td>
-                    <td>
-                      <a (click)="toWhatsApp()">
-                        <img src="../../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
-                      </a>
-                    </td>
-                    <td>
-                      <a (click)="toPay()">
-                        <!--<img src="../../../assets/img/logo-pse.png" height="50px" />-->
-                        <img src="https://www.nequi.com.co/wp-content/themes/nequi/img/logo_nequi_header.svg" height="20px" />
-                      </a>
-                    </td>
-                    <td>
-                      <button mat-mini-fab color="primary" type="button" class="btn btn-danger" (click)="borrar(this.itemServicioSelect.idServicio)">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="3">Valor total de la orden</td>
-                    <td colspan="2" >{{crearOrden.precioTotal}}</td>
-                  </tr>
-                </tfoot>
-              </table>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nombre Servicio</th>
+                      <th scope="col">cantidad</th>
+                      <th scope="col">Valor Unidad</th>
+                      <th scope="col">Valor total</th>
+                      <th scope="col">Contacto</th>
+                      <th scope="col">Pagar</th>
+                      <th scope="col">borrar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let itemServicioSelect of ListaServSeleccionado">
+                      <td>
+                        {{itemServicioSelect.nombreServicio}}
+                      </td>
+                      <td>
+                        <input type="number" value="{{itemServicioSelect.cantidad}}" min="1" max="50" name="cantidad" (change)="cambiarValorTotal(itemServicioSelect.idServicio)">
+                      </td>
+                      <td>
+                        {{itemServicioSelect.precionUnidad}}
+                      </td>
+                      <td>
+                        {{itemServicioSelect.valorTotal}}
+                      </td>
+                      <td>
+                        <a (click)="toWhatsApp()">
+                          <img src="../../../../assets/img/WhatsApp_Logo_3.png" height="50px" />
+                        </a>
+                      </td>
+                      <td>
+                        <a (click)="toPay()">
+                          <!--<img src="../../../assets/img/logo-pse.png" height="50px" />-->
+                          <img src="https://www.nequi.com.co/wp-content/themes/nequi/img/logo_nequi_header.svg" height="20px" />
+                        </a>
+                      </td>
+                      <td>
+                        <button mat-mini-fab color="primary" type="button" class="btn btn-danger" (click)="borrar(this.itemServicioSelect.idServicio)">
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="3">Valor total de la orden</td>
+                      <td colspan="1" >{{crearOrden.totalOrden}}</td>
+                    </tr>
+                  </tfoot>
+                </table>
                 <div mat-dialog-actions>
-                    <button (click)="createEvent()" mat-button >Guardar</button>
+                    <button mat-button type="submit" (click)="createEvent()" >Guardar</button>
                 </div>
               </div>
             </form>

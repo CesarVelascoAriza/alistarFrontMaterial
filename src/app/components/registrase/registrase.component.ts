@@ -85,6 +85,7 @@ export class RegistraseComponent implements OnInit {
     this.usuario.password = this.formControlRegistrarse.value.password;
     this.usuario.telefono = this.formControlRegistrarse.value.telefono;
     this.usuario.fechaNacimiento = this.formControlRegistrarse.value.dateUser;
+    
     console.log('Usuario: ' , this.usuario)
     this._usuarioService.register(this.usuario).subscribe(
       response => {

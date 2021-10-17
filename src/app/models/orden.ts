@@ -1,14 +1,6 @@
-import { Estado } from './estado';
-import { Evento } from './evento';
-import { Horario } from './horario';
-
 export class Orden {
-  nombreEvento:String='';
-  usuario: number = 0;
   idOrden: number = 0;
-  horario: Horario = new Horario();
-  estado: Estado = new Estado();
-  precioTotal: number = 0.0;
-  cantidad:number =0;
-  evento:Array<Evento> = new Array<Evento>()
+  servicio: number = 0;
+  cantidad: number = 0;
+  totalOrden: number = 0.0;
 }

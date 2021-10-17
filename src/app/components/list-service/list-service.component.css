@@ -1,5 +1,5 @@
 .example-card {
-  max-width: 400px;
+  max-width: 200px;
 }
 
 .example-header-image {
@@ -13,5 +13,11 @@ div.repetir
   flex-wrap: wrap;
 }
 div.repetir >mat-card{
-  margin: 10px;
+  margin: 20px;
+}
+
+mat-card-header{
+  padding: 12px ;
+  text-align: center;
+  opacity: 0.8; 
 }
