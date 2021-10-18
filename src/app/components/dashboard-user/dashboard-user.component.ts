@@ -25,7 +25,7 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
   day = new Date()
   min = new Date(new Date().getFullYear() - 80, 0, 1);
   max = new Date(new Date().getFullYear() - 18, new Date().getMonth(), this.day.getDate());
-
+  carga : boolean= false;
   actualizarForm=this.fb.group({
     tipoDocumento:['',Validators.required],
     numberIdentifi:['',Validators.required],
@@ -42,6 +42,7 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.carga= true
     this.getAltDocumentos();
     this.getUser();
   }
@@ -52,6 +53,7 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
   getUser(){
     this.api_service.getUsuarioById().subscribe(data=>{
       this.usuario=data
+      this.carga=false
       console.info(" usaurio : ",data)
     });
   }

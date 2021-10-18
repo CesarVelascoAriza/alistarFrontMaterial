@@ -24,7 +24,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   msnError: string = "";
   ListaServSeleccionado: Servicio [] = [];
   suscripcion: Subscription = new Subscription();
-
+  carga:boolean =false
   @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined;
 
   constructor(
@@ -58,19 +58,23 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   }
 
   listarServicios() {
+    this.carga= true
     this.manageService.listarServicios().subscribe(
       response => {
         this.servicios = response;
         console.log('Lista de servicios', this.servicios);
+        this.carga=false
       }, error => {
         if(error.status === 400){
           this.msnError = 'Error al Listar Servicios ', error
           Swal.fire('Error', this.msnError, 'error')
+          this.carga=false
         }
         if (error.status == 403) {
           this.api_service.logout();
           this.router.navigate(['/home']);
           window.location.reload();
+          this.carga=false
         }
       }
     )
