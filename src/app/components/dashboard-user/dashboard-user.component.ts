@@ -1,15 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { MediaObserver, MediaChange } from '@angular/flex-layout'
-import { Subscription } from 'rxjs'
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
 import { TipoDocumento } from 'src/app/models/tipoDocumento';
 import { DropDownService } from 'src/app/services/drop-down.service';
+import Swal from 'sweetalert2';
+import { ApiServicesService } from 'src/app/services/api-services.service';
+import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
-
-
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-dashboard-user',
@@ -21,24 +20,36 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
 
   hide = true;
   usuario: Usuario = new Usuario()
+  usuarioModificado: Usuario = new Usuario()
   tDocs : TipoDocumento[] = [];
   day = new Date()
   min = new Date(new Date().getFullYear() - 80, 0, 1);
   max = new Date(new Date().getFullYear() - 18, new Date().getMonth(), this.day.getDate());
   carga : boolean= false;
-  actualizarForm=this.fb.group({
-    tipoDocumento:['',Validators.required],
-    numberIdentifi:['',Validators.required],
-    nameUser:['',Validators.required],
-    dateUser:['',Validators.required],
-    telefono:['', Validators.required],
-    direccion:[this.usuario.direccion, Validators.required],
-    password:['', Validators.required],
-    email:['',Validators.required]
-  });
+  imagenUsuario: string = "";
 
-  constructor(private api_service :UsuarioService,private dropdownService: DropDownService,
+  //Atributos para la imagen
+  fotousuario?: Blob;
+  base64: string = 'Base64...'
+  imageUrl?: string;
+  tipo: string = '';
+
+  formControlUsuario = this.fb.group({
+    direccion:['', Validators.required],
+    telefono:['', Validators.required],
+    email:['', Validators.required],
+    password:['', Validators.required],
+    imagen:['', Validators.required]
+  })
+
+  constructor(
+    private api_service: ApiServicesService,
+    private dropdownService: DropDownService,
+    private router: Router,
+    private sant: DomSanitizer,
     private fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private localStorageService: LocalStorageService
     ) { }
 
   ngOnInit() {
@@ -48,10 +59,10 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-
+    this.obtenerImagenUsuario()
   }
   getUser(){
-    this.api_service.getUsuarioById().subscribe(data=>{
+    this.usuarioService.getUsuarioById().subscribe(data=>{
       this.usuario=data
       this.carga=false
       console.info(" usaurio : ",data)
@@ -64,14 +75,76 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
  }
 
  submitActualizar(){
-  this.usuario.numeroIdentificacion = this.actualizarForm.value.numberIdentifi ? 0 : this.usuario.numeroIdentificacion;
-  this.usuario.direccion = this.actualizarForm.value.direccion ? '' :this.usuario.direccion;
-  this.usuario.email = this.actualizarForm.value.email ? '' : this.usuario.email;
-  this.usuario.nombre = this.actualizarForm.value.nameUser ? '' :this.usuario.nombre  ;
-  this.usuario.telefono = this.actualizarForm.value.telefono?'':this.usuario.telefono;
-  this.usuario.fechaNacimiento = this.actualizarForm.value.dateUser?'':this.usuario.fechaNacimiento;
 
-   console.info(this.usuario);
+    this.usuario.direccion = this.formControlUsuario.value.direccion;
+    this.usuario.telefono = this.formControlUsuario.value.telefono;
+    this.usuario.email = this.formControlUsuario.value.email;
+    this.usuario.password = this.formControlUsuario.value.password;
+    this.usuario.imagen = this.localStorageService.geDatosStorage('imgUsub64')
+
+    this.usuarioService.updateUser(this.usuario).subscribe(
+      response => {
+        console.log('response  ', response);   
+        Swal.fire('Usuario editado con éxito', 'success').then(data => {
+          window.location.reload()
+        }); 
+      }, 
+      error => {
+        if(error.status === 400){
+          Swal.fire('Error en la edición del usuario', 'error');
+        }
+        if (error.status == 403) {
+          this.api_service.logout();
+          this.router.navigate(['/home']).then(data => {
+            window.location.reload();
+          })
+        }
+      }
+    )
 
  }
+
+ obtenerImagenUsuario() {
+   console.log('obtenerImagenUsuario', this.usuario);
+   
+    if (this.usuario !== null) {
+      this.usuarioService.getUsuarioById().subscribe(
+        response => {
+          this.usuario.imagen = response.imagen
+        }, 
+        error => {
+          if (error.status === 406) {
+            Swal.fire('error', 'No existen registros para este usuario' , 'error')
+          }
+          if (error.status == 403) {
+            this.api_service.logout();
+            this.router.navigate(['/home']).then(data => {
+              window.location.reload();
+            })
+          } 
+        }
+      )
+    }
+  }
+
+  public uploadImage(event: any): void { 
+    this.fotousuario = event.target.files[0];
+    let tipo = (this.fotousuario?.type)?.split('/')[1];
+    localStorage.setItem('tipoImagen', JSON.stringify(tipo))
+    if (tipo === 'png') {
+      this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fotousuario)) as string   
+      let reader = new FileReader();
+      reader.readAsDataURL(this.fotousuario as Blob);
+      reader.onloadend = () => {
+        this.base64 = reader.result as string;
+        const imagen = this.base64.split(',')[1]
+        console.log(imagen);
+        
+        localStorage.setItem('imgUsub64', imagen);
+      } 
+    } else {
+      Swal.fire('Solo se permiten archivos .png', 'error')
+    }
+  }
+
 }

@@ -13,9 +13,10 @@ import { ManageEventService } from 'src/app/services/manage-event.service';
 })
 export class ViewEventComponent implements OnInit {
 
-  public evento: Evento;
-  public ordenes: Servicio[] = [];
-  public detalleOrden: Orden[] = [];
+  evento: Evento;
+  ordenes: Servicio[] = [];
+  detalleOrden: Orden[] = [];
+  carga : boolean= false;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -25,7 +26,6 @@ export class ViewEventComponent implements OnInit {
     this.evento = JSON.parse(this.localStorageService.geDatosStorage('evento'));
     this.ordenes = this.manageEvent.ordenEvento
     this.detalleOrden = this.manageEvent.detalleOrden
-    
   }
 
   ngOnInit(): void {

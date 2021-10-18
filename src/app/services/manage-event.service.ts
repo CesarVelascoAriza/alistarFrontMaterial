@@ -39,6 +39,8 @@ export class ManageEventService  {
   }
 
   updateEvent(evento: Evento): Observable<Evento> {
+    console.log('evento a editar... ', evento);
+    
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
     return this.http.put<Evento>(environment.UrlBase+'Evento/update-evento', evento, {headers: httpHeaders})
   }

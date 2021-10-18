@@ -27,8 +27,8 @@ export class ConsultServiceComponent implements OnInit {
   cant: string = ""
   prueba: string = "Esto es una prueba"
   err: HttpErrorResponse | undefined
-  
-  public titulo: string;
+  carga : boolean= false;
+  titulo: string;
   
   constructor(
     private manageService: ManageServiceService,
@@ -44,15 +44,17 @@ export class ConsultServiceComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.carga = true;
     this.obtenerServicios(); 
   } 
 
   public obtenerServicios(): any {
     let usuario = this.api_service.getUsuarioSesion
-   
+    console.log(usuario.numeroIdentificacion)
     this.manageService.getServicexUser(usuario.numeroIdentificacion).subscribe(
       response =>{
         this.serviciosUsuarios = response
+        this.carga = false;
         if (this.serviciosUsuarios.length === undefined) {
           this.serviciosUsuarios.length = 0;
         }
@@ -65,6 +67,7 @@ export class ConsultServiceComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false;  
       }
     );
   }
@@ -74,11 +77,13 @@ export class ConsultServiceComponent implements OnInit {
   }
 
   openDialogEditService(idServicio: number) {
+    this.carga = true
     this.manageService.viewService(idServicio).subscribe(
       response => {
         this.servicioInfo = response
         localStorage.setItem('servicioEditar', JSON.stringify(this.servicioInfo))
         this.dialog.open(EditServiceComponent)
+        this.carga = false
       }, error => {
         if (error.status === 406) {
           Swal.fire('error', 'No existen registros para este usuario' , 'error')
@@ -88,17 +93,20 @@ export class ConsultServiceComponent implements OnInit {
           this.router.navigate(['/home']).then(data => {
             window.location.reload();
           })
-        }        
+        }   
+        this.carga = false     
       }  
     )
   }
 
   openDialogViewService(idServicio: number) {
+    this.carga = true
     this.manageService.viewService(idServicio).subscribe(
       response => {
         this.servicioInfo = response
         localStorage.setItem('servicio', JSON.stringify(this.servicioInfo))
         this.dialog.open(ViewServiceComponent)
+        this.carga = false
       }, error => { 
        if(error.status === 400){
           Swal.fire({ 
@@ -113,15 +121,17 @@ export class ConsultServiceComponent implements OnInit {
             window.location.reload();
           })
         }
-        
+        this.carga = false
       }
     )
   }
 
   openDialogDeleteService(idServicio: number) {
+    this.carga = true
     this.manageService.deleteService(idServicio).subscribe(
       response => {
         this.obtenerServicios();
+        this.carga = false
       }, error => {
        if(error.status === 400){
         Swal.fire({
@@ -136,6 +146,7 @@ export class ConsultServiceComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false
       }
     )
   }

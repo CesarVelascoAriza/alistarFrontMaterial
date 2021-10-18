@@ -9,7 +9,7 @@
         </mat-card-subtitle>
       </mat-card-header>
   
-      <mat-card-content>
+     <!-- <mat-card-content> -->
         <div class="contenido-formulario">
           <form >
             <div class="form-control">
@@ -22,26 +22,26 @@
                 <input matInput type="text" name="valorTotal" id="valorTotal" value="{{evento.valorTotal}}" readonly [(ngModel)]="evento.valorTotal">
               </mat-form-field>
               <mat-form-field appearance="fill">
-                <mat-label>{{evento.estado.estado}}</mat-label>
-                <mat-select >
-                    <mat-option value="{{evento.estado.estado}}" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
-                </mat-select>
+                  <mat-label>Estado</mat-label>
+                  <mat-select name="estado" id="estado" [(ngModel)]="evento.estado.estado">
+                      <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
+                  </mat-select>
               </mat-form-field>
             </div>
             <div class="form-control">
               <mat-form-field appearance="fill">
                 <mat-label>Fecha</mat-label>
-                <input matInput [matDatepicker]="picker" value="{{evento.horario.fecha}}">
+                <input matInput [matDatepicker]="picker" name="fecha" id="fecha" value="{{evento.horario.fecha}}" (ngModelChange)="onDateChange($event)"  >
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Hora Inicio</mat-label>
-                <input type="time" class="form-control" required step="2" matInput value="{{evento.horario.horaInicio}}" >
+                <input type="time" name="horaInicio" id="horaInicio" class="form-control" required step="2" matInput value="{{evento.horario.horaInicio}}" (ngModelChange)="onDateChange($event)" >
               </mat-form-field>
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Hora Finalización</mat-label>
-                <input type="time" class="form-control" required step="2" matInput value="{{evento.horario.horaFin}}" >
+                <input type="time" name="horaFin" id="horaFin" class="form-control" required step="2" matInput value="{{evento.horario.horaFin}}" (ngModelChange)="onDateChange($event)">
               </mat-form-field>
             </div>
             <div id="contenedor">
@@ -97,7 +97,6 @@
                       </td>
                     </tr>
                   </tbody>
-                
                 </table>
               </div>
             </div>
@@ -111,7 +110,7 @@
             </mat-card-actions>
           </form> 
         </div>
-      </mat-card-content>
+      <!-- </mat-card-content> -->
   
       <mat-card-footer>
   

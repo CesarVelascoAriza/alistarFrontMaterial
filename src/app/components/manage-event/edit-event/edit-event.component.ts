@@ -18,12 +18,14 @@ import Swal from 'sweetalert2';
 })
 export class EditEventComponent implements OnInit {
 
-  public evento: Evento;
-  public ordenes: Servicio[] = [];
-  public detalleOrden: Orden[] = [];
-  public listEstado: Estado[] = [];
+  evento: Evento;
+  ordenes: Servicio[] = [];
+  detalleOrden: Orden[] = [];
+  listEstado: Estado[] = [];
   servicioSeleccionado: Servicio = new Servicio();
   ordenSeleccionada: Orden = new Orden();
+  carga : boolean= false;
+  mensajes: string = ""
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -45,11 +47,14 @@ export class EditEventComponent implements OnInit {
 
   actualizarEvento(): void {
     console.log('Evento a aactualizar... ',this.evento);
-    
+    this.carga = true
     this.manageEvent.updateEvent(this.evento).subscribe(
       response => {
+        console.log('response... ', response);
         this.dialog.closeAll();    
-        Swal.fire('Evento editado con éxito', 'success').then(data => {
+        this.carga = false;
+        this.mensajes = 'Evento ' , response.nombreEvento, 'editado con éxito'
+        Swal.fire(this.mensajes, 'success').then(data => {
           window.location.reload()
         }); 
       },
@@ -64,6 +69,7 @@ export class EditEventComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false;
       }
     )
   }
@@ -75,9 +81,11 @@ export class EditEventComponent implements OnInit {
   }
 
   getListEstado() {
+    this.carga = true
     this.manageEvent.getAllEstados().subscribe(
       data => {
-        this.listEstado = data;       
+        this.listEstado = data;   
+        this.carga = false    
       },
       error => {
         if(error.status === 400){
@@ -88,17 +96,24 @@ export class EditEventComponent implements OnInit {
           this.router.navigate(['/home']);
           window.location.reload();
         }
+        this.carga = false 
       }
     )
   }
 
   borrar(idServicio: number, idOrden: number) {
-
     console.log('idServicio.. ', this.ordenes);
     const index: number = this.ordenes.indexOf(this.servicioSeleccionado, idServicio)
     const index2: number = this.detalleOrden.indexOf(this.ordenSeleccionada, idOrden)
     this.ordenes.splice(index)
     this.detalleOrden.splice(index2)
+    this.evento.orden = this.detalleOrden;
+  }
+
+  onDateChange(change: any) {
+    const newVal = change
+    console.log("Fecha cambiada ... ", newVal);
+
   }
   
 }

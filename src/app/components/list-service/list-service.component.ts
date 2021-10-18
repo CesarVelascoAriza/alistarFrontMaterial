@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { accionServicios } from 'src/app/models/accionServicios';
 import { Servicio } from 'src/app/models/servicio';
 import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
@@ -15,7 +14,7 @@ import Swal from 'sweetalert2';
   templateUrl: './list-service.component.html',
   styleUrls: ['./list-service.component.css']
 })
-export class ListServiceComponent implements OnInit, OnDestroy, accionServicios {
+export class ListServiceComponent implements OnInit, OnDestroy {
 
   page_size : number =4
   page_number: number =1
@@ -26,6 +25,7 @@ export class ListServiceComponent implements OnInit, OnDestroy, accionServicios 
   ListaServSeleccionado: Servicio [] = [];
   suscripcion: Subscription = new Subscription();
   carga:boolean =false
+  
   @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined;
 
   constructor(
@@ -35,10 +35,6 @@ export class ListServiceComponent implements OnInit, OnDestroy, accionServicios 
     private api_service: ApiServicesService,
     private router: Router
   ) {   }
-
-  cambiarVisibilidad(flag: boolean): Boolean {
-    return flag;
-  }
 
   ngOnInit(): void {
     this.listarServicios()

@@ -27,8 +27,8 @@ export class ConsultEventComponent implements OnInit {
   err: HttpErrorResponse | undefined
   listaOrdenesEvento: Servicio[]=[];
   listaOrdenes: Orden[] = [];
-
-  public titulo: string;
+  carga : boolean= false;
+  titulo: string;
 
   constructor(
     private router: Router,
@@ -44,6 +44,7 @@ export class ConsultEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.carga = true;
     this.obtenerEventos();
   }
 
@@ -54,8 +55,7 @@ export class ConsultEventComponent implements OnInit {
     this.manageEvent.getAllEventsByUsuaio(usuario.numeroIdentificacion).subscribe(
       response => {
         this.eventosUsuarios = response
-        console.log('Eventos de usuario.. ', this.eventosUsuarios);
-        
+        this.carga = false;        
         if (this.eventosUsuarios.length === undefined) {
           this.eventosUsuarios.length = 0;
         }
@@ -69,11 +69,13 @@ export class ConsultEventComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false;  
       }
     );
   }
 
   openDialogViewEvent(idEvent: number) {
+    this.carga = true
     this.manageEvent.viewEvent(idEvent).subscribe(
       response => {
         this.eventInfo = response
@@ -83,6 +85,7 @@ export class ConsultEventComponent implements OnInit {
         }
         localStorage.setItem('evento', JSON.stringify(this.eventInfo));
         this.dialog.open(ViewEventComponent);
+        this.carga = false
       },
       error => {
         if(error.status === 400){
@@ -98,11 +101,13 @@ export class ConsultEventComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false
       }
     )
   }
 
   openDialogEditEvent(idEvent: number) {
+    this.carga = true
     this.manageEvent.viewEvent(idEvent).subscribe(
       response => {
         this.eventInfo = response
@@ -111,6 +116,7 @@ export class ConsultEventComponent implements OnInit {
         }
         localStorage.setItem('eventoEditar', JSON.stringify(this.eventInfo))
         this.dialog.open(EditEventComponent)
+        this.carga = false
       }, 
       error => {
         if (error.status === 406) {
@@ -122,14 +128,17 @@ export class ConsultEventComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false
       }
     )
   }
 
   openDialogDeleteEvent(idEvent: number) {
+    this.carga = true
     this.manageEvent.deleteEvent(idEvent).subscribe(
       response => {
         this.obtenerEventos();
+        this.carga = false
       },
       error => {
         if(error.status === 400){
@@ -145,6 +154,7 @@ export class ConsultEventComponent implements OnInit {
             window.location.reload();
           })
         }
+        this.carga = false
       }
     )
   }

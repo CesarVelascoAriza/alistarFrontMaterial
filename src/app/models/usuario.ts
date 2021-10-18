@@ -9,5 +9,5 @@ export class Usuario {
   tipoDocumento: TipoDocumento = new TipoDocumento();
   telefono: string = "";
   email: string = '';
-  imagenHashCode: string = '';
+  imagen: string = '';
 }

@@ -35,7 +35,7 @@
                         <mat-hint align="end">Descripcon Servicio</mat-hint>
                     </mat-form-field>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input"
+                        <input (change)="uploadImage($event)" type="file" class="custom-file-input"
                             id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                     </div>
                 </div>

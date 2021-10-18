@@ -45,11 +45,11 @@ export class ApiServicesService {
   /**Método para guardar el usuario */
   public usuarioSession(accesToken: string): void {
     let payload = this.decodeDatosToken(accesToken)
+    console.log('token , ', payload);
     this._usuario = new Usuario();
-    this._usuario.nombre = payload.name
+    this._usuario.nombre = payload.nombreUusario
     this._usuario.email = payload.email
     this._usuario.direccion = payload.direccion
-    this._usuario.imagenHashCode = payload.imagenPerfil
     this._usuario.fechaNacimiento = payload.fechaNacimiento
     this._usuario.telefono = payload.telefono
     this._usuario.numeroIdentificacion = payload.sub
@@ -120,15 +120,5 @@ export class ApiServicesService {
     }
     return this.httpHeaders
   }
-
-  /*invalidateLogin(err: HttpErrorResponse ) {
-    
-    console.log('Error del sistema  ', err?.status );
-    if (err?.status == 403) {
-      this.logout();
-      this.router.navigate(['/home']);
-    }
-    Swal.fire('error', err?.error , 'error')
-  }*/
 
 }

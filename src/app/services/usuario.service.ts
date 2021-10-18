@@ -12,7 +12,11 @@ export class UsuarioService {
 
   public url: string
   public helper = new JwtHelperService();
-  constructor( private http: HttpClient, private token:ApiServicesService ) {
+  constructor( 
+    private http: HttpClient, 
+    private token:ApiServicesService,
+    private api_service: ApiServicesService
+  ) {
     this.url = environment.UrlBase
   }
 
@@ -37,7 +41,10 @@ export class UsuarioService {
     return this.http.get<Usuario>(environment.UrlBase+'Usuarios/getUserBy?id='+usuaro.numeroIdentificacion, httpOptionsLocal)
   }
 
-
+  updateUser(usuario: Usuario) {
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.put<Usuario>(environment.UrlBase+'Usuarios/updateUser', usuario, {headers: httpHeaders})
+  }
 
 
 

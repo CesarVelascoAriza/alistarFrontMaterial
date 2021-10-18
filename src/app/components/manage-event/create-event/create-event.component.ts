@@ -30,6 +30,7 @@ export class CreateEventComponent implements OnInit {
   listEstado: Estado[] = [];
   events:EventoOrden = new EventoOrden();
   servicioSeleccionado: Servicio = new Servicio();
+  servicioBorrado: Servicio = new Servicio();
   ListaServSeleccionado: Servicio [] = [];
   usuario: Usuario;
   ordenList: Orden[] = [];
@@ -84,6 +85,7 @@ export class CreateEventComponent implements OnInit {
     console.log('lista selecciondos antes: ', this.ListaServSeleccionado)
     this.ListaServSeleccionado.splice(index);
     console.log('lista selecciondos despues: ', this.ListaServSeleccionado)
+    this.cambiarValorTotalOrden();
   }
 
   getListEstado() {
@@ -148,8 +150,9 @@ export class CreateEventComponent implements OnInit {
 
     this.manageEventService.saveEvent(this.crearEvento).subscribe(
       response => {
-        console.log(response);
-        Swal.fire('Success', 'Evento creada con éxito', 'success')
+          Swal.fire('Evento creado con éxito', 'success').then(data => {
+            this.router.navigate(['/consult_events']);
+          }); 
       }, error => {
         if(error.status === 400){
           Swal.fire('Error', 'Error al crear el evento', 'error')
