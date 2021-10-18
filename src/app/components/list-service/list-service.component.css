@@ -1,25 +1,33 @@
 .example-card {
+
   max-width: 350px;
+  max-width: 23%;
+
 }
 
 .example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-image: url("https://material.angular.io/assets/img/examples/shiba1.jpg");
   background-size: cover;
 }
-div.repetir
-{
+div.repetir {
   float: left;
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
-div.repetir >mat-card{
-  margin: 20px;
+div.repetir > mat-card {
+  margin: 1%;
 }
 
-mat-card-header{
-  padding: 12px ;
+mat-card-header {
   text-align: center;
-  opacity: 0.8; 
+  opacity: 0.8;
+}
+.load {
+  margin-left: 30%;
+  margin-bottom: 10%;
+  position: fixed;
+  padding: 5%;
 }
 
 .imagen {

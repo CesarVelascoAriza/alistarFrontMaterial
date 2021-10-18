@@ -11,15 +11,15 @@
   
       <mat-card-content>
         <div class="contenido-formulario">
-          <form class="example-form" >
+          <form >
             <div class="form-control">
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Usuario</mat-label>
-                <input matInput type="text" value="{{evento.usuario}}" readonly >
+                <input matInput type="text" name="usuario" id="usuario" value="{{evento.usuario}}" readonly [(ngModel)]="evento.usuario">
               </mat-form-field>
               <mat-form-field class="example-full-width" appearance="fill">
                 <mat-label>Valor Total Evento</mat-label>
-                <input matInput type="text" value="{{evento.valorTotal}}" readonly >
+                <input matInput type="text" name="valorTotal" id="valorTotal" value="{{evento.valorTotal}}" readonly [(ngModel)]="evento.valorTotal">
               </mat-form-field>
               <mat-form-field appearance="fill">
                 <mat-label>{{evento.estado.estado}}</mat-label>

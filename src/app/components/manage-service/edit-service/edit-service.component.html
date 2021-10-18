@@ -7,7 +7,7 @@
         <div mat-dialog-content style="width: 600px;">
             <form >
                 <div fxLayout="column" fxLayoutAlign="space-between right" fxLayoutGap="10px" class="stats-cards">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                         <mat-label>Nombre Servicio</mat-label>
                         <input matInput type="text" name="nombreServicio" id="nombreServicio" value="{{servicio.nombreServicio}}" [(ngModel)]="servicio.nombreServicio">
                         <mat-hint align="end">Nombre del Servicio</mat-hint>
@@ -19,17 +19,17 @@
                             <mat-option [value]="cat" *ngFor="let cat of categorias">{{cat.nombreCategoria}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                         <mat-label>Precio Servicio</mat-label>
                         <input matInput type="number" id="precionUnidad" name="precionUnidad"  value="{{servicio.precionUnidad}}" [(ngModel)]="servicio.precionUnidad">
                         <mat-hint align="end">Precio Servicio</mat-hint>
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                         <mat-label>Direccion Servicio</mat-label>
                         <input matInput type="text" id="dirservicio" name="dirservicio" value="{{servicio.direccion}}" [(ngModel)]="servicio.direccion">
                         <mat-hint align="end">Dirección Servicio</mat-hint>
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                         <mat-label>Descripcon Servicio</mat-label>
                         <input matInput type="text" id="descripcion" name="descripcion"  value="{{servicio.descripcionServicio}}" [(ngModel)]="servicio.descripcionServicio">
                         <mat-hint align="end">Descripcon Servicio</mat-hint>
