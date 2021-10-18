@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Evento } from 'src/app/models/evento';
+import { Orden } from 'src/app/models/orden';
+import { Servicio } from 'src/app/models/servicio';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ManageEventService } from 'src/app/services/manage-event.service';
 
 @Component({
   selector: 'app-view-event',
@@ -8,23 +13,29 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class ViewEventComponent implements OnInit {
 
-  day = new Date()
-  min =new Date(new Date().getFullYear()-80 , 0, 1);
-  max =new Date(new Date().getFullYear()-18 ,new Date().getMonth(),  this.day.getDate() );
+  public evento: Evento;
+  public ordenes: Servicio[] = [];
+  public detalleOrden: Orden[] = [];
 
   constructor(
-    private fb: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
+    private localStorageService: LocalStorageService,
+    public dialog:MatDialog,
+    private manageEvent: ManageEventService
+  ) { 
+    this.evento = JSON.parse(this.localStorageService.geDatosStorage('evento'));
+    this.ordenes = this.manageEvent.ordenEvento
+    this.detalleOrden = this.manageEvent.detalleOrden
+    
   }
 
-  formControlViewEvent = this.fb.group({
-    fecha:['', Validators.required]
-  })
+  ngOnInit(): void {
+   
+  }
 
-  submitVisualizar() {
-    console.log(this.formControlViewEvent.value.fecha)
+  close() {
+    this.dialog.closeAll();
+    this.ordenes = [];
+    this.detalleOrden = [];
   }
 
 }

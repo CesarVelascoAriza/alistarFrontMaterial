@@ -9,6 +9,5 @@ export class Evento {
   usuario: number = 0;
   horario: Horario = new Horario();
   estado: Estado = new Estado();
-  ordenes:Array<Orden> = new Array<Orden>()
+  orden:Array<Orden> = new Array<Orden>()
 }
- 

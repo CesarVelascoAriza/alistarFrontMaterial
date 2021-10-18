@@ -55,15 +55,14 @@ export class EditServiceComponent implements OnInit {
           window.location.reload()
         }); 
       }, error => {
-        console.log(error.status);
         if(error.status === 400){
           Swal.fire('Error en la creación del servicio', 'error');
         }
-        console.log('Error del sistema  ', error.status );
         if (error.status == 403) {
           this.api_service.logout();
-          this.router.navigate(['/home']);
-          window.location.reload();
+          this.router.navigate(['/home']).then(data => {
+            window.location.reload();
+          })
         }
       }
     )

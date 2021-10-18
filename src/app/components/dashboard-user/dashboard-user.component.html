@@ -1,24 +1,91 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <button mat-raised-button color="accent" >Crear Servicio</button>
-  <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
-    <mat-card fxFlex="25">
-      <app-widget-card label="Servicios mas solicitados" ></app-widget-card>
-    </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-card label="No hay servicios para atender hoy"></app-widget-card>
-    </mat-card>
-    <mat-card fxFlex="25">
-        <app-widget-card label="Proximos Eventos" ></app-widget-card>
-    </mat-card>
-  </div>
-  <mat-divider></mat-divider>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-      
-      <div fxFlex="40">
-          <app-widget-pie ></app-widget-pie>
+<div class="contenedor-Perfil">
+
+  <mat-card class="perfil-usario">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Usuario : {{usuario.nombre}}</mat-card-title>
+      <mat-card-subtitle>
+        Edita Tu Perfil
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="contenido-formulario">
+        <form class="example-form" (ngSubmit)="submitActualizar()" >
+          <div class="form-control">
+            <mat-form-field appearance="fill">
+              <mat-label>Select</mat-label>
+              <mat-select value="{{usuario.tipoDocumento.tipoDocumento}}" disabled  >
+                <mat-option value="{{doc.tipoDocumento}}" *ngFor="let doc of tDocs">{{doc.descripcionLarga}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Numero Registrado </mat-label>
+              <input value="{{usuario.numeroIdentificacion}}"  disabled matInput>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Nombres</mat-label>
+            </mat-form-field>
+
+          </div>
+
+          <div class="form-control">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Direcci&oacute;n</mat-label>
+              <input matInput type="text" value="{{usuario.direccion}}"   >
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Tel&eacute;fono</mat-label>
+              <span matPrefix>+57 &nbsp;</span>
+              <input type="tel" matInput placeholder="601-153-54-96" value="{{usuario.telefono}}"  >
+              <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input type="email" value="{{usuario.email}}" matInput placeholder="Ex. usuario@example.com" >
+              <mat-hint>Errors appear instantly!</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="form-control">
+            <mat-form-field appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker" [min]="min" [max]="max"  value="{{usuario.fechaNacimiento}}" >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Cambiar de password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'"  value="{{usuario.password}}" >
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="form-control">
+            <input type="file" name="file" id="file" class="inputfile" />
+            <label for="file">Achivo Imagen</label>
+          </div>
+
+          <mat-card-actions class="Btn-actions">
+            <button  type="submit"  mat-button>Actualizar</button>
+          </mat-card-actions>
+        </form>
+
+
+
+
       </div>
-  </div>
-  </mat-grid-list>
+    </mat-card-content>
+
+    <mat-card-footer>
+
+
+
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+
+  </mat-card>
+
 </div>

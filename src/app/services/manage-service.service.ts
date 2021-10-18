@@ -61,6 +61,8 @@ export class ManageServiceService {
   getServicexUser(idUsuario: number):Observable<Servicio[]>
   {
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    console.log('Cabeceras ', httpHeaders);
+    
     return this.http.get<Servicio[]>(environment.UrlBase + 'Servicio/get-usuario-service?usuarioId='+idUsuario,{headers: httpHeaders});
   }
 
@@ -92,6 +94,11 @@ export class ManageServiceService {
   listarServicios(): Observable<Servicio[]>
   {
     return this.http.get<Servicio[]>(environment.UrlBase + 'Servicio')
+  }
+
+  getServiceById(idServicio: number): Observable<Servicio> {
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.get<Servicio>(environment.UrlBase + 'Servicio?id='+idServicio, {headers: httpHeaders})
   }
 
 }

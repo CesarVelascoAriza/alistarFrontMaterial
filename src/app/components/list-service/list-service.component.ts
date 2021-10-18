@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { accionServicios } from 'src/app/models/accionServicios';
 import { Servicio } from 'src/app/models/servicio';
 import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
@@ -14,7 +15,7 @@ import Swal from 'sweetalert2';
   templateUrl: './list-service.component.html',
   styleUrls: ['./list-service.component.css']
 })
-export class ListServiceComponent implements OnInit, OnDestroy {
+export class ListServiceComponent implements OnInit, OnDestroy, accionServicios {
 
   page_size : number =4
   page_number: number =1
@@ -23,9 +24,9 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   servicios: Servicio[] = [];
   msnError: string = "";
   ListaServSeleccionado: Servicio [] = [];
-  suscripcion: Subscription = new Subscription(); 
+  suscripcion: Subscription = new Subscription();
 
-  @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined; 
+  @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined;
 
   constructor(
     private manageService: ManageServiceService,
@@ -34,6 +35,10 @@ export class ListServiceComponent implements OnInit, OnDestroy {
     private api_service: ApiServicesService,
     private router: Router
   ) {   }
+
+  cambiarVisibilidad(flag: boolean): Boolean {
+    return flag;
+  }
 
   ngOnInit(): void {
     this.listarServicios()
@@ -45,7 +50,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
     this.manageEventService.servicioSeleccionado = new EventEmitter<Servicio>();
 
   }
-  
+
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {
       this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
@@ -78,7 +83,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
 
   enviarServicio(servicio : Servicio){
     servicio.cantidad = 1;
-    servicio.precionUnidad = 1000;
+
     this.manageEventService.servicioSeleccionado.emit(servicio)
     this.dialog.closeAll()
   }

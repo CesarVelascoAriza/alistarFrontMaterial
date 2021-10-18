@@ -41,6 +41,7 @@ export class ConsultServiceComponent implements OnInit {
     this.servicioInfo = new Servicio();
     this.titulo = 'Mis Servicios';
   }
+  
 
   ngOnInit(): void {
     this.obtenerServicios(); 
@@ -60,9 +61,8 @@ export class ConsultServiceComponent implements OnInit {
         console.log('Error del sistema  ', this.err?.status );
         if (this.err?.status == 403) {
           this.api_service.logout();
-          this.router.navigate(['/home']);
-          Swal.fire('error', error.error , 'error').then(data => {
-            window.location.reload()
+          this.router.navigate(['/home']).then(data => {
+            window.location.reload();
           })
         }
       }
@@ -85,10 +85,11 @@ export class ConsultServiceComponent implements OnInit {
         }
         if (error.status == 403) {
           this.api_service.logout();
-          this.router.navigate(['/home']);
-          window.location.reload();
+          this.router.navigate(['/home']).then(data => {
+            window.location.reload();
+          })
         }        
-      }
+      }  
     )
   }
 
@@ -96,7 +97,6 @@ export class ConsultServiceComponent implements OnInit {
     this.manageService.viewService(idServicio).subscribe(
       response => {
         this.servicioInfo = response
-        console.log('this.servicioInfo ... ', this.servicioInfo);
         localStorage.setItem('servicio', JSON.stringify(this.servicioInfo))
         this.dialog.open(ViewServiceComponent)
       }, error => { 
@@ -109,8 +109,9 @@ export class ConsultServiceComponent implements OnInit {
         }
         if (error.status == 403) {
           this.api_service.logout();
-          this.router.navigate(['/home']);
-          window.location.reload();
+          this.router.navigate(['/home']).then(data => {
+            window.location.reload();
+          })
         }
         
       }
@@ -120,8 +121,6 @@ export class ConsultServiceComponent implements OnInit {
   openDialogDeleteService(idServicio: number) {
     this.manageService.deleteService(idServicio).subscribe(
       response => {
-        console.log('response  ', response);
-        console.log('idServicio  ', idServicio);
         this.obtenerServicios();
       }, error => {
        if(error.status === 400){
@@ -133,8 +132,9 @@ export class ConsultServiceComponent implements OnInit {
         }
         if (error.status == 403) {
           this.api_service.logout();
-          this.router.navigate(['/home']);
-          window.location.reload();
+          this.router.navigate(['/home']).then(data => {
+            window.location.reload();
+          })
         }
       }
     )

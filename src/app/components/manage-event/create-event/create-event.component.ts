@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,8 +14,8 @@ import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
-import { isDate } from 'util';
 import { ListServiceComponent } from '../../list-service/list-service.component';
+import { FormControl  } from '@angular/forms';
 
 
 @Component({
@@ -53,11 +53,11 @@ export class CreateEventComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    public manageEventService: ManageEventService,
+    private manageEventService: ManageEventService,
     private manageServiceService: ManageServiceService,
     private dialog:MatDialog,
     private api_service: ApiServicesService
-  ) { 
+  ) {
     this.titulo = 'Crea tu evento';
     this.ListaServSeleccionado = new Array<Servicio>();
 
@@ -68,12 +68,11 @@ export class CreateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListEstado()   
-
+    this.getListEstado();
     if(localStorage.getItem('usuario') != null || localStorage.getItem('usuario') !=  undefined)
     {
       let usuariolocal = localStorage.getItem('usuario');
-        this.usuario =JSON.parse(usuariolocal!);          
+      this.usuario =JSON.parse(usuariolocal!);
     }
   }
 
@@ -81,15 +80,17 @@ export class CreateEventComponent implements OnInit {
   {
     console.log('borrar Item id: ', id)
     const index : number = this.ListaServSeleccionado.indexOf(this.servicioSeleccionado,id);
+    console.log('index.. ', index);
+    console.log('lista selecciondos antes: ', this.ListaServSeleccionado)
     this.ListaServSeleccionado.splice(index);
-    console.log('lista selecciondos: ', this.ListaServSeleccionado)
+    console.log('lista selecciondos despues: ', this.ListaServSeleccionado)
   }
 
   getListEstado() {
     this.manageEventService.getAllEstados().subscribe(
       data => {
-      this.listEstado = data;
-      }, 
+        this.listEstado = data;
+      },
       error => {
         if(error.status === 400){
           Swal.fire('Error', 'Error al crear el evento', 'error')
@@ -99,13 +100,14 @@ export class CreateEventComponent implements OnInit {
           this.router.navigate(['/home']);
           window.location.reload();
         }
-      })
+      }
+    )
   }
 
   editar()
   {
-    this.crearOrden.precioTotal += this.servicioSeleccionado.valorTotal
-    console.log('valor total: ' + this.crearOrden.precioTotal)
+    this.crearOrden.totalOrden += this.servicioSeleccionado.valorTotal
+    console.log('valor total: ' + this.crearOrden.totalOrden)
   }
 
   seleccionServicio(id: number){
@@ -132,7 +134,19 @@ export class CreateEventComponent implements OnInit {
     console.log('crear');
     
     console.log('formControlCreateEvent.. ', this.formControlCreateEvent.value.fecha);
-    this.manageEventService.guardarEvento(this.crearEvento).subscribe(
+
+    console.log('formControlCreateEvent.. ', (this.formControlCreateEvent.value.fecha).toJSON());
+    this.crearEvento.estado = this.formControlCreateEvent.value.estado;
+    this.crearEvento.horario.fecha = (this.formControlCreateEvent.value.fecha).toJSON();
+    this.crearEvento.horario.horaFin =this.formControlCreateEvent.value.horaFin;
+    this.crearEvento.horario.horaInicio =this.formControlCreateEvent.value.horaInicio;
+    this.crearEvento.nombreEvento =this.formControlCreateEvent.value.nombreEvento;
+    this.crearEvento.usuario = this.usuario.numeroIdentificacion;
+    this.crearEvento.valorTotal = this.crearOrden.totalOrden
+    this.createOrderList();
+    this.crearEvento.orden =this.ordenList;
+
+    this.manageEventService.saveEvent(this.crearEvento).subscribe(
       response => {
         console.log(response);
         Swal.fire('Success', 'Evento creada con éxito', 'success')
@@ -144,31 +158,30 @@ export class CreateEventComponent implements OnInit {
           this.api_service.logout();
           this.router.navigate(['/home']);
           window.location.reload();
-        }       
+        }
       }
     )
-    
   }
 
   //Método para crear la lista de ordenes
   createOrderList() {
-    for (let i = 0; i < this.ListaServSeleccionado.length; i++) 
+    for (let i = 0; i < this.ListaServSeleccionado.length; i++)
     {
       const element = this.ListaServSeleccionado[i];
       let newOrder = new Orden();
 
       newOrder.cantidad = element.cantidad;
       newOrder.servicio = element.idServicio;
-      newOrder.precioTotal = element.valorTotal;
+      newOrder.totalOrden = element.valorTotal;
       console.log(newOrder, '   ORDEN');
-      this.ordenList.push(newOrder)      
-    }   
+      this.ordenList.push(newOrder)
+    }
   }
 
   formatFecha() {
     console.log('fecha ', this.crearEvento.horario.fecha)
     let fecha = (this.crearEvento.horario.fecha).toString()
-       
+
     let date = new Date();
     let result = date.toISOString();
     console.log(result)
@@ -184,29 +197,29 @@ export class CreateEventComponent implements OnInit {
         for (let i in this.ListaServSeleccionado) {
           this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
         }
-  
+
       } else {
         for (let j in this.ListaServSeleccionado) {
           this.servicioSeleccionado = this.ListaServSeleccionado[j]
-          this.servicios.push(this.servicioSeleccionado.idServicio)                   
+          this.servicios.push(this.servicioSeleccionado.idServicio)
         }
-  
+
         //aumentar la cantidad
         if (this.servicios.includes(data.idServicio)) {
           for (let i in this.ListaServSeleccionado) {
             if (this.ListaServSeleccionado[i].idServicio === data.idServicio) {
               this.ListaServSeleccionado[i].cantidad +=1
               this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
-            }            
+            }
           }
         } else {
           this.ListaServSeleccionado.push(data)
           for (let i in this.ListaServSeleccionado) {
             this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
-          }          
+          }
         }
       }
-      this.cambiarValorTotalOrden();  
+      this.cambiarValorTotalOrden();
     }, error => {
       this.err = error
         console.log('Error del sistema  ', this.err?.status );
@@ -227,18 +240,23 @@ export class CreateEventComponent implements OnInit {
       if (this.ListaServSeleccionado[i].idServicio === idServicio) {
         this.ListaServSeleccionado[i].cantidad +=1
         this.ListaServSeleccionado[i].valorTotal = this.ListaServSeleccionado[i].precionUnidad * this.ListaServSeleccionado[i].cantidad
-      }            
+      }
     }
     this.cambiarValorTotalOrden();
   }
 
-  cambiarValorTotalOrden() { 
-    this.crearOrden.precioTotal = this.ListaServSeleccionado.reduce((sum, value) => (sum + value.valorTotal), 0)
+  cambiarValorTotalOrden() {
+    this.crearOrden.totalOrden = this.ListaServSeleccionado.reduce((sum, value) => (sum + value.valorTotal), 0)
   }
 
   saveOrder() {
     console.log('Guardar orden');
     console.log(this.crearOrden, '  Orden');
   }
+
+  hora = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
 }

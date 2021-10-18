@@ -13,13 +13,13 @@
         <mat-card-title>{{con.nombreServicio}}</mat-card-title>
         <mat-card-subtitle>Proveedor: {{con.proveedor.nombre}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="data:image/jpeg;base64,{{con.imagenServicio}}" alt="Imagen del servicio">
+      <img mat-card-image class="imagen" src="data:image/jpeg;base64,{{con.imagenServicio}}" alt="Imagen del servicio">
       <mat-card-content>
         <p>
           {{con.descripcionServicio}}
         </p> 
       </mat-card-content>
-      <mat-card-actions>
+      <mat-card-actions >
         <button mat-button color="primary" (click)="enviarServicio(con)">Seleccionar</button>
         <button mat-button color="primary">Ver servicio</button>
       </mat-card-actions>
