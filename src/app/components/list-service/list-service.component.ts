@@ -21,6 +21,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [4, 8, 16, 24];
   pageEvent: PageEvent |undefined;
   servicios: Servicio[] = [];
+
   msnError: string = "";
   ListaServSeleccionado: Servicio [] = [];
   suscripcion: Subscription = new Subscription();

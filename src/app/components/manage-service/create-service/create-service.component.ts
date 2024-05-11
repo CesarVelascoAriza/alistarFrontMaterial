@@ -11,7 +11,7 @@ import { DatosService } from 'src/app/services/datos.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiServicesService } from 'src/app/services/api-services.service';
-import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
+
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -68,7 +68,7 @@ export class CreateServiceComponent implements OnInit {
     let tipo = (this.fotoSeleccionada?.type)?.split('/')[1];
     localStorage.setItem('tipoImagen', JSON.stringify(tipo))
     if (tipo === 'png') {
-      this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fotoSeleccionada)) as string   
+     // this.imageUrl = this.sant.bypassSecurityTrustUrl(window.URL.createObjectURL(this.fotoSeleccionada)) as string   
       let reader = new FileReader();
       reader.readAsDataURL(this.fotoSeleccionada as Blob);
       reader.onloadend = () => {

@@ -9,7 +9,8 @@
         <mat-form-field hintLabel="Max 15 characters" appearance="fill">
           <mat-label>Documento de Identidad</mat-label>
           <input matInput #input maxlength="10" formControlName='usuario' placeholder="Usuario" >
-          <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+          <!-- <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint> -->
+          <mat-hint ></mat-hint>
         </mat-form-field>
         <br>
         <br>
