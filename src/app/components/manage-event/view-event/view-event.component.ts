@@ -1,10 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Evento } from 'src/app/models/evento';
-import { Orden } from 'src/app/models/orden';
-import { Servicio } from 'src/app/models/servicio';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
-import { ManageEventService } from 'src/app/services/manage-event.service';
+import { Component, OnInit } from '@angular/core';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-event',
@@ -19,14 +14,8 @@ export class ViewEventComponent implements OnInit {
   carga : boolean= false;
 
   constructor(
-    private localStorageService: LocalStorageService,
-    public dialog:MatDialog,
-    private manageEvent: ManageEventService
-  ) { 
-    this.evento = JSON.parse(this.localStorageService.geDatosStorage('evento'));
-    this.ordenes = this.manageEvent.ordenEvento
-    this.detalleOrden = this.manageEvent.detalleOrden
-  }
+    private fb: UntypedFormBuilder
+  ) { }
 
   ngOnInit(): void {
    

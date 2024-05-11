@@ -3,12 +3,9 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
 import { TipoDocumento } from 'src/app/models/tipoDocumento';
 import { DropDownService } from 'src/app/services/drop-down.service';
-import Swal from 'sweetalert2';
-import { ApiServicesService } from 'src/app/services/api-services.service';
-import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
-import { FormBuilder, Validators } from '@angular/forms';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-dashboard-user',
@@ -42,14 +39,8 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
     imagen:['', Validators.required]
   })
 
-  constructor(
-    private api_service: ApiServicesService,
-    private dropdownService: DropDownService,
-    private router: Router,
-    private sant: DomSanitizer,
-    private fb: FormBuilder,
-    private usuarioService: UsuarioService,
-    private localStorageService: LocalStorageService
+  constructor(private api_service :UsuarioService,private dropdownService: DropDownService,
+    private fb: UntypedFormBuilder,
     ) { }
 
   ngOnInit() {
