@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Categoria } from 'src/app/models/categoria';
 import { Servicio } from 'src/app/models/servicio';
 import { Usuario } from 'src/app/models/usuario';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
-import { DropDownService } from 'src/app/services/drop-down.service';
-import { DatosService } from 'src/app/services/datos.service';
+import { DropDownService } from 'src/app/services/drop-down.service';;
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiServicesService } from 'src/app/services/api-services.service';
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
@@ -21,19 +22,19 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 })
 export class CreateServiceComponent implements OnInit {
 
-  public titulo: string = 'Crea tu servicio';
-  public categorias : Categoria[] | any;
-  public usuario: Usuario | Usuario;
-  public model: Servicio | any;
-  public error: any;
-  public identity : any;
-  public formData = new FormData();
+  titulo: string = 'Crea tu servicio';
+  categorias : Categoria[] | any;
+  usuario: Usuario | Usuario;
+  model: Servicio | any;
+  error: any;
+  identity : any;
+  formData = new FormData();
 
   //Atributos para la imagen
-  public fotoSeleccionada?: Blob;
-  public base64: string = 'Base64...'
-  public imageUrl?: string;
-  public tipo: string = '';
+  fotoSeleccionada?: Blob;
+  base64: string = 'Base64...'
+  imageUrl?: string;
+  tipo: string = '';
   
   constructor(
     private dropdownService: DropDownService,
@@ -75,7 +76,6 @@ export class CreateServiceComponent implements OnInit {
         this.base64 = reader.result as string;
         const imagen = this.base64.split(',')[1]
         console.log(imagen);
-        
         localStorage.setItem('imgb64', imagen);
       } 
     } else {
@@ -91,9 +91,8 @@ export class CreateServiceComponent implements OnInit {
     if (tipoImagen === 'png') {
       this.manageService.createService(this.model).subscribe(
         response => { 
-          this.dialog.closeAll();    
-          Swal.fire('Nuevo servicio creado con éxito', 'success').then(data => {
-            window.location.reload()
+          Swal.fire('Servicio creado con éxito', 'success').then(data => {
+            window.location.reload();
           }); 
           
       }, err => {

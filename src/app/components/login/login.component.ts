@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   public resUsuario: ConsultaUsuarioResponse
   public identity: any
   public consulta: any
+  carga: boolean = false
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -51,12 +52,12 @@ export class LoginComponent implements OnInit {
 				confirmButtonText: 'Cerrar'
 			})
     }*/
+    this.carga = true;
      this.request.getUserNamePassword(this.usuario).subscribe(
        response=>{
          this.api_service.usuarioSession(response.token)
          this.api_service.tokenSession(response.token)
-         let usuario = this.api_service.getUsuarioSesion;  
-                
+         let usuario = this.api_service.getUsuarioSesion;    
          this.dialog.closeAll();
          this._router.navigate(['list'])
          Swal.fire({
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
          }).then(data => {
           window.location.reload()
         }); 
+        this.carga = false
           
        },
        error => {
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit {
          if (errorMessage != null) {
            Swal.fire('error', 'Falla en la autenticatición, Por favor Revise sus credenciales', error)
          }
+         this.carga = false
        }
      );
    }

@@ -13,31 +13,35 @@
                         <mat-hint align="end">Nombre del Evento</mat-hint>
                     </mat-form-field>
                     <mat-form-field appearance="fill">
-                      <mat-label>Choose a date</mat-label>
+                      <mat-label>Fecha</mat-label>
                       <input matInput [matDatepicker]="picker" formControlName="fecha">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
 
-                   <div class="mb-3">
-                      <label class="form-label">Hora Inicio Evento</label>
-                      <input type="time" class="form-control" required formControlName='horaInicio' step="2">
-                      <div>
-                        <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
-                      </div>
-                      <label class="form-label">Hora Finalización Evento</label>
-                      <input type="time" class="form-control" required formControlName='horaFin' step="2">
-                      <div>
-                        <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
-                      </div>
-                    </div>
-                    <mat-form-field appearance="fill">
-                      <mat-label>Estado</mat-label>
-                      <mat-select formControlName='estado'>
-                          <mat-option selected disabled >Seleccione......</mat-option>
-                          <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                   <div >
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Hora Inicio</mat-label>
+                        <input type="time" class="form-control" required formControlName='horaInicio' step="2" matInput value="{{evento.horario.horaInicio}}" >
+                        <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
+                          <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
+                        </div>
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Hora Finalización</mat-label>
+                        <input type="time" class="form-control" required formControlName='horaFin' step="2" matInput value="{{evento.horario.horaFin}}" >
+                        <div *ngIf="hora.invalid && (hora.dirty || hora.touched)">
+                          <div id="emailHelp" class="form-text">Este campo es obligatorio</div>
+                        </div>
+                      </mat-form-field>
+                   </div>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName='estado'>
+                        <mat-option selected disabled >Seleccione......</mat-option>
+                        <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
                 <div mat-dialog-actions>
                   <button mat-button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="agregarServiciosAlEvento()">Seleccionar Servicio</button>
                 </div>
@@ -99,7 +103,6 @@
             </form>
         </div>
         <br>
-
     </mat-card>
 </div>
 

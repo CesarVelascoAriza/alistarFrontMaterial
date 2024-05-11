@@ -1,22 +1,115 @@
+
 <div class="content">
-    <mat-card>
-      <mat-card-header>
-        <h1>Registro</h1>
-      </mat-card-header>
-      <br>
-      <mat-card-content>
-        <form  [formGroup]='formControlViewEvent' (ngSubmit)="submitVisualizar()" class="formulariosRegistro">
-          <mat-form-field appearance="fill"  class="form-control">
-            <mat-label>Fecha de Nacimiento</mat-label>
-            <input matInput [matDatepicker]="picker" [min]="min" [max]="max" formControlName='fecha' >
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <mat-card-footer>
-              <button type="submit" class="btn"  mat-button color="primary" [disabled]='!formControlViewEvent.valid'>Guardar</button>
-          </mat-card-footer>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  </div>
+
+  <mat-card class="perfil-usario">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Evento : {{evento.nombreEvento}}</mat-card-title>
+      <mat-card-subtitle>
+        Información del evento
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="contenido-formulario">
+        <form class="example-form" >
+          <div class="form-control">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Usuario</mat-label>
+              <input matInput type="text" value="{{evento.usuario}}" readonly >
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Valor Total Evento</mat-label>
+              <input matInput type="text" value="{{evento.valorTotal}}" readonly >
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Estado</mat-label>
+              <input type="text" matInput value="{{evento.estado.estado}}" readonly >
+            </mat-form-field>
+          </div>
+          <div class="form-control">
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Fecha</mat-label>
+              <input matInput type="text" value="{{evento.horario.fecha}}" readonly >
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Hora Inicio</mat-label>
+              <input type="text" matInput value="{{evento.horario.horaInicio}}" readonly >
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Hora Finalización</mat-label>
+              <input type="text" matInput value="{{evento.horario.horaFin}}" readonly >
+            </mat-form-field>
+          </div>
+          <div id="contenedor">
+            <div id="tabla1">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre Servicio</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Proveedor</th>
+                    <th scope="col">Valor Unidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of ordenes">
+                    <td>
+                      {{item.nombreServicio}}
+                    </td>
+                    <td>
+                      {{item.categoria.nombreCategoria}}
+                    </td>
+                    <td>
+                      {{item.proveedor.nombre}}
+                    </td>
+                    <td>
+                      {{item.precionUnidad}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="tabla2">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Valor total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of detalleOrden">
+                    <td>
+                      {{item.cantidad}}
+                    </td>
+                    <td>
+                      {{item.totalOrden}}
+                    </td>
+                  </tr>
+                </tbody>
+              
+              </table>
+            </div>
+          </div>
+          <br>
+          <br>
+          <mat-card-actions >
+            <button mat-button color='primary'>
+              <mat-icon (click)="close()">close</mat-icon>
+            </button>
+          </mat-card-actions>
+        </form> 
+      </div>
+    </mat-card-content>
+
+    <mat-card-footer>
+
+    </mat-card-footer>
+
+  </mat-card>
+
+</div>
+
+
   

@@ -23,13 +23,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ViewEventComponent } from './view-event/view-event.component';
+import { EditEventComponent } from './edit-event/edit-event.component';
 
 
 @NgModule({
   declarations: [
     CreateEventComponent,
     ConsultEventComponent,
-    ViewEventComponent
+    ViewEventComponent,
+    EditEventComponent
   ],
   imports: [
     CommonModule,

@@ -63,3 +63,16 @@
 {
   margin-left: 40%;
 }
+
+img{
+  width: 40px;
+  height: 40px;
+}
+
+button {
+  background-color: #083A80;
+  font-size: 1rem;
+  font-variation-settings: "wght" 625;
+  letter-spacing: -.75px;
+  color: #fff;
+  }

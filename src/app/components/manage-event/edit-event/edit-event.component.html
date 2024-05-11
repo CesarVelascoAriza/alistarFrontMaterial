@@ -1,0 +1,122 @@
+
+<div class="content">
+    <mat-card class="perfil-usario">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>Evento : {{evento.nombreEvento}}</mat-card-title>
+        <mat-card-subtitle>
+          Información del evento
+        </mat-card-subtitle>
+      </mat-card-header>
+  
+     <!-- <mat-card-content> -->
+        <div class="contenido-formulario">
+          <form >
+            <div class="form-control">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Usuario</mat-label>
+                <input matInput type="text" name="usuario" id="usuario" value="{{evento.usuario}}" readonly [(ngModel)]="evento.usuario">
+              </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Valor Total Evento</mat-label>
+                <input matInput type="text" name="valorTotal" id="valorTotal" value="{{evento.valorTotal}}" readonly [(ngModel)]="evento.valorTotal">
+              </mat-form-field>
+              <mat-form-field appearance="fill">
+                  <mat-label>Estado</mat-label>
+                  <mat-select name="estado" id="estado" [(ngModel)]="evento.estado.estado">
+                      <mat-option [value]="estados" *ngFor="let estados of listEstado">{{estados.estado}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-control">
+              <mat-form-field appearance="fill">
+                <mat-label>Fecha</mat-label>
+                <input matInput [matDatepicker]="picker" name="fecha" id="fecha" value="{{evento.horario.fecha}}" (ngModelChange)="onDateChange($event)"  >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Hora Inicio</mat-label>
+                <input type="time" name="horaInicio" id="horaInicio" class="form-control" required step="2" matInput value="{{evento.horario.horaInicio}}" (ngModelChange)="onDateChange($event)" >
+              </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Hora Finalización</mat-label>
+                <input type="time" name="horaFin" id="horaFin" class="form-control" required step="2" matInput value="{{evento.horario.horaFin}}" (ngModelChange)="onDateChange($event)">
+              </mat-form-field>
+            </div>
+            <div id="contenedor">
+              <div id="tabla1">
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nombre Servicio</th>
+                      <th scope="col">Categoria</th>
+                      <th scope="col">Proveedor</th>
+                      <th scope="col">Valor Unidad</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of ordenes">
+                      <td>
+                        {{item.nombreServicio}}
+                      </td>
+                      <td>
+                        {{item.categoria.nombreCategoria}}
+                      </td>
+                      <td>
+                        {{item.proveedor.nombre}}
+                      </td>
+                      <td>
+                        {{item.precionUnidad}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div id="tabla2">
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Valor total</th>
+                      <th scope="col">Borrar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of detalleOrden">
+                      <td>
+                        {{item.cantidad}}
+                      </td>
+                      <td>
+                        {{item.totalOrden}}
+                      </td>
+                      <td>
+                        <a (click)="borrar(this.item.servicio, this.item.idOrden)">
+                          X
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+            <br>
+            <mat-card-actions >
+              <button mat-button (click)="actualizarEvento()" >
+                <mat-icon >edit</mat-icon>
+                Actualizar
+              </button>
+            </mat-card-actions>
+          </form> 
+        </div>
+      <!-- </mat-card-content> -->
+  
+      <mat-card-footer>
+  
+      </mat-card-footer>
+  
+    </mat-card>
+  
+  </div>
+  

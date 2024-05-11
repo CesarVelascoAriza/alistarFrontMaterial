@@ -9,7 +9,6 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 
 import { TipoDocumento } from '../../models/tipoDocumento';
 import { Usuario } from '../../models/usuario';
-import { Telefono } from 'src/app/models/telefono';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 

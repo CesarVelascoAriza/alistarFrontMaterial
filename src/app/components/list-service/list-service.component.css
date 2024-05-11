@@ -1,5 +1,8 @@
 .example-card {
+
+  max-width: 350px;
   max-width: 23%;
+
 }
 
 .example-header-image {
@@ -26,3 +29,15 @@ mat-card-header {
   position: fixed;
   padding: 5%;
 }
+
+.imagen {
+  padding: 10%;
+}
+
+button {
+  background-color: #083A80;
+  font-size: 1rem;
+  font-variation-settings: "wght" 625;
+  letter-spacing: -.75px;
+  color: #fff;
+  }

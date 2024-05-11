@@ -14,6 +14,8 @@ import { ApiServicesService } from './api-services.service';
 export class ManageEventService  {
 
   servicioSeleccionado = new EventEmitter<Servicio>();
+  ordenEvento: Servicio[]= [];
+  detalleOrden: Orden[] =[];
 
   constructor(
     private http: HttpClient,
@@ -21,32 +23,36 @@ export class ManageEventService  {
   ) { }
 
 
-  getAllEstados():Observable<Estado[]>{
+  getAllEstados(): Observable<Estado[]> {
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
     return this.http.get<Estado[]>(environment.UrlBase+'estado',{headers: httpHeaders});
   }
 
-  guardarOrden(orden:Orden):Observable<Orden>{
-    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
-    return  this.http.post<Orden>(environment.UrlBase+'Orden/save-Orden',orden,{headers: httpHeaders});
-  }
-
-  guardarEvento(evento:Evento):Observable<Evento>{
+  saveEvent(evento:Evento): Observable<Evento> {
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
     return  this.http.post<Evento>(environment.UrlBase+'Evento/save-evento',evento,{headers: httpHeaders});
   }
 
-  getAllEventsByUsuaio(idUsuario: number):Observable<Evento[]>{
-    console.log(idUsuario);
-    
+  getAllEventsByUsuaio(idUsuario: number): Observable<Evento[]> {
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
     return this.http.get<Evento[]>(environment.UrlBase + 'Evento/Get-evento-Usuario?usuarioId=' + idUsuario,{headers: httpHeaders});
   }
 
-  getOrdernById(idOrden: number):Observable<Orden>
-  {
+  updateEvent(evento: Evento): Observable<Evento> {
+    console.log('evento a editar... ', evento);
+    
     let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
-    return this.http.get<Orden>(environment.UrlBase + 'Orden/getIdOrden?id=' + idOrden,{headers: httpHeaders});
+    return this.http.put<Evento>(environment.UrlBase+'Evento/update-evento', evento, {headers: httpHeaders})
+  }
+
+  deleteEvent(idEvento: number): Observable<Evento> {
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.delete<Evento>(environment.UrlBase+'Evento/deleteEvento?id='+ idEvento, {headers: httpHeaders})
+  }
+
+  viewEvent(idEvento: number): Observable<Evento> {
+    let httpHeaders = new HttpHeaders({'Content-Type':'application/json', 'Authorization':'Bearer '+ this.api_service.getTokenSesion});
+    return this.http.get<Evento>(environment.UrlBase + 'Evento/getEventoById?id='+ idEvento, {headers: httpHeaders})
   }
 
 }

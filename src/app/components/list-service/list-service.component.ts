@@ -26,6 +26,7 @@ export class ListServiceComponent implements OnInit, OnDestroy {
   ListaServSeleccionado: Servicio [] = [];
   suscripcion: Subscription = new Subscription();
   carga:boolean =false
+  
   @ViewChild(MatPaginator) matpaginador:MatPaginator | undefined;
 
   constructor(

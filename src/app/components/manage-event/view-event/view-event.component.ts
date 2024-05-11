@@ -8,23 +8,23 @@ import { UntypedFormBuilder, Validators } from '@angular/forms';
 })
 export class ViewEventComponent implements OnInit {
 
-  day = new Date()
-  min =new Date(new Date().getFullYear()-80 , 0, 1);
-  max =new Date(new Date().getFullYear()-18 ,new Date().getMonth(),  this.day.getDate() );
+  evento: Evento;
+  ordenes: Servicio[] = [];
+  detalleOrden: Orden[] = [];
+  carga : boolean= false;
 
   constructor(
     private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {
+   
   }
 
-  formControlViewEvent = this.fb.group({
-    fecha:['', Validators.required]
-  })
-
-  submitVisualizar() {
-    console.log(this.formControlViewEvent.value.fecha)
+  close() {
+    this.dialog.closeAll();
+    this.ordenes = [];
+    this.detalleOrden = [];
   }
 
 }

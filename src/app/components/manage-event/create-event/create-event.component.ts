@@ -14,8 +14,8 @@ import { ApiServicesService } from 'src/app/services/api-services.service';
 import { ManageEventService } from 'src/app/services/manage-event.service';
 import { ManageServiceService } from 'src/app/services/manage-service.service';
 import Swal from 'sweetalert2';
-import { isDate } from 'util';
 import { ListServiceComponent } from '../../list-service/list-service.component';
+import { FormControl  } from '@angular/forms';
 
 
 @Component({
@@ -30,6 +30,7 @@ export class CreateEventComponent implements OnInit {
   listEstado: Estado[] = [];
   events:EventoOrden = new EventoOrden();
   servicioSeleccionado: Servicio = new Servicio();
+  servicioBorrado: Servicio = new Servicio();
   ListaServSeleccionado: Servicio [] = [];
   usuario: Usuario;
   ordenList: Orden[] = [];
@@ -68,12 +69,11 @@ export class CreateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getListEstado()
-
+    this.getListEstado();
     if(localStorage.getItem('usuario') != null || localStorage.getItem('usuario') !=  undefined)
     {
       let usuariolocal = localStorage.getItem('usuario');
-        this.usuario =JSON.parse(usuariolocal!);
+      this.usuario =JSON.parse(usuariolocal!);
     }
   }
 
@@ -81,14 +81,17 @@ export class CreateEventComponent implements OnInit {
   {
     console.log('borrar Item id: ', id)
     const index : number = this.ListaServSeleccionado.indexOf(this.servicioSeleccionado,id);
+    console.log('index.. ', index);
+    console.log('lista selecciondos antes: ', this.ListaServSeleccionado)
     this.ListaServSeleccionado.splice(index);
-    console.log('lista selecciondos: ', this.ListaServSeleccionado)
+    console.log('lista selecciondos despues: ', this.ListaServSeleccionado)
+    this.cambiarValorTotalOrden();
   }
 
   getListEstado() {
     this.manageEventService.getAllEstados().subscribe(
       data => {
-      this.listEstado = data;
+        this.listEstado = data;
       },
       error => {
         if(error.status === 400){
@@ -99,7 +102,8 @@ export class CreateEventComponent implements OnInit {
           this.router.navigate(['/home']);
           window.location.reload();
         }
-      })
+      }
+    )
   }
 
   editar()
@@ -130,6 +134,8 @@ export class CreateEventComponent implements OnInit {
   //Método para crear eventos
   createEvent() {
     console.log('crear');
+    
+    console.log('formControlCreateEvent.. ', this.formControlCreateEvent.value.fecha);
 
     console.log('formControlCreateEvent.. ', (this.formControlCreateEvent.value.fecha).toJSON());
     this.crearEvento.estado = this.formControlCreateEvent.value.estado;
@@ -142,10 +148,11 @@ export class CreateEventComponent implements OnInit {
     this.createOrderList();
     this.crearEvento.orden =this.ordenList;
 
-    this.manageEventService.guardarEvento(this.crearEvento).subscribe(
+    this.manageEventService.saveEvent(this.crearEvento).subscribe(
       response => {
-        console.log(response);
-        Swal.fire('Success', 'Evento creada con éxito', 'success')
+          Swal.fire('Evento creado con éxito', 'success').then(data => {
+            this.router.navigate(['/consult_events']);
+          }); 
       }, error => {
         if(error.status === 400){
           Swal.fire('Error', 'Error al crear el evento', 'error')
@@ -157,7 +164,6 @@ export class CreateEventComponent implements OnInit {
         }
       }
     )
-
   }
 
   //Método para crear la lista de ordenes
@@ -250,5 +256,10 @@ export class CreateEventComponent implements OnInit {
     console.log('Guardar orden');
     console.log(this.crearOrden, '  Orden');
   }
+
+  hora = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
 
 }
