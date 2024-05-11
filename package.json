@@ -26,7 +26,7 @@
     "highcharts": "^11.4.1",
     "highcharts-angular": "^4.0.0",
     "jwt-decode": "^4.0.0",
-    "md-dialog": "*",
+    "md-dialog": "^0.0.1-alpha.1",
     "rxjs": "^7.8.1",
     "sweetalert2": "^11.1.2",
     "tslib": "^2.0.0",
