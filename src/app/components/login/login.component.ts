@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConsultaUsuarioResponse } from 'src/app/models/consultaUsuarioResponse';
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   public consulta: any
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private request: ApiServicesService,
     private _router: Router,
     private api_service: ApiServicesService,

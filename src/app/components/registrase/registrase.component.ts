@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, FormGroupDirective, NgForm, Validators, UntypedFormGroup } from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+  isErrorState(control: UntypedFormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
@@ -28,8 +28,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class RegistraseComponent implements OnInit {
 
   isLinear = false;
-  firstFormGroup: FormGroup | any ;
-  secondFormGroup: FormGroup | any ;
+  firstFormGroup: UntypedFormGroup | any ;
+  secondFormGroup: UntypedFormGroup | any ;
   day = new Date()
   public tDocs : TipoDocumento[];
   public usuario : Usuario;
@@ -50,9 +50,9 @@ export class RegistraseComponent implements OnInit {
     terminosCondiciones:[false,Validators.requiredTrue]
   })
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private request: ApiServicesService,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private _usuarioService : UsuarioService,
     private dropdownService: DropDownService,
     private _router: Router,
@@ -104,7 +104,7 @@ export class RegistraseComponent implements OnInit {
       });
   }
 
-  emailFormControl = new FormControl('', [
+  emailFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.email,
   ]);

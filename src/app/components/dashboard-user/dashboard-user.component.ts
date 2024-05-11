@@ -7,7 +7,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
 import { TipoDocumento } from 'src/app/models/tipoDocumento';
 import { DropDownService } from 'src/app/services/drop-down.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 
 
@@ -38,7 +38,7 @@ export class DashboardUserComponent implements OnInit, OnDestroy {
   });
 
   constructor(private api_service :UsuarioService,private dropdownService: DropDownService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     ) { }
 
   ngOnInit() {

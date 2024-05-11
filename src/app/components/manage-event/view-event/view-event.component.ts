@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-view-event',
@@ -13,7 +13,7 @@ export class ViewEventComponent implements OnInit {
   max =new Date(new Date().getFullYear()-18 ,new Date().getMonth(),  this.day.getDate() );
 
   constructor(
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {
